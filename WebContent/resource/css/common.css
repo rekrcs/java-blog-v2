@@ -1,0 +1,688 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'OTEnjoystoriesBA';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/OTEnjoystoriesBA.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html {
+	/* 영문이면 roboto가 적용되고, 한글이면 Noto Sans KR가 적용되도록 아래와 같은 순서로 배치 */
+	font-family: "Roboto", "Noto Sans KR", sans-serif;
+}
+
+/* 노말라이즈 */
+body, ul, li, h1 {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+label[for] {
+	cursor: pointer;
+	user-select: none;
+}
+
+/* 라이브러리 */
+.block {
+	display: block;
+}
+
+.inline-block {
+	display: inline-block;
+}
+
+.absolute-left {
+	position: absolute;
+	left: 0;
+}
+
+.absolute-right {
+	position: absolute;
+	right: 0;
+}
+
+.absolute-bottom {
+	position: absolute;
+	bottom: 0;
+}
+
+.absolute-top {
+	position: absolute;
+	top: 0;
+}
+
+.absolute-center {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.absolute-middle {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.absolute-middle.absolute-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.relative {
+	position: relative;
+}
+
+.cell {
+	float: left;
+	box-sizing: border-box;
+}
+
+.cell-right {
+	float: right;
+	box-sizing: border-box;
+}
+
+.row::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.clear-both {
+	clear: both;
+}
+
+.img-box>img {
+	width: 100%;
+	display: block;
+}
+
+.con {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.con-small {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.margin-0-auto {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.text-align-center {
+	text-align: center;
+}
+
+.text-align-right {
+	text-align: right;
+}
+
+.line-height-0 {
+	line-height: 0;
+}
+
+.line-height-0>* {
+	line-height: normal;
+}
+
+.width-30px {
+	width: 30px;
+}
+
+.width-35px {
+	width: 35px;
+}
+
+.width-40px {
+	width: 35px;
+}
+
+.width-45px {
+	width: 35px;
+}
+
+.width-50px {
+	width: 50px;
+}
+
+.width-80px {
+	width: 80px;
+}
+
+.width-100px {
+	width: 100px;
+}
+
+.width-100p {
+	width: 100%;
+}
+
+.width-60p {
+	width: 60%;
+}
+
+.width-55p {
+	width: 55%;
+}
+
+.width-50p {
+	width: 50%;
+}
+
+.width-45p {
+	width: 45%;
+}
+
+.width-40p {
+	width: 40%;
+}
+
+.width-30p {
+	width: 30%;
+}
+
+.width-35p {
+	width: 35%;
+}
+
+.width-100p-except-30px {
+	width: calc(100% - 30px);
+}
+
+.width-100p-except-35px {
+	width: calc(100% - 35px);
+}
+
+.width-100p-except-40px {
+	width: calc(100% - 40px);
+}
+
+.width-100p-except-50px {
+	width: calc(100% - 50px);
+}
+
+.width-100p-except-80px {
+	width: calc(100% - 80px);
+}
+
+.width-100p-except-100px {
+	width: calc(100% - 100px);
+}
+
+.height-100p {
+	height: 100%;
+}
+
+.height-50p {
+	height: 50%;
+}
+
+.border-box {
+	box-sizing: border-box;
+}
+
+.font-size-dot-8rem {
+	font-size: .8rem;
+}
+
+.table-row {
+	display: table;
+}
+
+.table-row.row::after {
+	display: inline;
+	clear: non;
+}
+
+.table-row>.cell {
+	float: none;
+	display: table-cell;
+}
+
+.border-red {
+	border: 10px solid red;
+}
+
+.border-green {
+	border: 10px solid green;
+}
+
+.border-blue {
+	border: 10px solid blue;
+}
+
+.border-gold {
+	border: 10px solid gold;
+}
+
+.border-pink {
+	border: 10px solid pink;
+}
+
+/* 라이브러리 - flex */
+*>.flex {
+	display: flex;
+}
+
+*>.flex-grow-1 {
+	flex-grow: 1;
+}
+
+*>.flex-jc-c {
+	justify-content: center;
+}
+
+*>.flex-jc-s {
+	justify-content: flex-start;
+}
+
+*>.flex-jc-e {
+	justify-content: flex-end;
+}
+
+*>.flex-jc-sb {
+	justify-content: space-between;
+}
+
+*>.flex-ai-c {
+	align-items: center;
+}
+
+*>.flex-ai-s {
+	align-items: flex-start;
+}
+
+*>.flex-ai-e {
+	align-items: flex-end;
+}
+
+*>.flex-as-s {
+	align-self: stretch;
+}
+
+*>.flex-as-c {
+	align-self: center;
+}
+
+*>.flex-as-s {
+	align-self: flex-start;
+}
+
+*>.flex-as-e {
+	align-self: flex-end;
+}
+
+*>.flex-column-nowrap {
+	flex-flow: column nowrap;
+}
+
+*>.flex-column-wrap {
+	flex-flow: column wrap;
+}
+
+.flex-ch-basis-0>* {
+	flex-basis: 0;
+}
+
+*>.flex-1-0-0 {
+	flex: 1 0 0;
+}
+
+/* 커스텀 */
+.con {
+	max-width: 1356px;
+}
+
+.con-small {
+	max-width: 980px;
+}
+
+@media ( min-width :800px) {
+	.visible-on-sm-down {
+		display: none;
+	}
+}
+
+@media ( max-width :799px) {
+	.visible-on-md-up {
+		display: none;
+	}
+}
+
+/*탑바 시작*/
+.top-bar {
+	height: 70px;
+	background-color: white;
+	color: black;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	border-top: 1px solid rgba(0, 0, 0, .2);
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	z-index: 1;
+}
+
+@media ( min-width :800px) {
+	body {
+		padding-top: 70px;
+	}
+}
+
+.top-bar .logo {
+	font-family: OTEnjoystoriesBA;
+	font-size: 2rem;
+	padding: 0 20px;
+	font-weight: bold;
+}
+
+.top-bar .menu-box-1>ul>li>a {
+	font-weight: bold;
+	font-size: 1rem;
+	padding: 0 30px;
+}
+
+.top-bar .menu-box-1>ul>li:hover>a {
+	background-color: white;
+	color: #008d62;
+}
+
+.top-bar .menu-box-1 ul>li {
+	position: relative;
+}
+
+.top-bar .menu-box-1>ul ul {
+	background-color: black;
+	color: white;
+	display: none;
+	position: absolute;
+	z-index: 10;
+	top: 100%;
+	/*left:-2px;*/
+	width: 100%;
+}
+
+.top-bar .menu-box-1>ul>li:hover>ul {
+	display: block;
+	/*border:2px solid black;*/
+	border-top-width: 0;
+}
+
+.top-bar .menu-box-1>ul ul>li>a {
+	font-weight: blod;
+	text-align: center;
+	padding: 30px 0;
+}
+
+.top-bar .menu-box-1>ul ul>li:hover>a {
+	background-color: #368bcc;
+	color: white;
+}
+/*탑바 끝*/
+
+/*모바일 탑바 시작*/
+.mobile-top-bar {
+	background-color: white;
+	color: black;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-top: 1px solid rgba(0, 0, 0, .2);
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	z-index: 1;
+}
+
+.mobile-top-bar .logo {
+	font-family: OTEnjoystoriesBA;
+	font-size: 2.5rem;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar {
+	width: 20px;
+	height: 20px;
+	background-color: white;
+	position: relative;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar>div {
+	position: absolute;
+	width: 100%;
+	height: 20%;
+	background-color: black;
+	top: 0;
+	left: 0;
+	transition: top .2s .2s, transform .2s 0s, visibility 0s .2s;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar.active>div {
+	transition: top .2s 0s, transform .2s .2s, visibility 0s;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar>div:nth-child(2) {
+	top: 40%;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar>div:nth-child(3) {
+	top: 80%;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar.active>div {
+	top: 40%;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar.active>div:nth-child(1) {
+	transform: rotate(45deg);
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar.active>div:nth-child(2) {
+	visibility: hidden;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar.active>div:nth-child(3) {
+	transform: rotate(-45deg);
+}
+
+@media ( max-width :799px) {
+	body {
+		padding-top: 50px;
+	}
+}
+/*모바일 탑바 끝*/
+
+/*모바일 사이드바 시작*/
+.mobile-side-bar {
+	position: fixed;
+	background-color: white;
+	color: black;
+	top: 50px;
+	left: 0;
+	right: 0;
+	padding-bottom: 5px;
+	border-top: 1px solid rgba(0, 0, 0, .2);
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	/*토글 버튼으로 사이드바 감추기*/
+	opacity: 0;
+	transition: visibility 0.5s, opacity 0.5s;
+	visibility: hidden;
+}
+
+/*토글 버튼으로 사이드바 활성화*/
+.mobile-side-bar.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.mobile-side-bar>.menu-box-1 ul>li>a {
+	font-size: 1rem;
+	padding: 10px;
+	font-weight: bold;
+}
+
+.mobile-side-bar>.menu-box-1 ul>li>a:not(:only-child)::after {
+	content: "[+]";
+}
+
+.mobile-side-bar>.menu-box-1 ul>li:hover>a:not(:only-child)::after {
+	content: "[-]";
+}
+
+.mobile-side-bar>.menu-box-1 ul>li:hover>a {
+	background-color: white;
+	color: black;
+	border-bottom: 1px solid black;
+}
+
+.mobile-side-bar>.menu-box-1 ul ul {
+	display: none;
+	background-color: black;
+	color: white;
+}
+
+.mobile-side-bar>.menu-box-1 ul>li:hover>ul {
+	display: block;
+}
+/*모바일 사이드바 끝*/
+
+/*pc 통합body 시작*/
+@media ( min-width :800px) {
+	.body-main {
+		padding: 0 20px;
+	}
+}
+
+.body-container>.body-main {
+	width: 66%;
+}
+
+.body-container>.body-aside {
+	width: 10%;
+}
+
+.body-container>.between-section-and-aside {
+	width: 10%;
+}
+/*pc 통합body 끝*/
+
+/*pc body-main 시작*/
+.body-container>.body-main>.body-main-name {
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	margin-bottom: 15px;
+}
+
+.body-container>.body-main>.article>.article-header>.article-title {
+	font-size: 3rem;
+}
+
+.body-container>.body-main>.article>.article-header:hover>.article-title {
+	color:#008d62;
+}
+
+.body-container>.body-main>.article>.article-header {
+	padding-top: 20px;
+}
+
+.body-container>.body-main>.article>.article-body {
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	width:100%;
+}
+
+.body-container>.body-main>.article>.article-body {
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	padding-bottom: 35px;
+	margin-bottom: 15px;
+}
+/*pc body-main 끝*/
+
+/*pc aside 시작*/
+.body-container>.body-aside>.aside-section>ul>li>a {
+	color: blue;
+}
+
+.body-container>.body-aside>.aside-section>ul>li:hover>a {
+	color: red;
+}
+
+.body-container>.body-aside>.aside-section {
+	margin-bottom: 50px;
+}
+/*pc aside 끝*/
+
+/*모바일 body-main 시작*/
+@media ( max-width :799px) {
+	.body-main {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.body-main {
+		flex-grow: 1;
+		width: 100%;
+	}
+}
+/*모바일 body-main 끝*/
+
+/*메인 베너 시작*/
+@media ( max-width :800px) {
+	.img-container {
+		width: 100%;
+		height: 180px;
+		color: white;
+		font-size: bold;
+		background-color: #999;
+	}
+	.img-header {
+		padding: 0 20px;
+	}
+}
+
+@media ( min-width :799px) {
+	.img-container {
+		width: 100%;
+		height: 300px;
+		color: white;
+		font-size: bold;
+		background-color: #999;
+	}
+}
+
+.img-container {
+	margin-bottom: 30px;
+}
+/*메인 베너 끝*/
+
+/*footer 시작*/
+.article-footer {
+	margin-top: 50px;
+}
+
+.article-footer>.footer-container {
+	width: 100%;
+	height: 150px;
+}
+
+.article-footer>.footer-container {
+	font-family: OTEnjoystoriesBA;
+	font-size: 1.2rem;
+}
+
+/*footer 끝*/

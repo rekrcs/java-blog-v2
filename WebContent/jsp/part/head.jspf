@@ -1,0 +1,161 @@
+<%@ page import="java.util.List"%>
+<%@ page import="com.sbs.java.blog.dto.CateItem"%>
+<%@ page import="com.sbs.java.blog.dto.Article"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%
+	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
+List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+%>
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 유용한 링크 -->
+<!-- cdnsj : https://cdnjs.com/ -->
+<!-- 폰트어썸 아이콘 리스트 : https://fontawesome.com/icons?d=gallery&m=free -->
+
+<!-- tvn폰트 불러오기 -->
+
+<!-- 구글 폰트 불러오기 -->
+<!-- rotobo(400/700/900), notosanskr(400/600/900) -->
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Roboto:wght@400;700;900&display=swap"
+	rel="stylesheet">
+
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+
+<!-- css링크 -->
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/common.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resource/css/home/main.css">
+
+<!-- 제이쿼리 불러오기 -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 폰트어썸 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/F2/1.4.5/f2.min.js">
+
+<!-- js링크 -->
+<script src="${pageContext.request.contextPath}/resource/js/common.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resource/js/home/main.js"></script>
+
+<title>Youn's Blog</title>
+</head>
+
+<body>
+	<!--탑바-->
+	<div class="top-bar visible-on-md-up">
+		<div class="con-small height-100p flex flex-jc-sb">
+			<a href="${pageContext.request.contextPath}/s/home/main"
+				class="logo flex flex-ai-c"> Youn's Blog흏 </a>
+
+			<nav class="menu-box-1">
+				<ul class="flex height-100p">
+					<li><a href="${pageContext.request.contextPath}/s/home/main"
+						class="height-100p flex flex-ai-c">Home</a></li>
+					<li><a
+						href="${pageContext.request.contextPath}/s/article/write"
+						class="flex height-100p flex-ai-c">Write</a></li>
+					</li>
+					<li><a
+						href="${pageContext.request.contextPath}/s/article/list"
+						class="height-100p flex flex-ai-c">Articles</a>
+						<ul>
+							<li><a
+								href="${pageContext.request.contextPath}/s/article/list"
+								class="block">전체</a></li>
+							<%
+								for (CateItem cateItem : cateItems) {
+							%>
+							<li><a
+								href="${pageContext.request.contextPath}/s/article/list?cateItemId=<%=cateItem.getId()%>"
+								class="block"><%=cateItem.getName()%></a></li>
+							<%
+								}
+							%>
+						</ul></li>
+					<li><a
+						href="${pageContext.request.contextPath}/s/home/aboutMe"
+						class="height-100p flex flex-ai-c">About Me</a></li>
+					<li><a href="#" class="height-100p flex flex-ai-c">SNS</a>
+						<ul>
+							<li><a href="https://github.com/rekrcs" target="_blank"
+								" class="block">GITHUB</a></li>
+							<li><a href="#" class="block">FACEBOOK</a></li>
+							<li><a href="#" class="block">INSTA</a></li>
+						</ul></li>
+					<li><a href="${pageContext.request.contextPath}/s/member/join"
+						class="flex height-100p flex-ai-c">Sign up</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
+	<!--모바일 탑바-->
+	<div class="mobile-top-bar visible-on-sm-down flex flex-ai-c">
+		<a href="#" class="btn-toggle-mobile-side-bar">
+			<div></div>
+			<div></div>
+			<div></div>
+		</a> <a href="${pageContext.request.contextPath}/s/home/main"
+			class="logo flex flex-ai-c absolute-center absolute-middle">
+			Youn's Blog흏 </a>
+	</div>
+	<div class="mobile-side-bar visible-on-sm-down flex flex-ai-c">
+		<nav class="menu-box-1 flex-grow-1">
+			<ul>
+				<li><a href="${pageContext.request.contextPath}/s/home/main"
+					class="block">Home</a></li>
+				<li><a
+					href="${pageContext.request.contextPath}/s/article/write"
+					class="block">Write</a></li>
+				<li><a href="#" class="block">Articles</a>
+					<ul>
+						<li><a
+							href="${pageContext.request.contextPath}/s/article/list"
+							class="block">전체</a></li>
+						<%
+							for (CateItem cateItem : cateItems) {
+						%>
+						<li><a
+							href="${pageContext.request.contextPath}/s/article/list?cateItemId=<%=cateItem.getId()%>"
+							class="block"><%=cateItem.getName()%></a></li>
+						<%
+							}
+						%>
+					</ul></li>
+				<li><a href="${pageContext.request.contextPath}/s/home/aboutMe"
+					class="block">About Me</a></li>
+				<li><a href="#" class="block">SNS</a>
+					<ul>
+						<li><a href="${pageContext.request.contextPath}/s/home/sns"
+							class="block">GITHUB</a></li>
+						<li><a href="#" class="block">FACEBOOK</a></li>
+						<li><a href="#" class="block">INSTA</a></li>
+					</ul></li>
+				<li><a href="${pageContext.request.contextPath}/s/member/join"
+					class="block"> Sign up</a></li>
+			</ul>
+		</nav>
+	</div>
+
+	<!--메인베너-->
+	<div class="img-container con-small flex flex-jc-c flex-ai-c">
+		<div class="img-header" style="font-family: OTEnjoystoriesBA; font-size: 2rem" >
+			<h1>내가 만드는 블로그롲</h1>
+			<h3>공부하고 기억 하기 위해 주절 주절 기록 하는 블로그 햫</h3>
+		</div>
+	</div>
