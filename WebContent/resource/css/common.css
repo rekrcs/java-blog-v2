@@ -653,12 +653,11 @@ label[for] {
 	}
 	.img-container>.img-header {
 		padding: 0 20px;
-		
 	}
 	.img-container>.img-header>h3 {
 		display: none;
 	}
-	.img-container>.img-header > h1 {
+	.img-container>.img-header>h1 {
 		font-size: 3.3rem;
 	}
 }

@@ -53,6 +53,7 @@
 	src="${pageContext.request.contextPath}/resource/js/home/main.js"></script>
 
 <title>Youn's Blog</title>
+
 </head>
 
 <body>
