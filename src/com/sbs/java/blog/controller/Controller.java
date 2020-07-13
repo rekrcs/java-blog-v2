@@ -10,6 +10,7 @@ import com.sbs.java.blog.dto.Article;
 import com.sbs.java.blog.dto.CateItem;
 import com.sbs.java.blog.service.ArticleService;
 import com.sbs.java.blog.service.MemberService;
+import com.sbs.java.blog.util.Util;
 
 public abstract class Controller {
 	protected Connection dbConn;
@@ -34,6 +35,13 @@ public abstract class Controller {
 		// 이 메서드는 모든 컨트롤러의 모든 액션이 실행되기 전에 실행된다.
 		List<CateItem> cateItems = articleService.getForPrintCateItems();
 		List<Article> articlesForFooter = articleService.getForPrintListArticles(5);
+
+		// 사이드바 카테고리 아이템별 갯수
+		int cateItemId = 0;
+
+		if (!Util.empty(req, "cateItemId") && Util.isNum(req, "cateItemId")) {
+			cateItemId = Util.getInt(req, "cateItemId");
+		}
 		
 		req.setAttribute("cateItems", cateItems);
 		req.setAttribute("articlesForFooter", articlesForFooter);

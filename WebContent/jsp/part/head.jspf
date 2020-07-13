@@ -5,7 +5,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
-List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
 %>
 
 <!DOCTYPE html>
@@ -154,7 +154,8 @@ List<Article> articlesForFooter = (List<Article>) request.getAttribute("articles
 
 	<!--메인베너-->
 	<div class="img-container con-small flex flex-jc-c flex-ai-c">
-		<div class="img-header" style="font-family: OTEnjoystoriesBA; font-size: 2rem" >
+		<div class="img-header"
+			style="font-family: OTEnjoystoriesBA; font-size: 2rem">
 			<h1>내가 만드는 블로그롲</h1>
 			<h3>공부하고 기억 하기 위해 주절 주절 기록 하는 블로그 햫</h3>
 		</div>

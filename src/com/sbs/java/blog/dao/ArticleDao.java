@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.sbs.java.blog.dto.Article;
+import com.sbs.java.blog.dto.ArticleReply;
 import com.sbs.java.blog.dto.CateItem;
 import com.sbs.java.blog.util.DBUtil;
 import com.sbs.java.blog.util.SecSql;
@@ -178,5 +179,36 @@ public class ArticleDao extends Dao {
 		secSql.append("WHERE id = ?", id);
 
 		return DBUtil.delete(dbConn, secSql);
+	}
+
+	public int replyWrite(String body, int articleId) {
+		SecSql sql = new SecSql();
+
+		sql.append("INSERT INTO articleReply");
+		sql.append("SET regDate = NOW()");
+		sql.append(", updateDate = NOW()");
+		sql.append(", body = ? ", body);
+		sql.append(", articleId = ? ", articleId);
+		// 멤버 아이디 구현 필요
+
+		return DBUtil.insert(dbConn, sql);
+	}
+
+	public List<ArticleReply> getArticleReply(int id) {
+		SecSql sql = new SecSql();
+
+		sql.append("SELECT * ");
+		sql.append("FROM articleReply ");
+		sql.append("WHERE 1 ");
+		sql.append("AND articleId = ?", id);
+
+		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
+		List<ArticleReply> articleReplies = new ArrayList<>();
+
+		for (Map<String, Object> row : rows) {
+			articleReplies.add(new ArticleReply(row));
+		}
+
+		return articleReplies;
 	}
 }

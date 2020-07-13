@@ -49,6 +49,7 @@ CREATE TABLE article (
     displayStatus TINYINT(1) UNSIGNED NOT NULL,
     `title` CHAR(200) NOT NULL,
     `body` TEXT NOT NULL,
+     memberId INT(10) UNSIGNED NOT NULL,
     hit INT(10) UNSIGNED NOT NULL
 );
 
@@ -69,11 +70,25 @@ FROM article;
 CREATE TABLE `member` (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
     loginId CHAR(100) NOT NULL UNIQUE,
-    loginPw CHAR(100) NOT NULL,
+    loginPw CHAR(200) NOT NULL,
     `name` CHAR(100) NOT NULL,
-    nickname CHAR(100) NOT NULL UNIQUE
+    email CHAR(200) NOT NULL,
+    nickname CHAR(200) NOT NULL
 );
 
 SELECT *
 FROM `member`;
+
+CREATE TABLE `articleReply` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    articleId INT(10) UNSIGNED NOT NULL,
+    `body` TEXT NOT NULL,
+     memberId INT(10) UNSIGNED NOT NULL
+);
+
+SELECT * 
+FROM articleRely;

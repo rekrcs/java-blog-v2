@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.java.blog.dto.Article;
+import com.sbs.java.blog.dto.ArticleReply;
 import com.sbs.java.blog.dto.CateItem;
 import com.sbs.java.blog.util.Util;
 
@@ -38,9 +39,19 @@ public class ArticleController extends Controller {
 			return doActionDoModify(req, resp);
 		case "delete":
 			return doActionDelete(req, resp);
+		case "doReply":
+			return doActionDoReply(req, resp);
 		}
 
 		return "";
+	}
+
+	private String doActionDoReply(HttpServletRequest req, HttpServletResponse resp) {
+		int articleId = Integer.parseInt(req.getParameter("id"));
+		String body = req.getParameter("body");
+		int id = articleService.replyWrite(body, articleId);
+		
+		return "html:<script>location.replace('./detail?id=" + articleId +"');</script>";
 	}
 
 	private String doActionDelete(HttpServletRequest req, HttpServletResponse resp) {
@@ -93,6 +104,10 @@ public class ArticleController extends Controller {
 		Article article = articleService.getForPrintArticle(id);
 
 		req.setAttribute("article", article);
+		
+		List<ArticleReply> articleReplies = articleService.getArticleReply(id);
+		req.setAttribute("articleReplies", articleReplies);
+		
 
 		return "article/detail.jsp";
 	}

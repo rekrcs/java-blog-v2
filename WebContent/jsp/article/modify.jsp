@@ -139,7 +139,7 @@
 <div class="body-container flex con-small">
 	<section class="body-main flex-grow-1">
 		<div class="write-form-box con">
-			<form action="doModify?id=${param.id}" method="POST"
+			<form action="doModify?id=${param.id}" method="post" onsubmit="submitWriteForm(this); return false;"
 				class="write-form form1">
 				<div class="form-row">
 					<div class="label">카테고리 선택</div>
@@ -165,8 +165,8 @@
 				<div class="form-row">
 					<div class="label">내용</div>
 					<div class="input">
-						<!-- <textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
-						<input type="hidden" name="body">
+						<textarea name="body" placeholder="내용을 입력해주세요."></textarea>
+					<!-- 	<input type="hidden" name="body">
 						<div id="editor1"></div>
 						<script>
 							var editor1 = new toastui.Editor(
@@ -181,7 +181,7 @@
 												youtubePlugin, replPlugin,
 												codepenPlugin ]
 									});
-						</script>
+						</script> -->
 					</div>
 				</div>
 				<div class="form-row">

@@ -1,10 +1,13 @@
+<%@ page import="java.util.List"%>
 <%@ page import="com.sbs.java.blog.dto.Article"%>
 <%@ page import="com.sbs.java.blog.dto.CateItem"%>
+<%@ page import="com.sbs.java.blog.dto.ArticleReply"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
 <%
 	Article article = (Article) request.getAttribute("article");
+	List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
 %>
 <!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <script
@@ -52,7 +55,7 @@
 	display: flex;
 	justify-content: flex-end;
 	color: black;
-	margin-top: 30px;
+	margin: 50px 0 100px;
 	font-size: 1.2rem;
 	font-weight: bold;
 }
@@ -63,6 +66,55 @@
 
 .option-box>span>a:hover {
 	color: red;
+}
+
+/*댓글*/
+/* lib */
+.form1 {
+	display: block;
+	width: 100%;
+}
+
+.form1 .form-row {
+	align-items: center;
+	display: flex;
+}
+
+.form1 .form-row>.input {
+	flex-grow: 1;
+}
+
+.form1 .form-row>.input>input, .form1 .form-row>.input>textarea {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.form1 .form-row>.input>textarea {
+	height: 70px;
+}
+
+@media ( max-width : 700px ) {
+	.form1 .form-row {
+		display: block;
+	}
+}
+
+@media ( max-width : 700px ) {
+	.form1 .form-row>.input>.reply-btn {
+		width: 100%;
+	}
+}
+
+@media ( min-width : 701px ) {
+	.form1 .form-row>.input>.reply-btn {
+		width: 10%;
+	}
+}
+/* cus */
+.write-form-box {
+	margin: 20px 0 30px;
 }
 
 /*홈으로 돌아가기*/
@@ -84,12 +136,12 @@
 
 /*테이블 정렬*/
 td {
-	padding-left:10px;
+	padding-left: 10px;
 }
 
 th {
 	background-color: #368bcc;
-	color:white;
+	color: white;
 }
 </style>
 
@@ -97,7 +149,7 @@ th {
 <%
 	String cateName = null;
 	for (CateItem cateItem : cateItems) {
-		if(cateItem.getId() == article.getCateItemId()) {
+		if (cateItem.getId() == article.getCateItemId()) {
 			cateName = cateItem.getName();
 			break;
 		}
@@ -131,6 +183,10 @@ th {
 				<th>카테고리</th>
 				<td><%=cateName%></td>
 			</tr>
+			<tr>
+				<th>댓글수</th>
+				<td><%=articleReplies.size()%></td>
+			</tr>
 		</table>
 		<div>
 			<script type="text/x-template" id="origin1" style="display: none;"><%=article.getBody()%></script>
@@ -153,6 +209,41 @@ th {
 				href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}">수정</a></span><span></span><span
 				class="option-delete"><a href="delete?id=${param.id}">삭제</a></span>
 		</div>
+		<hr />
+		
+		<div style="margin-top: 50px">댓글 : <%=articleReplies.size()%></div>
+		<!-- 댓글 폼 -->
+		<div class="write-form-box con">
+			<form action="doReply?id=<%=article.getId()%>&" method="post"
+				class="write-form form1">
+				<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->
+				<div class="form-row">
+					<div class="input">
+						<textarea name="body" placeholder="댓글을 입력해주세요."></textarea>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="label"></div>
+					<div class="input flex flex-jc-e">
+						<!-- 						<input type="submit" value="댓글쓰기" class="reply-btn"/> -->
+						<button type="submit">댓글쓰기</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- 댓글 파트 -->
+		<%
+			for (ArticleReply articleReply : articleReplies) {
+		%>
+		<div class="reply-box" style="margin: 10px; border:1px solid rgba(0, 0, 0, .2);">
+		<div class="reply-header" style="margin-bottom: 10px">
+			<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate().substring(0, 10)%></span>
+		</div>
+			<div class="reply-body" style="font-size: 1.2rem"><%=articleReply.getBody()%></div>
+		</div>
+		<%
+			}
+		%>
 	</section>
 </div>
 
