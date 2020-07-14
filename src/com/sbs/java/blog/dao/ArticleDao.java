@@ -203,35 +203,11 @@ public class ArticleDao extends Dao {
 		return DBUtil.insert(dbConn, sql);
 	}
 
-	public List<ArticleReply> getArticleReply(int id, int page, int itemsInAPage) {
-//		SecSql sql = new SecSql();
-//		int limitFrom = (page - 1) * itemsInAPage;
-//
-//		sql.append("SELECT *");
-//		sql.append("FROM article");
-//		sql.append("WHERE displayStatus = 1");
-//		if (cateItemId != 0) {
-//			sql.append("AND cateItemId = ?", cateItemId);
-//		}
-//		if (searchKeywordType.equals("title") && searchKeyword.length() > 0) {
-//			sql.append("AND title LIKE CONCAT('%', ?, '%')", searchKeyword);
-//		}
-//		sql.append("ORDER BY id DESC ");
-//		sql.append("LIMIT ?, ? ", limitFrom, itemsInAPage);
-//
-//		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
-//		List<Article> articles = new ArrayList<>();
-//
-//		for (Map<String, Object> row : rows) {
-//			articles.add(new Article(row));
-//		}
-//
-//		return articles;
-		
+	public List<ArticleReply> getArticleReplyPage(int id, int page, int itemsInAPage) {
 		SecSql sql = new SecSql();
 
 		int limitFrom = (page - 1) * itemsInAPage;
-		
+
 		sql.append("SELECT * ");
 		sql.append("FROM articleReply ");
 		sql.append("WHERE 1 ");
@@ -247,8 +223,7 @@ public class ArticleDao extends Dao {
 		}
 
 		return articleReplies;
-		
-		
+
 	}
 
 	public ArticleReply getArticleReplyForPrint(int id) {
@@ -288,25 +263,23 @@ public class ArticleDao extends Dao {
 		return count;
 	}
 
-	public List<ArticleReply> getArticleReply(int id) {
-		SecSql sql = new SecSql();
-
-		sql.append("SELECT * ");
-		sql.append("FROM articleReply ");
-		sql.append("WHERE 1 ");
-		sql.append("AND articleId = ?", id);
-		sql.append("ORDER BY id DESC ");
-		
-
-		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
-		List<ArticleReply> articleReplies = new ArrayList<>();
-
-		for (Map<String, Object> row : rows) {
-			articleReplies.add(new ArticleReply(row));
-		}
-
-		return articleReplies;
-		
-	}
-
+//	public List<ArticleReply> getArticleReply(int id) {
+//		SecSql sql = new SecSql();
+//
+//		sql.append("SELECT * ");
+//		sql.append("FROM articleReply ");
+//		sql.append("WHERE 1 ");
+//		sql.append("AND articleId = ?", id);
+//		sql.append("ORDER BY id DESC ");
+//
+//		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
+//		List<ArticleReply> articleReplies = new ArrayList<>();
+//
+//		for (Map<String, Object> row : rows) {
+//			articleReplies.add(new ArticleReply(row));
+//		}
+//
+//		return articleReplies;
+//
+//	}
 }

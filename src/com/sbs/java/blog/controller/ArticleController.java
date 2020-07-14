@@ -139,8 +139,8 @@ public class ArticleController extends Controller {
 
 		req.setAttribute("article", article);
 		
-		List<ArticleReply> articleRepliesAll = articleService.getArticleReply(id);
-		req.setAttribute("articleRepliesAll", articleRepliesAll);
+		int totalCountForReply = articleService.getForPrintListReplyCount(id);
+		req.setAttribute("totalCountForReply", totalCountForReply);
 //		시작
 		int page = 1;
 
@@ -152,14 +152,12 @@ public class ArticleController extends Controller {
 		int totalCount = articleService.getForPrintListReplyCount(id);
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 
-		System.out.println("totalCount : " + totalCount);
-		System.out.println("totalPage : " + totalPage);
 		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("totalPage", totalPage);
 		req.setAttribute("page", page);
 
 //		끝
-		List<ArticleReply> articleReplies = articleService.getArticleReply(id, page, itemsInAPage);
+		List<ArticleReply> articleReplies = articleService.getArticleReplyPage(id, page, itemsInAPage);
 		req.setAttribute("articleReplies", articleReplies);
 		return "article/detail.jsp";
 

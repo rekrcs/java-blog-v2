@@ -221,7 +221,7 @@ th {
 		</tr>
 		<tr>
 			<th>댓글수</th>
-			<td><%=articleReplies.size()%></td>
+			<td>${totalCountForReply}</td>
 		</tr>
 	</table>
 	<div>
@@ -248,7 +248,7 @@ th {
 
 	<div style="margin-top: 50px">
 		댓글 :
-		<%=articleReplies.size()%></div>
+		${totalCountForReply}</div>
 
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
