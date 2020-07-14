@@ -56,20 +56,19 @@ public class ArticleController extends Controller {
 		int id = Integer.parseInt(req.getParameter("id"));
 		int articleId = Integer.parseInt(req.getParameter("articleId"));
 		String body = req.getParameter("body");
-		
+
 		int modifyId = articleService.modifyReply(id, body);
-		
-	
+
 		return "html:<script> alert('댓글이 수정 되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
 
 	}
 
 	private String doActionModifyReply(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Integer.parseInt(req.getParameter("id"));
-		
+
 		ArticleReply articleReply = articleService.getArticleReplyForPrint(id);
 		req.setAttribute("articleReply", articleReply);
-		
+
 		return "article/modifyReply.jsp";
 	}
 
@@ -139,11 +138,31 @@ public class ArticleController extends Controller {
 		Article article = articleService.getForPrintArticle(id);
 
 		req.setAttribute("article", article);
+		
+		List<ArticleReply> articleRepliesAll = articleService.getArticleReply(id);
+		req.setAttribute("articleRepliesAll", articleRepliesAll);
+//		시작
+		int page = 1;
 
-		List<ArticleReply> articleReplies = articleService.getArticleReply(id);
+		if (!Util.empty(req, "page") && Util.isNum(req, "page")) {
+			page = Util.getInt(req, "page");
+		}
+
+		int itemsInAPage = 3;
+		int totalCount = articleService.getForPrintListReplyCount(id);
+		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
+
+		System.out.println("totalCount : " + totalCount);
+		System.out.println("totalPage : " + totalPage);
+		req.setAttribute("totalCount", totalCount);
+		req.setAttribute("totalPage", totalPage);
+		req.setAttribute("page", page);
+
+//		끝
+		List<ArticleReply> articleReplies = articleService.getArticleReply(id, page, itemsInAPage);
 		req.setAttribute("articleReplies", articleReplies);
-
 		return "article/detail.jsp";
+
 	}
 
 	private String doActionList(HttpServletRequest req, HttpServletResponse resp) {

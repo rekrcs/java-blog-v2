@@ -8,6 +8,9 @@
 <%
 	Article article = (Article) request.getAttribute("article");
 	List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
+	List<ArticleReply> articleRepliesAll = (List<ArticleReply>) request.getAttribute("articleRepliesAlls");
+	int totalPage = (int) request.getAttribute("totalPage");
+	int paramPage = (int) request.getAttribute("page");
 %>
 <!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <script
@@ -158,6 +161,25 @@ th {
 .reply-container>.reply-option-box>div a:hover {
 	color: red;
 }
+
+/* 댓글 박스 */
+.page-box {
+	margin-bottom: 15px;
+}
+
+.page-box>ul>li>a {
+	padding: 0 10px;
+	text-decoration: underline;
+	color: #787878;
+}
+
+.page-box>ul>li:hover>a {
+	color: black;
+}
+
+.page-box>ul>li.current>a {
+	color: red;
+}
 </style>
 
 <!--카테고리 이름 받기-->
@@ -262,8 +284,7 @@ th {
 		<div class="reply-option-box flex flex-jc-e"
 			style="margin: 0 10px 20px 0">
 			<div class="reply-modify">
-				<a
-					href="modifyReply?id=<%=articleReply.getId()%>">수정</a>
+				<a href="modifyReply?id=<%=articleReply.getId()%>">수정</a>
 			</div>
 			<div class="reply-delete" style="margin-left: 10px">
 				<a
@@ -275,6 +296,20 @@ th {
 		}
 	%>
 
+	<!-- 	댓글 페이징 -->
+	<div class="con page-box">
+		<ul class="flex flex-jc-c">
+			<%
+				for (int i = 1; i <= totalPage; i++) {
+			%>
+			<li class="<%=i == paramPage ? "current" : ""%>"><a
+				href="?id=<%=article.getId()%>&page=<%=i%>"
+				class="block"><%=i%></a></li>
+			<%
+				}
+			%>
+		</ul>
+	</div>
 </section>
 </div>
 

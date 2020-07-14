@@ -65,8 +65,8 @@ public class ArticleService extends Service {
 		return articleDao.replyWrite(body, articleId);
 	}
 
-	public List<ArticleReply> getArticleReply(int id) {
-		return articleDao.getArticleReply(id);
+	public List<ArticleReply> getArticleReply(int id, int page, int itemsInAPage) {
+		return articleDao.getArticleReply(id, page, itemsInAPage);
 		
 	}
 
@@ -77,5 +77,13 @@ public class ArticleService extends Service {
 
 	public int modifyReply(int id, String body) {
 		return articleDao.modifyReply(id, body);
+	}
+
+	public int getForPrintListReplyCount(int id) {
+		return articleDao.getForPrintListReplyCount(id);
+	}
+
+	public List<ArticleReply> getArticleReply(int id) {
+		return articleDao.getArticleReply(id);
 	}
 }

@@ -203,14 +203,41 @@ public class ArticleDao extends Dao {
 		return DBUtil.insert(dbConn, sql);
 	}
 
-	public List<ArticleReply> getArticleReply(int id) {
+	public List<ArticleReply> getArticleReply(int id, int page, int itemsInAPage) {
+//		SecSql sql = new SecSql();
+//		int limitFrom = (page - 1) * itemsInAPage;
+//
+//		sql.append("SELECT *");
+//		sql.append("FROM article");
+//		sql.append("WHERE displayStatus = 1");
+//		if (cateItemId != 0) {
+//			sql.append("AND cateItemId = ?", cateItemId);
+//		}
+//		if (searchKeywordType.equals("title") && searchKeyword.length() > 0) {
+//			sql.append("AND title LIKE CONCAT('%', ?, '%')", searchKeyword);
+//		}
+//		sql.append("ORDER BY id DESC ");
+//		sql.append("LIMIT ?, ? ", limitFrom, itemsInAPage);
+//
+//		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
+//		List<Article> articles = new ArrayList<>();
+//
+//		for (Map<String, Object> row : rows) {
+//			articles.add(new Article(row));
+//		}
+//
+//		return articles;
+		
 		SecSql sql = new SecSql();
 
+		int limitFrom = (page - 1) * itemsInAPage;
+		
 		sql.append("SELECT * ");
 		sql.append("FROM articleReply ");
 		sql.append("WHERE 1 ");
 		sql.append("AND articleId = ?", id);
 		sql.append("ORDER BY id DESC ");
+		sql.append("LIMIT ?, ? ", limitFrom, itemsInAPage);
 
 		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
 		List<ArticleReply> articleReplies = new ArrayList<>();
@@ -220,6 +247,8 @@ public class ArticleDao extends Dao {
 		}
 
 		return articleReplies;
+		
+		
 	}
 
 	public ArticleReply getArticleReplyForPrint(int id) {
@@ -246,6 +275,38 @@ public class ArticleDao extends Dao {
 		secSql.append("WHERE id = ?", id);
 
 		return DBUtil.update(dbConn, secSql);
+	}
+
+	public int getForPrintListReplyCount(int id) {
+		SecSql sql = new SecSql();
+
+		sql.append("SELECT COUNT(*) AS cnt ");
+		sql.append("FROM articleReply ");
+		sql.append("WHERE articleId = ? ", id);
+
+		int count = DBUtil.selectRowIntValue(dbConn, sql);
+		return count;
+	}
+
+	public List<ArticleReply> getArticleReply(int id) {
+		SecSql sql = new SecSql();
+
+		sql.append("SELECT * ");
+		sql.append("FROM articleReply ");
+		sql.append("WHERE 1 ");
+		sql.append("AND articleId = ?", id);
+		sql.append("ORDER BY id DESC ");
+		
+
+		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
+		List<ArticleReply> articleReplies = new ArrayList<>();
+
+		for (Map<String, Object> row : rows) {
+			articleReplies.add(new ArticleReply(row));
+		}
+
+		return articleReplies;
+		
 	}
 
 }
