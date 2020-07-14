@@ -106,7 +106,6 @@
 </style>
 
 <!--body 내용-->
-<div class="body-container flex con-small">
 	<section class="body-main flex-grow-1">
 		<div class="write-form-box con">
 			<form action="doWrite" method="POST" onsubmit="submitWriteForm(this); return false;" class="write-form form1">

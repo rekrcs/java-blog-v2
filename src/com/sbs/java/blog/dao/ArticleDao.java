@@ -181,6 +181,15 @@ public class ArticleDao extends Dao {
 		return DBUtil.delete(dbConn, secSql);
 	}
 
+	public int deleteReply(int id) {
+		SecSql secSql = new SecSql();
+
+		secSql.append("DELETE FROM articleReply");
+		secSql.append("WHERE id = ?", id);
+
+		return DBUtil.delete(dbConn, secSql);
+	}
+
 	public int replyWrite(String body, int articleId) {
 		SecSql sql = new SecSql();
 
@@ -201,6 +210,7 @@ public class ArticleDao extends Dao {
 		sql.append("FROM articleReply ");
 		sql.append("WHERE 1 ");
 		sql.append("AND articleId = ?", id);
+		sql.append("ORDER BY id DESC ");
 
 		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
 		List<ArticleReply> articleReplies = new ArrayList<>();
@@ -211,4 +221,31 @@ public class ArticleDao extends Dao {
 
 		return articleReplies;
 	}
+
+	public ArticleReply getArticleReplyForPrint(int id) {
+		SecSql sql = new SecSql();
+
+		sql.append("SELECT * ");
+		sql.append("FROM articleReply ");
+		sql.append("WHERE 1 ");
+		sql.append("AND id = ?", id);
+
+		Map<String, Object> row = DBUtil.selectRow(dbConn, sql);
+
+		ArticleReply articleReply = new ArticleReply(row);
+
+		return articleReply;
+	}
+
+	public int modifyReply(int id, String body) {
+		SecSql secSql = new SecSql();
+
+		secSql.append("UPDATE articleReply");
+		secSql.append("SET updateDate = NOW()");
+		secSql.append(", body = ?", body);
+		secSql.append("WHERE id = ?", id);
+
+		return DBUtil.update(dbConn, secSql);
+	}
+
 }

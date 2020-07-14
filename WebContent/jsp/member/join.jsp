@@ -89,7 +89,6 @@
 </script>
 
 <!--body 내용-->
-<div class="body-container flex con-small">
 	<section class="body-main">
 		<div class="member-join-box con">
 			<form action="doJoin" method="post" class="join-form form1"

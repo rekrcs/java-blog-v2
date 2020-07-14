@@ -31,7 +31,6 @@ String cateItemName = (String) request.getAttribute("cateItemName");
 </style>
 
 <!--body 내용-->
-<div class="body-container flex con-small">
 	<section class="body-main">
 		<div class="body-main-name">
 			<h3><%=cateItemName%>

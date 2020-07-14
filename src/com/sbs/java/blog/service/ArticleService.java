@@ -56,6 +56,10 @@ public class ArticleService extends Service {
 	public int delete(int id) {
 		return articleDao.delete(id);
 	}
+	
+	public int deleteReply(int id) {
+		return articleDao.deleteReply(id);
+	}
 
 	public int replyWrite(String body, int articleId) {
 		return articleDao.replyWrite(body, articleId);
@@ -64,5 +68,14 @@ public class ArticleService extends Service {
 	public List<ArticleReply> getArticleReply(int id) {
 		return articleDao.getArticleReply(id);
 		
+	}
+
+	public ArticleReply getArticleReplyForPrint(int id) {
+		
+		return articleDao.getArticleReplyForPrint(id);
+	}
+
+	public int modifyReply(int id, String body) {
+		return articleDao.modifyReply(id, body);
 	}
 }

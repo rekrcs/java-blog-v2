@@ -143,6 +143,21 @@ th {
 	background-color: #368bcc;
 	color: white;
 }
+
+/*댓글 출력*/
+.reply-container>.reply-box {
+	margin: 10px 10px 0 10px;
+	border: 1px solid rgba(0, 0, 0, .2);
+	word-break: break-all;
+}
+
+.reply-container>.reply-option-box>div a {
+	color: blue;
+}
+
+.reply-container>.reply-option-box>div a:hover {
+	color: red;
+}
 </style>
 
 <!--카테고리 이름 받기-->
@@ -157,94 +172,110 @@ th {
 %>
 
 <!--body 내용-->
-<div class="body-container flex con-small">
-	<section class="body-main flex-grow-1">
-		<div class="body-main-name">
-			<div class="title"><%=article.getTitle()%></div>
-		</div>
-		<table border="1" width="100%">
-			<tr>
-				<th>번호</th>
-				<td><%=article.getId()%></td>
-			</tr>
-			<tr>
-				<th>조회수</th>
-				<td><%=article.getHit()%></td>
-			</tr>
-			<tr>
-				<th>작성일</th>
-				<td><%=article.getRegDate()%></td>
-			</tr>
-			<tr>
-				<th>수정일</th>
-				<td><%=article.getUpdateDate()%></td>
-			</tr>
-			<tr>
-				<th>카테고리</th>
-				<td><%=cateName%></td>
-			</tr>
-			<tr>
-				<th>댓글수</th>
-				<td><%=articleReplies.size()%></td>
-			</tr>
-		</table>
-		<div>
-			<script type="text/x-template" id="origin1" style="display: none;"><%=article.getBody()%></script>
-			<div id="viewer1"></div>
-			<script>
-				var editor1__initialValue = $('#origin1').html().trim();
-				var editor1 = new toastui.Editor({
-					el : document.querySelector('#viewer1'),
-					initialValue : editor1__initialValue,
-					viewer : true,
-					plugins : [ toastui.Editor.plugin.codeSyntaxHighlight,
-							youtubePlugin, replPlugin, codepenPlugin ]
-				});
-			</script>
-		</div>
+<section class="body-main flex-grow-1">
+	<div class="body-main-name">
+		<div class="title"><%=article.getTitle()%></div>
+	</div>
+	<table border="1" width="100%">
+		<tr>
+			<th>번호</th>
+			<td><%=article.getId()%></td>
+		</tr>
+		<tr>
+			<th>조회수</th>
+			<td><%=article.getHit()%></td>
+		</tr>
+		<tr>
+			<th>작성일</th>
+			<td><%=article.getRegDate()%></td>
+		</tr>
+		<tr>
+			<th>수정일</th>
+			<td><%=article.getUpdateDate()%></td>
+		</tr>
+		<tr>
+			<th>카테고리</th>
+			<td><%=cateName%></td>
+		</tr>
+		<tr>
+			<th>댓글수</th>
+			<td><%=articleReplies.size()%></td>
+		</tr>
+	</table>
+	<div>
+		<script type="text/x-template" id="origin1" style="display: none;"><%=article.getBody()%></script>
+		<div id="viewer1"></div>
+		<script>
+			var editor1__initialValue = $('#origin1').html().trim();
+			var editor1 = new toastui.Editor({
+				el : document.querySelector('#viewer1'),
+				initialValue : editor1__initialValue,
+				viewer : true,
+				plugins : [ toastui.Editor.plugin.codeSyntaxHighlight,
+						youtubePlugin, replPlugin, codepenPlugin ]
+			});
+		</script>
+	</div>
 
-		<!-- 수정 삭제버튼-->
-		<div class="option-box">
-			<span class="option-modify"><a
-				href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}">수정</a></span><span></span><span
-				class="option-delete"><a href="delete?id=${param.id}">삭제</a></span>
-		</div>
-		<hr />
-		
-		<div style="margin-top: 50px">댓글 : <%=articleReplies.size()%></div>
-		<!-- 댓글 폼 -->
-		<div class="write-form-box con">
-			<form action="doReply?id=<%=article.getId()%>&" method="post"
-				class="write-form form1">
-				<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->
-				<div class="form-row">
-					<div class="input">
-						<textarea name="body" placeholder="댓글을 입력해주세요."></textarea>
-					</div>
+	<!-- 수정 삭제버튼-->
+	<div class="option-box">
+		<span class="option-modify"><a
+			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}">수정</a></span><span></span><span
+			class="option-delete"><a href="delete?id=${param.id}">삭제</a></span>
+	</div>
+
+	<div style="margin-top: 50px">
+		댓글 :
+		<%=articleReplies.size()%></div>
+
+	<!-- 댓글 입력폼 -->
+	<div class="write-form-box con">
+		<form action="doReply?id=<%=article.getId()%>&" method="post"
+			class="write-form form1">
+			<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->
+			<div class="form-row">
+				<div class="input">
+					<textarea name="body" placeholder="댓글을 입력해주세요."></textarea>
 				</div>
-				<div class="form-row">
-					<div class="label"></div>
-					<div class="input flex flex-jc-e">
-						<!-- 						<input type="submit" value="댓글쓰기" class="reply-btn"/> -->
-						<button type="submit">댓글쓰기</button>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label"></div>
+				<div class="input flex flex-jc-e">
+					<!-- 						<input type="submit" value="댓글쓰기" class="reply-btn"/> -->
+					<button type="submit">댓글쓰기</button>
 				</div>
-			</form>
-		</div>
-		<!-- 댓글 파트 -->
-		<%
-			for (ArticleReply articleReply : articleReplies) {
-		%>
-		<div class="reply-box" style="margin: 10px; border:1px solid rgba(0, 0, 0, .2);">
-		<div class="reply-header" style="margin-bottom: 10px">
-			<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate().substring(0, 10)%></span>
-		</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- 댓글 출력 -->
+	<%
+		for (ArticleReply articleReply : articleReplies) {
+	%>
+	<div class="reply-container">
+		<div class="reply-box">
+			<div class="reply-header" style="margin-bottom: 10px;">
+				<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate().substring(0, 10)%></span>
+			</div>
 			<div class="reply-body" style="font-size: 1.2rem"><%=articleReply.getBody()%></div>
 		</div>
-		<%
-			}
-		%>
-	</section>
+		<div class="reply-option-box flex flex-jc-e"
+			style="margin: 0 10px 20px 0">
+			<div class="reply-modify">
+				<a
+					href="modifyReply?id=<%=articleReply.getId()%>">수정</a>
+			</div>
+			<div class="reply-delete" style="margin-left: 10px">
+				<a
+					href="deleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>">삭제</a>
+			</div>
+		</div>
+	</div>
+	<%
+		}
+	%>
+
+</section>
 </div>
 
 <div class="backHome">

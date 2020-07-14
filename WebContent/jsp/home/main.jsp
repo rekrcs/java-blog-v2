@@ -7,7 +7,6 @@
 	List<Article> articles = (List<Article>) request.getAttribute("articles");
 %>
 <!--body 내용-->
-<div class="body-container flex con-small">
 	<section class="body-main">
 		<div class="body-main-name">
 			<h3>최근 게시물</h3>

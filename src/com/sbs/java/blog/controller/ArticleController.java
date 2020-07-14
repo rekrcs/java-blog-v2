@@ -41,17 +41,52 @@ public class ArticleController extends Controller {
 			return doActionDelete(req, resp);
 		case "doReply":
 			return doActionDoReply(req, resp);
+		case "deleteReply":
+			return doActionDodeleteReply(req, resp);
+		case "modifyReply":
+			return doActionModifyReply(req, resp);
+		case "doModifyReply":
+			return doActionDoModifyReply(req, resp);
 		}
 
 		return "";
+	}
+
+	private String doActionDoModifyReply(HttpServletRequest req, HttpServletResponse resp) {
+		int id = Integer.parseInt(req.getParameter("id"));
+		int articleId = Integer.parseInt(req.getParameter("articleId"));
+		String body = req.getParameter("body");
+		
+		int modifyId = articleService.modifyReply(id, body);
+		
+	
+		return "html:<script> alert('댓글이 수정 되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
+
+	}
+
+	private String doActionModifyReply(HttpServletRequest req, HttpServletResponse resp) {
+		int id = Integer.parseInt(req.getParameter("id"));
+		
+		ArticleReply articleReply = articleService.getArticleReplyForPrint(id);
+		req.setAttribute("articleReply", articleReply);
+		
+		return "article/modifyReply.jsp";
+	}
+
+	private String doActionDodeleteReply(HttpServletRequest req, HttpServletResponse resp) {
+		int id = Integer.parseInt(req.getParameter("id"));
+		int articleId = Integer.parseInt(req.getParameter("articleId"));
+		int deleteReplyId = articleService.deleteReply(id);
+
+		return "html:<script> alert('댓글이 삭제되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
 	}
 
 	private String doActionDoReply(HttpServletRequest req, HttpServletResponse resp) {
 		int articleId = Integer.parseInt(req.getParameter("id"));
 		String body = req.getParameter("body");
 		int id = articleService.replyWrite(body, articleId);
-		
-		return "html:<script>location.replace('./detail?id=" + articleId +"');</script>";
+
+		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 
 	private String doActionDelete(HttpServletRequest req, HttpServletResponse resp) {
@@ -104,10 +139,9 @@ public class ArticleController extends Controller {
 		Article article = articleService.getForPrintArticle(id);
 
 		req.setAttribute("article", article);
-		
+
 		List<ArticleReply> articleReplies = articleService.getArticleReply(id);
 		req.setAttribute("articleReplies", articleReplies);
-		
 
 		return "article/detail.jsp";
 	}
