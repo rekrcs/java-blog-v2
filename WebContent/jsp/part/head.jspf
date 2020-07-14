@@ -98,6 +98,8 @@
 							<li><a href="#" class="block">FACEBOOK</a></li>
 							<li><a href="#" class="block">INSTA</a></li>
 						</ul></li>
+					<li><a href="${pageContext.request.contextPath}/s/member/login"
+						class="flex height-100p flex-ai-c">Log in</a></li>
 					<li><a href="${pageContext.request.contextPath}/s/member/join"
 						class="flex height-100p flex-ai-c">Sign up</a></li>
 				</ul>
@@ -147,6 +149,8 @@
 						<li><a href="#" class="block">FACEBOOK</a></li>
 						<li><a href="#" class="block">INSTA</a></li>
 					</ul></li>
+				<li><a href="${pageContext.request.contextPath}/s/member/login"
+					class="block"> Log in</a></li>
 				<li><a href="${pageContext.request.contextPath}/s/member/join"
 					class="block"> Sign up</a></li>
 			</ul>
