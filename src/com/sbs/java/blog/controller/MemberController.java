@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
 import com.sbs.java.blog.dto.Member;
 import com.sbs.java.blog.service.ArticleService;
 
@@ -28,9 +29,18 @@ public class MemberController extends Controller {
 			return doActionLogin(req, resp);
 		case "doLogin":
 			return doActionDoLogin(req, resp);
+		case "logout":
+			return doActionLogout(req, resp);
 		}
 		return "";
 
+	}
+
+	private String doActionLogout(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+
+		session.removeAttribute("loginedMemberId");
+		return "html:<script> alert('로그아웃 되었습니다.'); location.replace('../home/main'); </script>";
 	}
 
 	private String doActionDoLogin(HttpServletRequest req, HttpServletResponse resp) {
@@ -45,6 +55,7 @@ public class MemberController extends Controller {
 			for (Member member : members) {
 				if (member.getLoginId().equals(loginId) && member.getLoginPw().equals(loginPwReal)) {
 					session.setAttribute("loginedMemberId", member.getId());
+
 					return "html:<script> alert('" + member.getLoginId()
 							+ "님이 로그인 됐습니다.'); location.replace('../home/main'); </script>";
 				}

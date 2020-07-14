@@ -5,7 +5,8 @@
 	pageEncoding="UTF-8"%>
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
-	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+session.getAttribute("loginedMemberId");
 %>
 
 <!DOCTYPE html>
@@ -98,8 +99,28 @@
 							<li><a href="#" class="block">FACEBOOK</a></li>
 							<li><a href="#" class="block">INSTA</a></li>
 						</ul></li>
-					<li><a href="${pageContext.request.contextPath}/s/member/login"
+
+					<%
+						if (session.getAttribute("loginedMemberId") == null) {
+					%>
+					<li><a
+						href="${pageContext.request.contextPath}/s/member/login"
 						class="flex height-100p flex-ai-c">Log in</a></li>
+					<%
+						} else {
+					%>
+					<li><a
+						href="${pageContext.request.contextPath}/s/member/logout"
+						class="flex height-100p flex-ai-c">Log out</a></li>
+					<%
+						}
+					%>
+
+
+
+
+
+
 					<li><a href="${pageContext.request.contextPath}/s/member/join"
 						class="flex height-100p flex-ai-c">Sign up</a></li>
 				</ul>
