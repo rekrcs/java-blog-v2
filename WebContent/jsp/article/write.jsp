@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
-<%
-	int memberId = (int) session.getAttribute("loginedMemberId");
-%>
+
 <!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
@@ -140,7 +138,7 @@
 <!--body 내용-->
 <section class="body-main flex-grow-1">
 	<div class="write-form-box con">
-		<form action="doWrite?memberId=<%=memberId%>" method="post"
+		<form action="doWrite" method="post"
 			onsubmit="submitWriteForm(this); return false;"
 			class="write-form form1">
 			<div class="form-row">

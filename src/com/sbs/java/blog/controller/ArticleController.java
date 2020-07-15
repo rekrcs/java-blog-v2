@@ -180,8 +180,6 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionWrite() {
-		HttpSession session = req.getSession();
-
 		if (session.getAttribute("loginedMemberId") == null) {
 			return "html:<script> alert('로그인 후 글 작성 가능 합니다.'); location.replace('../member/login'); </script>";
 		}
@@ -191,10 +189,11 @@ public class ArticleController extends Controller {
 	private String doActionDoWrite() {
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
-		int memberId = Integer.parseInt(req.getParameter("memberId"));
 		int cateItemId = Util.getInt(req, "cateItemId");
 
-		int id = articleService.write(cateItemId, title, body, memberId);
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		int id = articleService.write(cateItemId, title, body, loginedMemberId);
 
 		return "html:<script> alert('" + id + "번 게시물이 생성되었습니다.'); location.replace('list'); </script>";
 	}
