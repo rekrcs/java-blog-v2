@@ -244,3 +244,9 @@ function submitWriteForm(form) {
 	form.submit();
 
 }*/
+
+function getBodyFromXTemplate(selector) {
+	return $(selector).html().trim().replace(/<!--REPLACE:script-->/gi, 'script');
+}
+
+

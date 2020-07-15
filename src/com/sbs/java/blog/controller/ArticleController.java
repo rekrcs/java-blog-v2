@@ -282,8 +282,7 @@ public class ArticleController extends Controller {
 
 		List<Article> articles = articleService.getForPrintListArticles(page, itemsInAPage, cateItemId,
 				searchKeywordType, searchKeyword);
-		
-		System.out.println(articles);
+
 		req.setAttribute("articles", articles);
 		return "article/list.jsp";
 	}
