@@ -242,8 +242,8 @@ th {
 	<!-- 수정 삭제버튼-->
 	<div class="option-box">
 		<span class="option-modify"><a
-			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}">수정</a></span><span></span><span
-			class="option-delete"><a href="delete?id=${param.id}">삭제</a></span>
+			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=<%=article.getMemberId()%>">수정</a></span><span></span><span
+			class="option-delete"><a href="delete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
 	</div>
 
 	<div style="margin-top: 50px">

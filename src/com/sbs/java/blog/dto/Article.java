@@ -5,10 +5,11 @@ import java.util.Map;
 public class Article extends Dto {
 	private String updateDate;
 	private int cateItemId;
+	private int memberId;
 	private int hit;
 	private String title;
 	private String body;
-	
+
 	public int getHit() {
 		return hit;
 	}
@@ -22,15 +23,10 @@ public class Article extends Dto {
 
 		this.updateDate = (String) row.get("updateDate");
 		this.cateItemId = (int) row.get("cateItemId");
+		this.memberId = (int) row.get("memberId");
 		this.title = (String) row.get("title");
 		this.body = (String) row.get("body");
 		this.hit = (int) row.get("hit");
-	}
-
-	@Override
-	public String toString() {
-		return "Article [updateDate=" + updateDate + ", cateItemId=" + cateItemId + ", title=" + title + ", body="
-				+ body + ", hit=" + hit + ", dto=" + super.toString() + "]";
 	}
 
 	public String getUpdateDate() {
@@ -63,6 +59,21 @@ public class Article extends Dto {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	@Override
+	public String toString() {
+		return "Article [updateDate=" + updateDate + ", cateItemId=" + cateItemId + ", memberId=" + memberId + ", hit="
+				+ hit + ", title=" + title + ", body=" + body + ", getId()=" + getId() + ", getRegDate()="
+				+ getRegDate() + "]";
 	}
 
 }

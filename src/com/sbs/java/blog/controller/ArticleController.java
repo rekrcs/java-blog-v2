@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sbs.java.blog.dto.Article;
 import com.sbs.java.blog.dto.ArticleReply;
@@ -89,8 +90,16 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionDelete(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		
 		int id = Integer.parseInt(req.getParameter("id"));
-
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		int memberId = Util.getInt(req, "memberId");
+		if (loginedMemberId != memberId) {
+			return "html:<script> alert('작성자만 삭제 가능 합니다.'); location.replace('../article/detail?id=" + id
+					+ "'); </script>";
+		}
+		
 		int deleteId = articleService.delete(id);
 		return "html:<script> alert('" + id + "번 게시물이 삭제되었습니다.'); location.replace('list'); </script>";
 	}
@@ -99,26 +108,42 @@ public class ArticleController extends Controller {
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
 		int cateItemId = Util.getInt(req, "cateItemId");
-		int id = Integer.parseInt(req.getParameter("id"));
+		int id = Util.getInt(req, "id");
 		int modifyId = articleService.modify(id, cateItemId, title, body);
 
 		return "html:<script> alert('" + id + "번 게시물이 수정되었습니다.'); location.replace('list'); </script>";
 	}
 
 	private String doActionModify(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		int memberId = Util.getInt(req, "memberId");
+		int id = Util.getInt(req, "id");
+
+		if (loginedMemberId != memberId) {
+			return "html:<script> alert('작성자만 수정 가능 합니다.'); location.replace('../article/detail?id=" + id
+					+ "'); </script>";
+		}
+
 		return "article/modify.jsp";
 	}
 
 	private String doActionWrite(HttpServletRequest req, HttpServletResponse resp) {
+		HttpSession session = req.getSession();
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('로그인 후 글 작성 가능 합니다.'); location.replace('../member/login'); </script>";
+		}
 		return "article/write.jsp";
 	}
 
 	private String doActionDoWrite(HttpServletRequest req, HttpServletResponse resp) {
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
+		int memberId = Integer.parseInt(req.getParameter("memberId"));
 		int cateItemId = Util.getInt(req, "cateItemId");
 
-		int id = articleService.write(cateItemId, title, body);
+		int id = articleService.write(cateItemId, title, body, memberId);
 
 		return "html:<script> alert('" + id + "번 게시물이 생성되었습니다.'); location.replace('list'); </script>";
 	}
@@ -138,7 +163,7 @@ public class ArticleController extends Controller {
 		Article article = articleService.getForPrintArticle(id);
 
 		req.setAttribute("article", article);
-		
+
 		int totalCountForReply = articleService.getForPrintListReplyCount(id);
 		req.setAttribute("totalCountForReply", totalCountForReply);
 //		시작

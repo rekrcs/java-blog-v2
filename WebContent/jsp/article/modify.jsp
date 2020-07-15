@@ -136,63 +136,61 @@
 </style>
 
 <!--body 내용-->
-	<section class="body-main flex-grow-1">
-		<div class="write-form-box con">
-			<form action="doModify?id=${param.id}" method="post"
-				onsubmit="submitWriteForm(this); return false;"
-				class="write-form form1">
-				<div class="form-row">
-					<div class="label">카테고리 선택</div>
-					<div class="input">
-						<select name="cateItemId">
-							<%
-								for (CateItem cateItem : cateItems) {
-							%>
-							<option value="<%=cateItem.getId()%>"><%=cateItem.getName()%></option>
-							<%
-								}
-							%>
+<section class="body-main flex-grow-1">
+	<div class="write-form-box con">
+		<form action="doModify?id=${param.id}" method="post"
+			onsubmit="submitWriteForm(this); return false;"
+			class="write-form form1">
+			<div class="form-row">
+				<div class="label">카테고리 선택</div>
+				<div class="input">
+					<select name="cateItemId">
+						<%
+							for (CateItem cateItem : cateItems) {
+						%>
+						<option value="<%=cateItem.getId()%>"><%=cateItem.getName()%></option>
+						<%
+							}
+						%>
 
-						</select>
-					</div>
+					</select>
 				</div>
-				<div class="form-row">
-					<div class="label">제목</div>
-					<div class="input">
-						<input name="title" type="text" placeholder="제목을 입력해주세요." />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">제목</div>
+				<div class="input">
+					<input name="title" type="text" placeholder="제목을 입력해주세요." />
 				</div>
-				<div class="form-row">
-					<div class="label">내용</div>
-					<div class="input">
-						<!-- 						<textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
-						<input type="hidden" name="body">
-						<div id="editor1"></div>
-						<script>
-							var editor1 = new toastui.Editor(
-									{
-										el : document.querySelector("#editor1"),
-										height : "600px",
-										initialEditType : "markdown",
-										previewStyle : "vertical",
-										initialValue : "# 안녕",
-										plugins : [
-												toastui.Editor.plugin.codeSyntaxHighlight,
-												youtubePlugin, replPlugin,
-												codepenPlugin ]
-									});
-						</script>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">내용</div>
+				<div class="input">
+			<textarea name="body" placeholder="내용을 입력해주세요."></textarea>
+					<!-- <input type="hidden" name="body">
+					<div id="editor1"></div>
+					<script>
+						var editor1 = new toastui.Editor({
+							el : document.querySelector("#editor1"),
+							height : "600px",
+							initialEditType : "markdown",
+							previewStyle : "vertical",
+							initialValue : "# 안녕",
+							plugins : [
+									toastui.Editor.plugin.codeSyntaxHighlight,
+									youtubePlugin, replPlugin, codepenPlugin ]
+						});
+					</script> -->
 				</div>
-				<div class="form-row">
-					<div class="label">전송</div>
-					<div class="input">
-						<input type="submit" value="전송" /> <a href="list">취소</a>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">전송</div>
+				<div class="input">
+					<input type="submit" value="전송" /> <a href="list">취소</a>
 				</div>
-			</form>
-		</div>
-	</section>
+			</div>
+		</form>
+	</div>
+</section>
 </div>
 
 <div class="backHome">

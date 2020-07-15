@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
-
+<%
+	int memberId = (int) session.getAttribute("loginedMemberId");
+%>
 <!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
@@ -38,6 +40,35 @@
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
+<script>
+	var writeFormSubmitted = false;
+
+	function submitWriteForm(form) {
+		if (writeFormSubmitted) {
+			alert('처리 중입니다.');
+			return;
+		}
+
+		form.title.value = form.title.value.trim();
+		if (form.title.value.length == 0) {
+			alert('제목을 입력해주세요.');
+			form.title.focus();
+
+			return;
+		}
+
+		form.body.value = form.body.value.trim();
+		if (form.body.value.length == 0) {
+			alert('내용을 입력해주세요.');
+			form.body.focus();
+
+			return;
+		}
+
+		form.submit();
+		writeFormSubmitted = true;
+	}
+</script>
 
 <style>
 /* lib */
@@ -106,61 +137,61 @@
 </style>
 
 <!--body 내용-->
-	<section class="body-main flex-grow-1">
-		<div class="write-form-box con">
-			<form action="doWrite" method="POST" onsubmit="submitWriteForm(this); return false;" class="write-form form1">
-				<div class="form-row">
-					<div class="label">카테고리 선택</div>
-					<div class="input">
-						<select name="cateItemId">
-							<%
-								for (CateItem cateItem : cateItems) {
-							%>
-							<option value="<%=cateItem.getId()%>"><%=cateItem.getName()%></option>
-							<%
-								}
-							%>
+<section class="body-main flex-grow-1">
+	<div class="write-form-box con">
+		<form action="doWrite?memberId=<%=memberId%>" method="post"
+			onsubmit="submitWriteForm(this); return false;"
+			class="write-form form1">
+			<div class="form-row">
+				<div class="label">카테고리 선택</div>
+				<div class="input">
+					<select name="cateItemId">
+						<%
+							for (CateItem cateItem : cateItems) {
+						%>
+						<option value="<%=cateItem.getId()%>"><%=cateItem.getName()%></option>
+						<%
+							}
+						%>
 
-						</select>
-					</div>
+					</select>
 				</div>
-				<div class="form-row">
-					<div class="label">제목</div>
-					<div class="input">
-						<input name="title" type="text" placeholder="제목을 입력해주세요." />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">제목</div>
+				<div class="input">
+					<input name="title" type="text" placeholder="제목을 입력해주세요." />
 				</div>
-				<div class="form-row">
-					<div class="label">내용</div>
-					<div class="input">
-						<!-- 						<textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
-						<input type="hidden" name="body">
-						<div id="editor1"></div>
-						<script>
-							var editor1 = new toastui.Editor(
-									{
-										el : document.querySelector("#editor1"),
-										height : "600px",
-										initialEditType : "markdown",
-										previewStyle : "vertical",
-										initialValue : "# 안녕",
-										plugins : [
-												toastui.Editor.plugin.codeSyntaxHighlight,
-												youtubePlugin, replPlugin,
-												codepenPlugin ]
-									});
-						</script>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">내용</div>
+				<div class="input">
+					<textarea name="body" placeholder="내용을 입력해주세요."></textarea>
+					<!-- <input type="hidden" name="body">
+					<div id="editor1"></div>
+					<script>
+						var editor1 = new toastui.Editor({
+							el : document.querySelector("#editor1"),
+							height : "600px",
+							initialEditType : "markdown",
+							previewStyle : "vertical",
+							initialValue : "# 안녕",
+							plugins : [
+									toastui.Editor.plugin.codeSyntaxHighlight,
+									youtubePlugin, replPlugin, codepenPlugin ]
+						});
+					</script> -->
 				</div>
-				<div class="form-row">
-					<div class="label">전송</div>
-					<div class="input">
-						<input type="submit" value="전송" /> <a href="list">취소</a>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">전송</div>
+				<div class="input">
+					<input type="submit" value="전송" /> <a href="list">취소</a>
 				</div>
-			</form>
-		</div>
-	</section>
+			</div>
+		</form>
+	</div>
+</section>
 </div>
 
 <div class="backHome">
