@@ -40,7 +40,6 @@
 		display: block;
 	}
 }
-
 </style>
 
 <!-- 비번 암호화저장 -->
@@ -49,96 +48,120 @@
 
 <!-- 회원가입 중 유효하지 않은 input 방지  -->
 <script>
-	var joinFormSubmitted = false;
-
 	function submitJoinForm(form) {
-		if (joinFormSubmitted) {
-			alert('처리 중입니다.');
-			return;
-		}
-
 		form.loginId.value = form.loginId.value.trim();
+
 		if (form.loginId.value.length == 0) {
-			alert('아이디를 입력해주세요.');
+			alert('로그인 아이디를 입력해주세요.');
 			form.loginId.focus();
-
-			return;
-		}
-
-		if (form.loginId.value.indexOf(' ') != -1) {
-			alert('아이디를 영문소문자와 숫자의 조합으로 입력해주세요.')
-			form.loginId.focus();
-
 			return;
 		}
 
 		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value.length == 0) {
-			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
 
+		if (form.loginPw.value.length == 0) {
+			alert('로그인 비번을 입력해주세요.');
+			form.loginPw.focus();
+			return;
+		}
+
+		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+
+		if (form.loginPwConfirm.value.length == 0) {
+			alert('로그인 비번확인을 입력해주세요.');
+			form.loginPwConfirm.focus();
+			return;
+		}
+
+		if (form.loginPw.value != form.loginPwConfirm.value) {
+			alert('로그인 비번확인이 일치하지 않습니다.');
+			form.loginPwConfirm.focus();
+			return;
+		}
+
+		form.name.value = form.name.value.trim();
+
+		if (form.name.value.length == 0) {
+			alert('이름을 입력해주세요.');
+			form.name.focus();
+			return;
+		}
+
+		form.nickname.value = form.nickname.value.trim();
+
+		if (form.nickname.value.length == 0) {
+			alert('별명을 입력해주세요.');
+			form.nickname.focus();
+			return;
+		}
+
+		form.email.value = form.email.value.trim();
+
+		if (form.email.value.length == 0) {
+			alert('이메일을 입력해주세요.');
+			form.email.focus();
 			return;
 		}
 
 		form.loginPwReal.value = sha256(form.loginPw.value);
-		// 		form.loginPw.value = '';
+		form.loginPw.value = '';
+		form.loginPwConfirm.value = '';
 
 		form.submit();
-		joinFormSubmitted = true;
 	}
 </script>
 
 <!--body 내용-->
-	<section class="body-main">
-		<div class="member-join-box con">
-			<form action="doJoin" method="post" class="join-form form1"
-				onsubmit="submitJoinForm(this); return false;">
-				<input type="hidden" name="loginPwReal">
-				<div class="form-row">
-					<div class="label">아이디</div>
-					<div class="input">
-						<input name="loginId" type="text" placeholder="아이디를 입력해 주세요" />
-					</div>
+<section class="body-main">
+	<div class="member-join-box con">
+		<form action="doJoin" method="post" class="join-form form1"
+			onsubmit="submitJoinForm(this); return false;">
+			<input type="hidden" name="loginPwReal">
+			<div class="form-row">
+				<div class="label">아이디</div>
+				<div class="input">
+					<input name="loginId" type="text" placeholder="아이디를 입력해 주세요" />
 				</div>
-				<div class="form-row">
-					<div class="label">이름</div>
-					<div class="input">
-						<input name="name" type="text" placeholder="이름을 입력해 주세요" />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">이름</div>
+				<div class="input">
+					<input name="name" type="text" placeholder="이름을 입력해 주세요" />
 				</div>
-				<div class="form-row">
-					<div class="label">email</div>
-					<div class="input">
-						<input name="email" type="email" placeholder="이메일을 입력해 주세요" />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">email</div>
+				<div class="input">
+					<input name="email" type="email" placeholder="이메일을 입력해 주세요" />
 				</div>
-				<div class="form-row">
-					<div class="label">닉네임</div>
-					<div class="input">
-						<input name="nickname" type="text" placeholder="닉네임을 입력해 주세요" />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">닉네임</div>
+				<div class="input">
+					<input name="nickname" type="text" placeholder="닉네임을 입력해 주세요" />
 				</div>
-				<div class="form-row">
-					<div class="label">비번</div>
-					<div class="input">
-						<input name="loginPw" type="password" placeholder="비번을 입력해 주세요" />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">비번</div>
+				<div class="input">
+					<input name="loginPw" type="password" placeholder="비번을 입력해 주세요" />
 				</div>
-				<div class="form-row">
-					<div class="label">비번확인</div>
-					<div class="input">
-						<input name="loginPwConfirm" type="password"
-							placeholder="비번을 한번더 입력해 주세요" />
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">비번확인</div>
+				<div class="input">
+					<input name="loginPwConfirm" type="password"
+						placeholder="비번을 한번더 입력해 주세요" />
 				</div>
-				<div class="form-row">
-					<div class="label">회원가입</div>
-					<div class="input">
-						<input value="전송" type="submit" /> <a href="../article/list">취소</a>
-					</div>
+			</div>
+			<div class="form-row">
+				<div class="label">회원가입</div>
+				<div class="input">
+					<input value="가입하기" type="submit" /> <a href="../home/main">취소</a>
 				</div>
-			</form>
-		</div>
+			</div>
+		</form>
+	</div>
 
-	</section>
-	<%@ include file="/jsp/part/foot.jspf"%>
+</section>
+<%@ include file="/jsp/part/foot.jspf"%>

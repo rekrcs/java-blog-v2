@@ -75,35 +75,61 @@ public class MemberController extends Controller {
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
 		String nickname = req.getParameter("nickname");
-		String loginPw = req.getParameter("loginPw");
-		String loginPwConfirm = req.getParameter("loginPwConfirm");
-		String loginPwReal = req.getParameter("loginPwReal");
+		String loginPw = req.getParameter("loginPwReal");
+//		String loginPwReal = req.getParameter("loginPwReal");
+//		String loginPw = req.getParameter("loginPw");
+//		String loginPwConfirm = req.getParameter("loginPwConfirm");
+		
+		//시작
+		boolean isJoinableLoginId = memberService.isJoinableLoginId(loginId);
 
-		for (Member member : members) {
-			if (member.getLoginId().equals(loginId)) {
-				return "html:<script> alert('이미 존재하는 아이디 입니다.'); location.replace('join'); </script>";
-			}
+		if (isJoinableLoginId == false) {
+			return String.format("html:<script> alert('%s(은)는 이미 사용중인 아이디 입니다.'); history.back(); </script>", loginId);
 		}
 
-		for (Member member : members) {
-			if (member.getNickname().equals(nickname)) {
-				return "html:<script> alert('이미 존재하는 닉네임 입니다.'); location.replace('join'); </script>";
-			}
-		}
-		for (Member member : members) {
-			if (member.getEmail().equals(email)) {
-				return "html:<script> alert('이미 존재하는 이메일 입니다.'); location.replace('join'); </script>";
-			}
+		boolean isJoinableNickname = memberService.isJoinableNickname(nickname);
+
+		if (isJoinableNickname == false) {
+			return String.format("html:<script> alert('%s(은)는 이미 사용중인 닉네임 입니다.'); history.back(); </script>", nickname);
 		}
 
-		if (!loginPw.equals(loginPwConfirm)) {
-			return "html:<script> alert('비번과 비번 확인이 일치 하지 않습니다.'); location.replace('join'); </script>";
+		boolean isJoinableEmail = memberService.isJoinableEmail(email);
 
-		} else {
-			int id = memberService.join(loginId, name, nickname, loginPwReal, email);
-			return "html:<script> alert('" + id + "번 회원님이 가입 했습니다.'); location.replace('join'); </script>";
+		if (isJoinableEmail == false) {
+			return String.format("html:<script> alert('%s(은)는 이미 사용중인 이메일 입니다.'); history.back(); </script>", email);
 		}
+
+		memberService.join(loginId, loginPw, name, nickname, email);
+
+		return String.format("html:<script> alert('%s님 환영합니다.'); location.replace('../home/main'); </script>", name);
 	}
+	// 끝
+//
+//	for(
+//
+//	Member member:members)
+//	{
+//		if (member.getLoginId().equals(loginId)) {
+//			return "html:<script> alert('이미 존재하는 아이디 입니다.'); location.replace('join'); </script>";
+//		}
+//
+//		if (member.getNickname().equals(nickname)) {
+//			return "html:<script> alert('이미 존재하는 닉네임 입니다.'); location.replace('join'); </script>";
+//		}
+//
+//		if (member.getEmail().equals(email)) {
+//			return "html:<script> alert('이미 존재하는 이메일 입니다.'); location.replace('join'); </script>";
+//		}
+//	}
+//
+//		if (!loginPw.equals(loginPwConfirm)) {
+//			return "html:<script> alert('비번과 비번 확인이 일치 하지 않습니다.'); location.replace('join'); </script>";
+//
+//		} else {
+//	int id = memberService.join(loginId, name, nickname, loginPwReal,
+//			email);return"html:<script> alert('"+id+"번 회원님이 가입 했습니다.'); location.replace('..home/main'); </script>";
+//		}
+//	}
 
 	private String doActionJoin(HttpServletRequest req, HttpServletResponse resp) {
 		return "member/join.jsp";

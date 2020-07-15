@@ -11,15 +11,15 @@ import com.sbs.java.blog.util.DBUtil;
 import com.sbs.java.blog.util.SecSql;
 
 public class MemberDao extends Dao {
-	private Connection dbConnection;
+	private Connection dbConn;
 
-	public MemberDao(Connection dbConnection) {
-		this.dbConnection = dbConnection;
+	public MemberDao(Connection dbConn) {
+		this.dbConn = dbConn;
 	}
 
 	public int join(String loginId, String name, String nickname, String loginPw, String email) {
 		SecSql secSql = new SecSql();
-		
+
 		secSql.append("INSERT INTO `member`");
 		secSql.append("SET regDate = NOW()");
 		secSql.append(", updateDate = NOW()");
@@ -28,8 +28,7 @@ public class MemberDao extends Dao {
 		secSql.append(", email = ? ", email);
 		secSql.append(", nickname = ? ", nickname);
 		secSql.append(", loginPw = ? ", loginPw);
-		
-		
+
 //		String sql = "";
 //
 //		sql += String.format("INSERT INTO `member` ");
@@ -39,31 +38,70 @@ public class MemberDao extends Dao {
 //		sql += String.format(", nickname = '%s' ", nickname);
 //		sql += String.format(", loginPw = '%s' ", loginPw);
 
-
-		return DBUtil.insert(dbConnection, secSql);
+		return DBUtil.insert(dbConn, secSql);
 	}
 
 	public List<Member> getForPrintMembers() {
 		SecSql secSql = new SecSql();
-		
+
 		secSql.append("SELECT *");
 		secSql.append("FROM `member`");
-		
-		
-		List<Map<String, Object>> rows = DBUtil.selectRows(dbConnection, secSql);
-		
+
+		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, secSql);
+
 //		String sql = "";
 //		sql += String.format("SELECT * ");
 //		sql += String.format("FROM `member` ");
-		
+
 //		List<Map<String, Object>> rows = DBUtil.selectRows(dbConnection, sql);
 		List<Member> members = new ArrayList<>();
-		
+
 		for (Map<String, Object> row : rows) {
 			members.add(new Member(row));
 		}
-		
+
 		return members;
+	}
+
+	public boolean isJoinableLoginId(String loginId) {
+		SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+		sql.append("FROM `member`");
+		sql.append("WHERE loginId = ?", loginId);
+
+		return DBUtil.selectRowIntValue(dbConn, sql) == 0;
+	}
+
+	public boolean isJoinableNickname(String nickname) {
+		SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+		sql.append("FROM `member`");
+		sql.append("WHERE nickname = ?", nickname);
+
+		return DBUtil.selectRowIntValue(dbConn, sql) == 0;
+	}
+
+	public boolean isJoinableEmail(String email) {
+		SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
+		sql.append("FROM `member`");
+		sql.append("WHERE email = ?", email);
+
+		return DBUtil.selectRowIntValue(dbConn, sql) == 0;
+	}
+
+	public int getMemberIdByLoginIdAndLoginPw(String loginId, String loginPw) {
+		SecSql sql = SecSql.from("SELECT id");
+		sql.append("FROM `member`");
+		sql.append("WHERE loginId = ?", loginId);
+		sql.append("AND loginPw = ?", loginPw);
+
+		return DBUtil.selectRowIntValue(dbConn, sql);
+	}
+
+	public Member getMemberById(int id) {
+		SecSql sql = SecSql.from("SELECT *");
+		sql.append("FROM `member`");
+		sql.append("WHERE id = ?", id);
+
+		return new Member(DBUtil.selectRow(dbConn, sql));
 	}
 
 }

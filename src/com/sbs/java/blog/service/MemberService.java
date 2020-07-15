@@ -21,4 +21,24 @@ public class MemberService extends Service {
 	public List<Member> getForPrintMembers() {
 		return memberDao.getForPrintMembers();
 	}
+
+	public boolean isJoinableLoginId(String loginId) {
+		return memberDao.isJoinableLoginId(loginId);
+	}
+
+	public boolean isJoinableNickname(String nickname) {
+		return memberDao.isJoinableNickname(nickname);
+	}
+
+	public boolean isJoinableEmail(String email) {
+		return memberDao.isJoinableEmail(email);
+	}
+
+	public int getMemberIdByLoginIdAndLoginPw(String loginId, String loginPw) {
+		return memberDao.getMemberIdByLoginIdAndLoginPw(loginId, loginPw);
+	}
+
+	public Member getMemberById(int id) {
+		return memberDao.getMemberById(id);
+	}
 }
