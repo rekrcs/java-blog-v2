@@ -65,67 +65,52 @@
 
 <!-- 회원가입 중 유효하지 않은 input 방지  -->
 <script>
-	var joinFormSubmitted = false;
-
-	function submitJoinForm(form) {
-		if (joinFormSubmitted) {
-			alert('처리 중입니다.');
-			return;
-		}
-
+	function submitLoginForm(form) {
 		form.loginId.value = form.loginId.value.trim();
+
 		if (form.loginId.value.length == 0) {
-			alert('아이디를 입력해주세요.');
+			alert('로그인 아이디를 입력해주세요.');
 			form.loginId.focus();
-
-			return;
-		}
-
-		if (form.loginId.value.indexOf(' ') != -1) {
-			alert('아이디를 영문소문자와 숫자의 조합으로 입력해주세요.')
-			form.loginId.focus();
-
 			return;
 		}
 
 		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value.length == 0) {
-			alert('비밀번호를 입력해주세요.');
-			form.loginPw.focus();
 
+		if (form.loginPw.value.length == 0) {
+			alert('로그인 비번을 입력해주세요.');
+			form.loginPw.focus();
 			return;
 		}
 
 		form.loginPwReal.value = sha256(form.loginPw.value);
-		// 		form.loginPw.value = '';
+		form.loginPw.value = '';
 
 		form.submit();
-		joinFormSubmitted = true;
 	}
 </script>
 
 <!--body 내용-->
 <section class="body-main">
-	<div class="member-join-box con">
-		<form action="doLogin" method="post" class="join-form form1"
-			onsubmit="submitJoinForm(this); return false;">
-			<input type="hidden" name="loginPwReal">
+	<div class="login-form-box con">
+		<form action="doLogin" method="POST" class="login-form form1"
+			onsubmit="submitLoginForm(this); return false;">
+			<input type="hidden" name="loginPwReal" />
 			<div class="form-row">
-				<div class="label">아이디</div>
+				<div class="label">로그인 아이디</div>
 				<div class="input">
-					<input name="loginId" type="text" placeholder="아이디를 입력해 주세요" />
+					<input name="loginId" type="text" placeholder="로그인 아이디를 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="label">비번</div>
+				<div class="label">로그인 비번</div>
 				<div class="input">
-					<input name="loginPw" type="password" placeholder="비번을 입력해 주세요" />
+					<input name="loginPw" type="password" placeholder="로그인 비번을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="label">로그인</div>
+				<div class="label">전송</div>
 				<div class="input">
-					<input value="로그인" type="submit" /> <a href="../home/main">취소</a>
+					<input type="submit" value="전송" /> <a href="../home/main">취소</a>
 				</div>
 			</div>
 		</form>

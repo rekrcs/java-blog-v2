@@ -113,51 +113,51 @@
 
 <!--body 내용-->
 <section class="body-main">
-	<div class="member-join-box con">
-		<form action="doJoin" method="post" class="join-form form1"
+	<div class="join-form-box con">
+		<form action="doJoin" method="POST" class="join-form form1"
 			onsubmit="submitJoinForm(this); return false;">
-			<input type="hidden" name="loginPwReal">
+			<input type="hidden" name="loginPwReal" />
 			<div class="form-row">
-				<div class="label">아이디</div>
+				<div class="label">로그인 아이디</div>
 				<div class="input">
-					<input name="loginId" type="text" placeholder="아이디를 입력해 주세요" />
+					<input name="loginId" type="text" placeholder="로그인 아이디를 입력해주세요." />
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="label">로그인 비번</div>
+				<div class="input">
+					<input name="loginPw" type="password" placeholder="로그인 비번을 입력해주세요." />
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="label">로그인 비번확인</div>
+				<div class="input">
+					<input name="loginPwConfirm" type="password"
+						placeholder="로그인 비번확인을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="label">이름</div>
 				<div class="input">
-					<input name="name" type="text" placeholder="이름을 입력해 주세요" />
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="label">email</div>
-				<div class="input">
-					<input name="email" type="email" placeholder="이메일을 입력해 주세요" />
+					<input name="name" type="text" placeholder="이름을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="label">닉네임</div>
 				<div class="input">
-					<input name="nickname" type="text" placeholder="닉네임을 입력해 주세요" />
+					<input name="nickname" type="text" placeholder="닉네임을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="label">비번</div>
+				<div class="label">이메일</div>
 				<div class="input">
-					<input name="loginPw" type="password" placeholder="비번을 입력해 주세요" />
+					<input name="email" type="email" placeholder="이메일을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="label">비번확인</div>
+				<div class="label">전송</div>
 				<div class="input">
-					<input name="loginPwConfirm" type="password"
-						placeholder="비번을 한번더 입력해 주세요" />
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="label">회원가입</div>
-				<div class="input">
-					<input value="가입하기" type="submit" /> <a href="../home/main">취소</a>
+					<input type="submit" value="회원가입" /> <a href="../home/main">취소</a>
 				</div>
 			</div>
 		</form>

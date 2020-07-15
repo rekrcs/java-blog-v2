@@ -17,17 +17,17 @@ public class MemberDao extends Dao {
 		this.dbConn = dbConn;
 	}
 
-	public int join(String loginId, String name, String nickname, String loginPw, String email) {
+	public int join(String loginId, String loginPw, String name, String nickname, String email) {
 		SecSql secSql = new SecSql();
 
 		secSql.append("INSERT INTO `member`");
 		secSql.append("SET regDate = NOW()");
 		secSql.append(", updateDate = NOW()");
 		secSql.append(", loginId = ? ", loginId);
+		secSql.append(", loginPw = ? ", loginPw);
 		secSql.append(", name = ? ", name);
 		secSql.append(", email = ? ", email);
 		secSql.append(", nickname = ? ", nickname);
-		secSql.append(", loginPw = ? ", loginPw);
 
 //		String sql = "";
 //
