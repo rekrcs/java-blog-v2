@@ -38,11 +38,11 @@ public class ArticleController extends Controller {
 			return doActionModify();
 		case "doModify":
 			return doActionDoModify();
-		case "delete":
-			return doActionDelete();
+		case "doDelete":
+			return doActionDoDelete();
 		case "doReply":
-			return doActionDoReply();
-		case "deleteReply":
+			return doActionReply();
+		case "doDeleteReply":
 			return doActionDodeleteReply();
 		case "modifyReply":
 			return doActionModifyReply();
@@ -108,7 +108,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('댓글이 삭제되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
 	}
 
-	private String doActionDoReply() {
+	private String doActionReply() {
 		HttpSession session = req.getSession();
 		int articleId = Util.getInt(req, "id");
 		if (session.getAttribute("loginedMemberId") == null) {
@@ -122,7 +122,7 @@ public class ArticleController extends Controller {
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 
-	private String doActionDelete() {
+	private String doActionDoDelete() {
 		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int loginedMemberId = 0;
@@ -285,5 +285,10 @@ public class ArticleController extends Controller {
 
 		req.setAttribute("articles", articles);
 		return "article/list.jsp";
+	}
+
+	@Override
+	public String getControllerName() {
+		return "article";
 	}
 }

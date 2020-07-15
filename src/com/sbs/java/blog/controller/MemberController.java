@@ -29,14 +29,14 @@ public class MemberController extends Controller {
 			return doActionLogin();
 		case "doLogin":
 			return doActionDoLogin();
-		case "logout":
-			return doActionLogout();
+		case "doLogout":
+			return doActionDoLogout();
 		}
 		return "";
 
 	}
 
-	private String doActionLogout() {
+	private String doActionDoLogout() {
 //		HttpSession session = req.getSession();
 
 		session.removeAttribute("loginedMemberId");
@@ -144,6 +144,11 @@ public class MemberController extends Controller {
 
 	private String doActionJoin() {
 		return "member/join.jsp";
+	}
+
+	@Override
+	public String getControllerName() {
+		return "member";
 	}
 
 }

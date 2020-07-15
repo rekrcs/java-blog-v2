@@ -6,13 +6,13 @@
 	pageEncoding="UTF-8"%>
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
-	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
-	session.getAttribute("loginedMemberId");
-	
-	//로그인 회원정보
-	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
-	Member loginedMember = (Member) request.getAttribute("loginedMember");
-	boolean isLogined = (boolean) request.getAttribute("isLogined");
+List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+session.getAttribute("loginedMemberId");
+
+//로그인 회원정보
+int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+Member loginedMember = (Member) request.getAttribute("loginedMember");
+boolean isLogined = (boolean) request.getAttribute("isLogined");
 %>
 
 <!DOCTYPE html>
@@ -60,6 +60,27 @@
 	src="${pageContext.request.contextPath}/resource/js/home/main.js"></script>
 
 <title>Youn's Blog</title>
+<script>
+	var loginedMemberId = parseInt("${loginedMemberId}");
+	var isLogined = "${isLogined}" == "true";
+	var loginedMember = null;
+</script>
+<%
+	if (isLogined) {
+%>
+<script>
+	loginedMember = {};
+	loginedMember["id"] = parseInt("${loginedMember.id}");
+	loginedMember["regDate"] = "${loginedMember.regDate}";
+	loginedMember["loginId"] = "${loginedMember.loginId}";
+	loginedMember["name"] = "${loginedMember.name}";
+	loginedMember["nickname"] = "${loginedMember.nickname}";
+	loginedMember["email"] = "${loginedMember.email}";
+</script>
+<%
+	}
+%>
+
 
 </head>
 
@@ -107,28 +128,22 @@
 						</ul></li>
 
 					<%
-						if (isLogined == false) {
+						if (isLogined == true) {
 					%>
 					<li><a
-						href="${pageContext.request.contextPath}/s/member/login"
-						class="flex height-100p flex-ai-c">Log in</a></li>
+						href="${pageContext.request.contextPath}/s/member/doLogout"
+						class="flex height-100p flex-ai-c">Log out</a></li>
 					<%
 						} else {
 					%>
 					<li><a
-						href="${pageContext.request.contextPath}/s/member/logout"
-						class="flex height-100p flex-ai-c">Log out</a></li>
+						href="${pageContext.request.contextPath}/s/member/login"
+						class="flex height-100p flex-ai-c">Log in</a></li>
+					<li><a href="${pageContext.request.contextPath}/s/member/join"
+						class="flex height-100p flex-ai-c">Sign up</a></li>
 					<%
 						}
 					%>
-
-
-
-
-
-
-					<li><a href="${pageContext.request.contextPath}/s/member/join"
-						class="flex height-100p flex-ai-c">Sign up</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -176,10 +191,23 @@
 						<li><a href="#" class="block">FACEBOOK</a></li>
 						<li><a href="#" class="block">INSTA</a></li>
 					</ul></li>
+				<%
+					if (isLogined == true) {
+				%>
+				<li><a
+					href="${pageContext.request.contextPath}/s/member/doLogout"
+					class="block"> Log out</a></li>
+				<%
+					} else {
+				%>
 				<li><a href="${pageContext.request.contextPath}/s/member/login"
 					class="block"> Log in</a></li>
+
 				<li><a href="${pageContext.request.contextPath}/s/member/join"
 					class="block"> Sign up</a></li>
+				<%
+					}
+				%>
 			</ul>
 		</nav>
 	</div>

@@ -25,15 +25,15 @@ public class ArticleDao extends Dao {
 		int limitFrom = (page - 1) * itemsInAPage;
 
 		// 시작
-		sql.append("SELECT A.*, M.nickName AS extra__writer");
-		sql.append("FROM article AS A");
-		sql.append("INNER JOIN `member` AS M");
-		sql.append("ON A.memberId = M.id");
-		sql.append("WHERE displayStatus = 1");
-		// 끝
-//		sql.append("SELECT *");
-//		sql.append("FROM article");
+//		sql.append("SELECT A.*, M.nickName AS extra__writer");
+//		sql.append("FROM article AS A");
+//		sql.append("INNER JOIN `member` AS M");
+//		sql.append("ON A.memberId = M.id");
 //		sql.append("WHERE displayStatus = 1");
+		// 끝
+		sql.append("SELECT *");
+		sql.append("FROM article");
+		sql.append("WHERE displayStatus = 1");
 		if (cateItemId != 0) {
 			sql.append("AND cateItemId = ?", cateItemId);
 		}

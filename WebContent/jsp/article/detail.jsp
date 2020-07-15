@@ -243,7 +243,7 @@ th {
 	<div class="option-box">
 		<span class="option-modify"><a
 			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=<%=article.getMemberId()%>">수정</a></span><span></span><span
-			class="option-delete"><a href="delete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
+			class="option-delete"><a href="doDelete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
 	</div>
 
 	<div style="margin-top: 50px">
@@ -288,7 +288,7 @@ th {
 			</div>
 			<div class="reply-delete" style="margin-left: 10px">
 				<a
-					href="deleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">삭제</a>
+					href="doDeleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">삭제</a>
 			</div>
 		</div>
 	</div>
