@@ -38,36 +38,6 @@
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
-<!-- 글쓰는 중 유효하지 않은 input 방지  -->
-<script>
-	var writeFormSubmitted = false;
-
-	function submitWriteForm(form) {
-		if (writeFormSubmitted) {
-			alert('처리 중입니다.');
-			return;
-		}
-
-		form.title.value = form.title.value.trim();
-		if (form.title.value.length == 0) {
-			alert('제목을 입력해주세요.');
-			form.title.focus();
-
-			return;
-		}
-
-		form.body.value = form.body.value.trim();
-		if (form.body.value.length == 0) {
-			alert('내용을 입력해주세요.');
-			form.body.focus();
-
-			return;
-		}
-
-		form.submit();
-		writeFormSubmitted = true;
-	}
-</script>
 
 <style>
 /* lib */
@@ -165,8 +135,8 @@
 			<div class="form-row">
 				<div class="label">내용</div>
 				<div class="input">
-			<textarea name="body" placeholder="내용을 입력해주세요."></textarea>
-					<!-- <input type="hidden" name="body">
+<!-- 					<textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
+					<input type="hidden" name="body">
 					<div id="editor1"></div>
 					<script>
 						var editor1 = new toastui.Editor({
@@ -179,7 +149,7 @@
 									toastui.Editor.plugin.codeSyntaxHighlight,
 									youtubePlugin, replPlugin, codepenPlugin ]
 						});
-					</script> -->
+					</script>
 				</div>
 			</div>
 			<div class="form-row">
