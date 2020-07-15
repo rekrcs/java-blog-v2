@@ -74,7 +74,7 @@ public class MemberController extends Controller {
 		String loginId = req.getParameter("loginId");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
-		String nickName = req.getParameter("nickName");
+		String nickname = req.getParameter("nickname");
 		String loginPw = req.getParameter("loginPw");
 		String loginPwConfirm = req.getParameter("loginPwConfirm");
 		String loginPwReal = req.getParameter("loginPwReal");
@@ -86,7 +86,7 @@ public class MemberController extends Controller {
 		}
 
 		for (Member member : members) {
-			if (member.getNickName().equals(nickName)) {
+			if (member.getNickname().equals(nickname)) {
 				return "html:<script> alert('이미 존재하는 닉네임 입니다.'); location.replace('join'); </script>";
 			}
 		}
@@ -100,7 +100,7 @@ public class MemberController extends Controller {
 			return "html:<script> alert('비번과 비번 확인이 일치 하지 않습니다.'); location.replace('join'); </script>";
 
 		} else {
-			int id = memberService.join(loginId, name, nickName, loginPwReal, email);
+			int id = memberService.join(loginId, name, nickname, loginPwReal, email);
 			return "html:<script> alert('" + id + "번 회원님이 가입 했습니다.'); location.replace('join'); </script>";
 		}
 	}

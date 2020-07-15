@@ -14,8 +14,8 @@ public class MemberService extends Service {
 		this.memberDao = new MemberDao(dbConnection);
 	}
 
-	public int join(String loginId, String name, String nickName, String loginPw, String email) {
-		return memberDao.join(loginId, name, nickName, loginPw, email);
+	public int join(String loginId, String name, String nickname, String loginPw, String email) {
+		return memberDao.join(loginId, name, nickname, loginPw, email);
 	}
 
 	public List<Member> getForPrintMembers() {

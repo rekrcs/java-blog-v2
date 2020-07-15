@@ -75,7 +75,7 @@ CREATE TABLE `member` (
     loginPw CHAR(200) NOT NULL,
     `name` CHAR(100) NOT NULL,
     email CHAR(200) NOT NULL,
-    nickName CHAR(200) NOT NULL
+    nickname CHAR(200) NOT NULL
 );
 
 SELECT *

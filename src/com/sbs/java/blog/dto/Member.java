@@ -9,7 +9,7 @@ public class Member extends Dto {
 	private String loginPwConfirm;
 	private String name;
 	private String email;
-	private String nickName;
+	private String nickname;
 
 	public Member(Map<String, Object> row) {
 		super(row);
@@ -19,7 +19,7 @@ public class Member extends Dto {
 		this.loginPwConfirm = (String) row.get("loginPwConfirm");
 		this.name = (String) row.get("name");
 		this.email = (String) row.get("email");
-		this.nickName = (String) row.get("nickName");
+		this.nickname = (String) row.get("nickname");
 	}
 
 	public String getLoginId() {
@@ -46,12 +46,12 @@ public class Member extends Dto {
 		this.name = name;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getLoginPwConfirm() {
@@ -81,8 +81,8 @@ public class Member extends Dto {
 	@Override
 	public String toString() {
 		return "Member [updateDate=" + updateDate + ", loginId=" + loginId + ", loginPw=" + loginPw
-				+ ", name=" + name + ", email=" + email + ", nickName="
-				+ nickName + ", getId()=" + getId() + ", getRegDate()=" + getRegDate() + "]";
+				+ ", name=" + name + ", email=" + email + ", nickname="
+				+ nickname + ", getId()=" + getId() + ", getRegDate()=" + getRegDate() + "]";
 	}
 
 }

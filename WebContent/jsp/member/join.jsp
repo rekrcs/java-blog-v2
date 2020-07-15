@@ -115,7 +115,7 @@
 				<div class="form-row">
 					<div class="label">닉네임</div>
 					<div class="input">
-						<input name="nickName" type="text" placeholder="닉네임을 입력해 주세요" />
+						<input name="nickname" type="text" placeholder="닉네임을 입력해 주세요" />
 					</div>
 				</div>
 				<div class="form-row">

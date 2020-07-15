@@ -17,7 +17,7 @@ public class MemberDao extends Dao {
 		this.dbConnection = dbConnection;
 	}
 
-	public int join(String loginId, String name, String nickName, String loginPw, String email) {
+	public int join(String loginId, String name, String nickname, String loginPw, String email) {
 		SecSql secSql = new SecSql();
 		
 		secSql.append("INSERT INTO `member`");
@@ -26,7 +26,7 @@ public class MemberDao extends Dao {
 		secSql.append(", loginId = ? ", loginId);
 		secSql.append(", name = ? ", name);
 		secSql.append(", email = ? ", email);
-		secSql.append(", nickName = ? ", nickName);
+		secSql.append(", nickname = ? ", nickname);
 		secSql.append(", loginPw = ? ", loginPw);
 		
 		
@@ -36,7 +36,7 @@ public class MemberDao extends Dao {
 //		sql += String.format("SET regDate = NOW() ");
 //		sql += String.format(", loginId = '%s' ", loginId);
 //		sql += String.format(", name = '%s' ", name);
-//		sql += String.format(", nickName = '%s' ", nickName);
+//		sql += String.format(", nickname = '%s' ", nickname);
 //		sql += String.format(", loginPw = '%s' ", loginPw);
 
 
