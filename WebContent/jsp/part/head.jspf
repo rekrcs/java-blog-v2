@@ -5,8 +5,8 @@
 	pageEncoding="UTF-8"%>
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
-List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
-session.getAttribute("loginedMemberId");
+	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+	session.getAttribute("loginedMemberId");
 %>
 
 <!DOCTYPE html>

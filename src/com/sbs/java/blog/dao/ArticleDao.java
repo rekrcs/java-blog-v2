@@ -8,6 +8,7 @@ import java.util.Map;
 import com.sbs.java.blog.dto.Article;
 import com.sbs.java.blog.dto.ArticleReply;
 import com.sbs.java.blog.dto.CateItem;
+import com.sbs.java.blog.dto.Member;
 import com.sbs.java.blog.util.DBUtil;
 import com.sbs.java.blog.util.SecSql;
 
@@ -23,9 +24,16 @@ public class ArticleDao extends Dao {
 		SecSql sql = new SecSql();
 		int limitFrom = (page - 1) * itemsInAPage;
 
-		sql.append("SELECT *");
-		sql.append("FROM article");
+		// 시작
+		sql.append("SELECT A.*, M.nickName AS extra__writer");
+		sql.append("FROM article AS A");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON A.memberId = M.id");
 		sql.append("WHERE displayStatus = 1");
+		// 끝
+//		sql.append("SELECT *");
+//		sql.append("FROM article");
+//		sql.append("WHERE displayStatus = 1");
 		if (cateItemId != 0) {
 			sql.append("AND cateItemId = ?", cateItemId);
 		}
@@ -47,7 +55,7 @@ public class ArticleDao extends Dao {
 
 	public List<Article> getForPrintListArticles(int fiveLatestArticle) {
 		SecSql sql = new SecSql();
-
+		
 		sql.append("SELECT *");
 		sql.append("FROM article");
 		sql.append("WHERE displayStatus = 1");
@@ -264,6 +272,29 @@ public class ArticleDao extends Dao {
 		return count;
 	}
 
+	public List<Article> getmemberForNickNames() {
+
+		SecSql secSql = new SecSql();
+
+		secSql.append("SELECT A.*, M.nickName AS extra__ writer");
+		secSql.append("FROM article AS A");
+		secSql.append("INNER JOIN `member` AS M");
+		secSql.append("ON A.memberId = M.id");
+		secSql.append("WHERE A.displayStatus = 1");
+		secSql.append("ORDER BY A.id DESC");
+
+		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, secSql);
+
+		List<Article> articleFormemberNickNames = new ArrayList<>();
+
+		for (Map<String, Object> row : rows) {
+			articleFormemberNickNames.add(new Article(row));
+		}
+
+		return articleFormemberNickNames;
+	}
+}
+
 //	public List<ArticleReply> getArticleReply(int id) {
 //		SecSql sql = new SecSql();
 //
@@ -283,4 +314,3 @@ public class ArticleDao extends Dao {
 //		return articleReplies;
 //
 //	}
-}

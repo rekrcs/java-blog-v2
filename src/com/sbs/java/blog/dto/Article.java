@@ -73,7 +73,6 @@ public class Article extends Dto {
 	public String toString() {
 		return "Article [updateDate=" + updateDate + ", cateItemId=" + cateItemId + ", memberId=" + memberId + ", hit="
 				+ hit + ", title=" + title + ", body=" + body + ", getId()=" + getId() + ", getRegDate()="
-				+ getRegDate() + "]";
+				+ getRegDate() + ", getExtra()=" + getExtra() + "]";
 	}
-
 }

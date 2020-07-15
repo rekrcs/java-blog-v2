@@ -86,4 +86,8 @@ public class ArticleService extends Service {
 	public int getArticleReplyCount(int id) {
 		return articleDao.getForPrintListReplyCount(id);
 	}
+
+	public List<Article> getMemberForNickNames() {
+		return articleDao.getmemberForNickNames();
+	}
 }

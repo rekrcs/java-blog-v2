@@ -44,7 +44,7 @@ String cateItemName = (String) request.getAttribute("cateItemName");
 			<div class="article-header">
 				<div class="article-info">
 					<span class="artice-date"><i><%=article.getRegDate().substring(0, 10)%></i></span>
-					<span class="article-writer"><i>by Youn</i></span>
+					<span class="article-writer"><i>by <%=article.getExtra().get("writer")%></i></span>
 				</div>
 				<a
 					href="${pageContext.request.contextPath}/s/article/detail?id=<%=article.getId()%>"

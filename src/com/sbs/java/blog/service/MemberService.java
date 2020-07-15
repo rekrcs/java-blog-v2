@@ -21,5 +21,4 @@ public class MemberService extends Service {
 	public List<Member> getForPrintMembers() {
 		return memberDao.getForPrintMembers();
 	}
-
 }
