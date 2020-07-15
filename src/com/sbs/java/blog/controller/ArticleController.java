@@ -27,33 +27,33 @@ public class ArticleController extends Controller {
 	public String doAction() {
 		switch (actionMethodName) {
 		case "list":
-			return doActionList(req, resp);
+			return doActionList();
 		case "detail":
-			return doActionDetail(req, resp);
+			return doActionDetail();
 		case "doWrite":
-			return doActionDoWrite(req, resp);
+			return doActionDoWrite();
 		case "write":
-			return doActionWrite(req, resp);
+			return doActionWrite();
 		case "modify":
-			return doActionModify(req, resp);
+			return doActionModify();
 		case "doModify":
-			return doActionDoModify(req, resp);
+			return doActionDoModify();
 		case "delete":
-			return doActionDelete(req, resp);
+			return doActionDelete();
 		case "doReply":
-			return doActionDoReply(req, resp);
+			return doActionDoReply();
 		case "deleteReply":
-			return doActionDodeleteReply(req, resp);
+			return doActionDodeleteReply();
 		case "modifyReply":
-			return doActionModifyReply(req, resp);
+			return doActionModifyReply();
 		case "doModifyReply":
-			return doActionDoModifyReply(req, resp);
+			return doActionDoModifyReply();
 		}
 
 		return "";
 	}
 
-	private String doActionDoModifyReply(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDoModifyReply() {
 		int id = Integer.parseInt(req.getParameter("id"));
 		int articleId = Integer.parseInt(req.getParameter("articleId"));
 		String body = req.getParameter("body");
@@ -64,7 +64,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	private String doActionModifyReply(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionModifyReply() {
 		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int articleId = Util.getInt(req, "articleId");
@@ -86,7 +86,7 @@ public class ArticleController extends Controller {
 		return "article/modifyReply.jsp";
 	}
 
-	private String doActionDodeleteReply(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDodeleteReply() {
 		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int articleId = Util.getInt(req, "articleId");
@@ -108,7 +108,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('댓글이 삭제되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
 	}
 
-	private String doActionDoReply(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDoReply() {
 		HttpSession session = req.getSession();
 		int articleId = Util.getInt(req, "id");
 		if (session.getAttribute("loginedMemberId") == null) {
@@ -122,7 +122,7 @@ public class ArticleController extends Controller {
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 
-	private String doActionDelete(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDelete() {
 		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int loginedMemberId = 0;
@@ -146,7 +146,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('" + id + "번 게시물이 삭제되었습니다.'); location.replace('list'); </script>";
 	}
 
-	private String doActionDoModify(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDoModify() {
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
 		int cateItemId = Util.getInt(req, "cateItemId");
@@ -156,7 +156,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('" + id + "번 게시물이 수정되었습니다.'); location.replace('list'); </script>";
 	}
 
-	private String doActionModify(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionModify() {
 		HttpSession session = req.getSession();
 		int loginedMemberId = 0;
 
@@ -179,7 +179,7 @@ public class ArticleController extends Controller {
 		return "article/modify.jsp";
 	}
 
-	private String doActionWrite(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionWrite() {
 		HttpSession session = req.getSession();
 
 		if (session.getAttribute("loginedMemberId") == null) {
@@ -188,7 +188,7 @@ public class ArticleController extends Controller {
 		return "article/write.jsp";
 	}
 
-	private String doActionDoWrite(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDoWrite() {
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
 		int memberId = Integer.parseInt(req.getParameter("memberId"));
@@ -199,7 +199,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('" + id + "번 게시물이 생성되었습니다.'); location.replace('list'); </script>";
 	}
 
-	private String doActionDetail(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDetail() {
 		if (Util.empty(req, "id")) {
 			return "html:id를 입력해주세요.";
 		}
@@ -239,7 +239,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	private String doActionList(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionList() {
 		int page = 1;
 
 		if (!Util.empty(req, "page") && Util.isNum(req, "page")) {

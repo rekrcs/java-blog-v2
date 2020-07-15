@@ -22,32 +22,32 @@ public class MemberController extends Controller {
 	public String doAction() {
 		switch (actionMethodName) {
 		case "join":
-			return doActionJoin(req, resp);
+			return doActionJoin();
 		case "doJoin":
-			return doActionDoJoin(req, resp);
+			return doActionDoJoin();
 		case "login":
-			return doActionLogin(req, resp);
+			return doActionLogin();
 		case "doLogin":
-			return doActionDoLogin(req, resp);
+			return doActionDoLogin();
 		case "logout":
-			return doActionLogout(req, resp);
+			return doActionLogout();
 		}
 		return "";
 
 	}
 
-	private String doActionLogout(HttpServletRequest req, HttpServletResponse resp) {
-		HttpSession session = req.getSession();
+	private String doActionLogout() {
+//		HttpSession session = req.getSession();
 
 		session.removeAttribute("loginedMemberId");
 		return "html:<script> alert('로그아웃 되었습니다.'); location.replace('../home/main'); </script>";
 	}
 
-	private String doActionDoLogin(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDoLogin() {
 //		List<Member> members = memberService.getForPrintMembers();
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPwReal");
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 
 		// 시작
 		int loginedMemberId = memberService.getMemberIdByLoginIdAndLoginPw(loginId, loginPw);
@@ -75,11 +75,11 @@ public class MemberController extends Controller {
 //		return "html:<script> alert('아이디와 비번을 확인해 주세요'); location.replace('login'); </script>";
 	}
 
-	private String doActionLogin(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionLogin() {
 		return "member/login.jsp";
 	}
 
-	private String doActionDoJoin(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionDoJoin() {
 //		List<Member> members = memberService.getForPrintMembers();
 
 		String loginId = req.getParameter("loginId");
@@ -142,7 +142,7 @@ public class MemberController extends Controller {
 //		}
 //	}
 
-	private String doActionJoin(HttpServletRequest req, HttpServletResponse resp) {
+	private String doActionJoin() {
 		return "member/join.jsp";
 	}
 

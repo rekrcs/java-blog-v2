@@ -1,12 +1,18 @@
 <%@ page import="java.util.List"%>
 <%@ page import="com.sbs.java.blog.dto.CateItem"%>
 <%@ page import="com.sbs.java.blog.dto.Article"%>
+<%@ page import="com.sbs.java.blog.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
 	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
 	session.getAttribute("loginedMemberId");
+	
+	//로그인 회원정보
+	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+	Member loginedMember = (Member) request.getAttribute("loginedMember");
+	boolean isLogined = (boolean) request.getAttribute("isLogined");
 %>
 
 <!DOCTYPE html>
@@ -101,7 +107,7 @@
 						</ul></li>
 
 					<%
-						if (session.getAttribute("loginedMemberId") == null) {
+						if (isLogined == false) {
 					%>
 					<li><a
 						href="${pageContext.request.contextPath}/s/member/login"
