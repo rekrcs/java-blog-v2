@@ -252,7 +252,7 @@ th {
 
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
-		<form action="doReply?id=<%=article.getId()%>&" method="post"
+		<form action="doReply?id=<%=article.getId()%>" method="post"
 			class="write-form form1">
 			<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->
 			<div class="form-row">
@@ -277,18 +277,18 @@ th {
 	<div class="reply-container">
 		<div class="reply-box">
 			<div class="reply-header" style="margin-bottom: 10px;">
-				<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate().substring(0, 10)%></span>
+				<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate()%></span>
 			</div>
 			<div class="reply-body" style="font-size: 1.2rem"><%=articleReply.getBody()%></div>
 		</div>
 		<div class="reply-option-box flex flex-jc-e"
 			style="margin: 0 10px 20px 0">
 			<div class="reply-modify">
-				<a href="modifyReply?id=<%=articleReply.getId()%>">수정</a>
+				<a href="modifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">수정</a>
 			</div>
 			<div class="reply-delete" style="margin-left: 10px">
 				<a
-					href="deleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>">삭제</a>
+					href="deleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">삭제</a>
 			</div>
 		</div>
 	</div>

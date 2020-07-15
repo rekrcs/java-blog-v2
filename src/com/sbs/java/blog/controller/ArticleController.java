@@ -65,7 +65,20 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionModifyReply(HttpServletRequest req, HttpServletResponse resp) {
-		int id = Integer.parseInt(req.getParameter("id"));
+		HttpSession session = req.getSession();
+		int id = Util.getInt(req, "id");
+		int articleId = Util.getInt(req, "articleId");
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('본인만 수정 가능 합니다. 로그인 후 이용하세요'); location.replace('detail?id=" + articleId
+					+ "'); </script>";
+		}
+
+		int memberId = Util.getInt(req, "memberId");
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		if (loginedMemberId != memberId) {
+			return "html:<script> alert('본인만 수정 가능 합니다'); location.replace('detail?id=" + articleId + "'); </script>";
+		}
 
 		ArticleReply articleReply = articleService.getArticleReplyForPrint(id);
 		req.setAttribute("articleReply", articleReply);
@@ -74,32 +87,61 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionDodeleteReply(HttpServletRequest req, HttpServletResponse resp) {
-		int id = Integer.parseInt(req.getParameter("id"));
-		int articleId = Integer.parseInt(req.getParameter("articleId"));
+		HttpSession session = req.getSession();
+		int id = Util.getInt(req, "id");
+		int articleId = Util.getInt(req, "articleId");
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('본인만 삭제 가능 합니다. 로그인 후 이용하세요'); location.replace('detail?id=" + articleId
+					+ "'); </script>";
+		}
+
+		int memberId = Util.getInt(req, "memberId");
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+
+		if (loginedMemberId != memberId) {
+			return "html:<script> alert('본인만 삭제 가능 합니다'); location.replace('detail?id=" + articleId + "'); </script>";
+		}
+
 		int deleteReplyId = articleService.deleteReply(id);
 
 		return "html:<script> alert('댓글이 삭제되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
 	}
 
 	private String doActionDoReply(HttpServletRequest req, HttpServletResponse resp) {
-		int articleId = Integer.parseInt(req.getParameter("id"));
+		HttpSession session = req.getSession();
+		int articleId = Util.getInt(req, "id");
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('로그인 후 댓글 쓰기가 가능 합니다.'); location.replace('detail?id=" + articleId
+					+ "'); </script>";
+		}
+		int memberId = (int) session.getAttribute("loginedMemberId");
 		String body = req.getParameter("body");
-		int id = articleService.replyWrite(body, articleId);
+		int id = articleService.replyWrite(body, articleId, memberId);
 
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 
 	private String doActionDelete(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		
-		int id = Integer.parseInt(req.getParameter("id"));
-		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		int id = Util.getInt(req, "id");
+		int loginedMemberId = 0;
 		int memberId = Util.getInt(req, "memberId");
+
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('본인만 삭제 가능 합니다. 로그인 후 이용하세요'); location.replace('detail?id=" + id
+					+ "'); </script>";
+		}
+
 		if (loginedMemberId != memberId) {
 			return "html:<script> alert('작성자만 삭제 가능 합니다.'); location.replace('../article/detail?id=" + id
 					+ "'); </script>";
 		}
-		
+
 		int deleteId = articleService.delete(id);
 		return "html:<script> alert('" + id + "번 게시물이 삭제되었습니다.'); location.replace('list'); </script>";
 	}
@@ -116,9 +158,18 @@ public class ArticleController extends Controller {
 
 	private String doActionModify(HttpServletRequest req, HttpServletResponse resp) {
 		HttpSession session = req.getSession();
-		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		int loginedMemberId = 0;
+
+		if (session.getAttribute("loginedMemberId") != null) {
+			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		}
 		int memberId = Util.getInt(req, "memberId");
 		int id = Util.getInt(req, "id");
+
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('본인만 수정 가능 합니다. 로그인 후 이용하세요'); location.replace('detail?id=" + id
+					+ "'); </script>";
+		}
 
 		if (loginedMemberId != memberId) {
 			return "html:<script> alert('작성자만 수정 가능 합니다.'); location.replace('../article/detail?id=" + id

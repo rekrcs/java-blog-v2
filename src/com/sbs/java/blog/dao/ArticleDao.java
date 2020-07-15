@@ -191,7 +191,7 @@ public class ArticleDao extends Dao {
 		return DBUtil.delete(dbConn, secSql);
 	}
 
-	public int replyWrite(String body, int articleId) {
+	public int replyWrite(String body, int articleId, int memberId) {
 		SecSql sql = new SecSql();
 
 		sql.append("INSERT INTO articleReply");
@@ -199,7 +199,7 @@ public class ArticleDao extends Dao {
 		sql.append(", updateDate = NOW()");
 		sql.append(", body = ? ", body);
 		sql.append(", articleId = ? ", articleId);
-		// 멤버 아이디 구현 필요
+		sql.append(", memberId = ? ", memberId);
 
 		return DBUtil.insert(dbConn, sql);
 	}

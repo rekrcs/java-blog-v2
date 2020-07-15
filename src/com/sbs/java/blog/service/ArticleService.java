@@ -61,8 +61,8 @@ public class ArticleService extends Service {
 		return articleDao.deleteReply(id);
 	}
 
-	public int replyWrite(String body, int articleId) {
-		return articleDao.replyWrite(body, articleId);
+	public int replyWrite(String body, int articleId, int memberId) {
+		return articleDao.replyWrite(body, articleId, memberId);
 	}
 
 	public List<ArticleReply> getArticleReplyPage(int id, int page, int itemsInAPage) {

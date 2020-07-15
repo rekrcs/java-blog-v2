@@ -217,7 +217,7 @@ function getUrlParams(url) {
 }
 // lib 끝
 
-var writeFormSubmitted = false;
+/*var writeFormSubmitted = false;
 
 function submitWriteForm(form) {
 	if (writeFormSubmitted) {
@@ -243,4 +243,4 @@ function submitWriteForm(form) {
 	form.body.value = source;
 	form.submit();
 
-}
+}*/

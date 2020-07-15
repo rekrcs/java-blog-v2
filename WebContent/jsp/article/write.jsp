@@ -40,6 +40,37 @@
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
+
+<script>
+	var writeFormSubmitted = false;
+
+	function submitWriteForm(form) {
+		if (writeFormSubmitted) {
+			alert('처리 중입니다.');
+			return;
+		}
+
+		form.title.value = form.title.value.trim();
+		if (form.title.value.length == 0) {
+			alert('제목을 입력해주세요.');
+			form.title.focus();
+
+			return;
+		}
+
+		var source = editor1.getMarkdown().trim();
+		if (source.length == 0) {
+			alert('내용을 입력해주세요.');
+			editor1.focus();
+			return;
+		}
+
+		form.body.value = source;
+		form.submit();
+
+	}
+</script>
+
 <style>
 /* lib */
 .form1 {

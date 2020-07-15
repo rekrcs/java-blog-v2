@@ -37,7 +37,37 @@
 <!-- 토스트 UI 에디터, CSS 코어 -->
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+	
+	
+<script>
+	var writeFormSubmitted = false;
 
+	function submitWriteForm(form) {
+		if (writeFormSubmitted) {
+			alert('처리 중입니다.');
+			return;
+		}
+
+		form.title.value = form.title.value.trim();
+		if (form.title.value.length == 0) {
+			alert('제목을 입력해주세요.');
+			form.title.focus();
+
+			return;
+		}
+
+		var source = editor1.getMarkdown().trim();
+		if (source.length == 0) {
+			alert('내용을 입력해주세요.');
+			editor1.focus();
+			return;
+		}
+
+		form.body.value = source;
+		form.submit();
+
+	}
+</script>
 
 <style>
 /* lib */
@@ -135,7 +165,7 @@
 			<div class="form-row">
 				<div class="label">내용</div>
 				<div class="input">
-<!-- 					<textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
+					<!-- 					<textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
 					<input type="hidden" name="body">
 					<div id="editor1"></div>
 					<script>
