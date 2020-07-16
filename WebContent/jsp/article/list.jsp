@@ -23,6 +23,7 @@
 
 .page-box>ul>li:hover>a {
 	color: black;
+	
 }
 
 .page-box>ul>li.current>a {

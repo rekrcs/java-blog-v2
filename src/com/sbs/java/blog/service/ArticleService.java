@@ -16,8 +16,8 @@ public class ArticleService extends Service {
 		articleDao = new ArticleDao(dbConn);
 	}
 
-	public List<Article> getForPrintListArticles(int fiveLatestArticle) {
-		return articleDao.getForPrintListArticles(fiveLatestArticle);
+	public List<Article> getForPrintListArticles(int showArticlesInMainPage) {
+		return articleDao.getForPrintListArticles(showArticlesInMainPage);
 	}
 
 	public List<Article> getForPrintListArticles(int page, int itemsInAPage, int cateItemId, String searchKeywordType,

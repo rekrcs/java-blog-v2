@@ -31,8 +31,8 @@ public class HomeController extends Controller {
 	}
 
 	private String doActionMain() {
-		int fiveLatestArticle = 5;
-		List<Article> articles = articleService.getForPrintListArticles(fiveLatestArticle);
+		int showArticlesInMainPage = 10;
+		List<Article> articles = articleService.getForPrintListArticles(showArticlesInMainPage);
 		req.setAttribute("articles", articles);
 		return "home/main.jsp";
 	}

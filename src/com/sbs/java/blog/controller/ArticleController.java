@@ -272,7 +272,7 @@ public class ArticleController extends Controller {
 			searchKeyword = Util.getString(req, "searchKeyword");
 		}
 
-		int itemsInAPage = 10;
+		int itemsInAPage = 5;
 		int totalCount = articleService.getForPrintListArticlesCount(cateItemId, searchKeywordType, searchKeyword);
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 

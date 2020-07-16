@@ -53,7 +53,7 @@ public class ArticleDao extends Dao {
 		return articles;
 	}
 
-	public List<Article> getForPrintListArticles(int fiveLatestArticle) {
+	public List<Article> getForPrintListArticles(int showArticlesInMainPage) {
 		SecSql sql = new SecSql();
 		// 시작
 		sql.append("SELECT A.*, M.nickName AS extra__writer");
@@ -66,7 +66,7 @@ public class ArticleDao extends Dao {
 //		sql.append("FROM article");
 		sql.append("WHERE displayStatus = 1");
 		sql.append("ORDER BY id DESC ");
-		sql.append("LIMIT ?", fiveLatestArticle);
+		sql.append("LIMIT ?", showArticlesInMainPage);
 
 		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
 		List<Article> articles = new ArrayList<>();
