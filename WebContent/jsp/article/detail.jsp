@@ -49,6 +49,9 @@
 
 
 <style>
+.body-main-name {
+	margin-top: 30px;
+}
 .title {
 	font-size: 3rem;
 }
@@ -194,9 +197,6 @@ th {
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
-	<div class="body-main-name">
-		<div class="title"><%=article.getTitle()%></div>
-	</div>
 	<table border="1" width="100%">
 		<tr>
 			<th>번호</th>
@@ -223,6 +223,9 @@ th {
 			<td>${totalCountForReply}</td>
 		</tr>
 	</table>
+	<div class="body-main-name">
+		<div class="title"><%=article.getTitle()%></div>
+	</div>
 	<div>
 		<script type="text/x-template" id="origin1" style="display: none;"><%=article.getBodyForXTemplate()%></script>
 		<div id="viewer1"></div>
@@ -242,12 +245,11 @@ th {
 	<div class="option-box">
 		<span class="option-modify"><a
 			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=<%=article.getMemberId()%>">수정</a></span><span></span><span
-			class="option-delete"><a href="doDelete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
+			class="option-delete"><a
+			href="doDelete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
 	</div>
 
-	<div style="margin-top: 50px">
-		댓글 :
-		${totalCountForReply}</div>
+	<div style="margin-top: 50px">댓글 : ${totalCountForReply}</div>
 
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
@@ -283,7 +285,8 @@ th {
 		<div class="reply-option-box flex flex-jc-e"
 			style="margin: 0 10px 20px 0">
 			<div class="reply-modify">
-				<a href="modifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">수정</a>
+				<a
+					href="modifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">수정</a>
 			</div>
 			<div class="reply-delete" style="margin-left: 10px">
 				<a
@@ -302,8 +305,7 @@ th {
 				for (int i = 1; i <= totalPage; i++) {
 			%>
 			<li class="<%=i == paramPage ? "current" : ""%>"><a
-				href="?id=<%=article.getId()%>&page=<%=i%>"
-				class="block"><%=i%></a></li>
+				href="?id=<%=article.getId()%>&page=<%=i%>" class="block"><%=i%></a></li>
 			<%
 				}
 			%>
