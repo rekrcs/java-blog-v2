@@ -1,6 +1,7 @@
 package com.sbs.java.blog.controller;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +67,18 @@ public abstract class Controller {
 		req.setAttribute("loginedMemberId", loginedMemberId);
 		req.setAttribute("loginedMember", loginedMember);
 		req.setAttribute("isLogined", isLogined);
+		
+		//게시물별 카운팅
+		int totalCateItems = articleService.getTotalCateItems();
+		List<Integer> eachCateItemIds = new ArrayList<>();
+		
+		for(CateItem cateItem : cateItems) {
+			int countEachItems = articleService.getTotalCateItems(cateItem.getId());
+			eachCateItemIds.add(countEachItems);
+		}
+		
+		req.setAttribute("totalCateItems", totalCateItems);
+		req.setAttribute("eachCateItemIds", eachCateItemIds);
 	}
 
 	public void afterAction() {

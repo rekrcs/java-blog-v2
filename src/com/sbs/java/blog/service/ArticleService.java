@@ -90,4 +90,14 @@ public class ArticleService extends Service {
 	public List<Article> getMemberForNickNames() {
 		return articleDao.getmemberForNickNames();
 	}
+
+	public int getTotalCateItems() {
+		return articleDao.getTotalCateItems();
+	}
+
+	public int getTotalCateItems(int id) {
+		return articleDao.getTotalCateItems(id);
+	}
+
+
 }

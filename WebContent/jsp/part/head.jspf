@@ -7,7 +7,11 @@
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
 	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
-	session.getAttribute("loginedMemberId");
+	
+	////게시물별 카운팅
+	
+	int totalCateItems = (int) request.getAttribute("totalCateItems");
+//	session.getAttribute("loginedMemberId");
 
 	//로그인 회원정보
 	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
