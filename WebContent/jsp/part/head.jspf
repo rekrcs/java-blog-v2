@@ -6,13 +6,13 @@
 	pageEncoding="UTF-8"%>
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
-List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
-session.getAttribute("loginedMemberId");
+	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
+	session.getAttribute("loginedMemberId");
 
-//로그인 회원정보
-int loginedMemberId = (int) request.getAttribute("loginedMemberId");
-Member loginedMember = (Member) request.getAttribute("loginedMember");
-boolean isLogined = (boolean) request.getAttribute("isLogined");
+	//로그인 회원정보
+	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
+	Member loginedMember = (Member) request.getAttribute("loginedMember");
+	boolean isLogined = (boolean) request.getAttribute("isLogined");
 %>
 
 <!DOCTYPE html>

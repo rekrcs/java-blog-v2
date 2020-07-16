@@ -18,7 +18,7 @@
 			<div class="article-header">
 				<div class="article-info">
 					<span class="artice-date"><i><%=article.getRegDate().substring(0, 10)%></i></span>
-					<span class="article-writer"><i>by <%=article.getExtra().get("wrtier")%></i></span>
+					<span class="article-writer"><i>by <%=article.getExtra().get("writer")%></i></span>
 				</div>
 				<a href="../article/detail?id=<%=article.getId()%>"
 					class="article-title"><%=article.getTitle()%></a>

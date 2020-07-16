@@ -8,7 +8,6 @@
 <%
 	Article article = (Article) request.getAttribute("article");
 	List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
-	List<ArticleReply> articleRepliesAll = (List<ArticleReply>) request.getAttribute("articleRepliesAlls");
 	int totalPage = (int) request.getAttribute("totalPage");
 	int paramPage = (int) request.getAttribute("page");
 %>
@@ -277,7 +276,7 @@ th {
 	<div class="reply-container">
 		<div class="reply-box">
 			<div class="reply-header" style="margin-bottom: 10px;">
-				<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate()%></span>
+				<span style="margin-right: 20px"><%=articleReply.getExtra().get("writer")%></span><span><%=articleReply.getRegDate()%></span>
 			</div>
 			<div class="reply-body" style="font-size: 1.2rem"><%=articleReply.getBody()%></div>
 		</div>
