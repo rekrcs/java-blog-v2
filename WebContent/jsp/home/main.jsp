@@ -5,16 +5,17 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
 <%
-	List<Article> articles = (List<Article>) request.getAttribute("articles");
+//	List<Article> articles = (List<Article>) request.getAttribute("articles");
+	List<Article> articleHits = (List<Article>) request.getAttribute("articleHits");
 %>
 
 <!--body 내용-->
 <section class="body-main">
 	<div class="body-main-name">
-		<h3>최근 게시물</h3>
+		<h3>인기 게시물 (TOP 5)</h3>
 	</div>
 	<%
-		for (Article article : articles) {
+		for (Article article : articleHits) {
 	%>
 	<div class="article">
 		<div class="article-header">

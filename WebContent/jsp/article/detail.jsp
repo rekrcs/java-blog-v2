@@ -203,6 +203,10 @@ th {
 			<td><%=article.getId()%></td>
 		</tr>
 		<tr>
+			<th>글쓴이</th>
+			<td><%=article.getExtra().get("writer")%></td>
+		</tr>
+		<tr>
 			<th>조회수</th>
 			<td><%=article.getHit()%></td>
 		</tr>

@@ -78,6 +78,31 @@ public class ArticleDao extends Dao {
 		return articles;
 	}
 
+	public List<Article> getForPrintListInOrderHit(int showArticlesInMainPage) {
+		SecSql sql = new SecSql();
+		// 시작
+		sql.append("SELECT A.*, M.nickName AS extra__writer");
+		sql.append("FROM article AS A");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON A.memberId = M.id");
+		// 끝
+
+//		sql.append("SELECT *");
+//		sql.append("FROM article");
+		sql.append("WHERE displayStatus = 1");
+		sql.append("ORDER BY hit DESC ");
+		sql.append("LIMIT ?", showArticlesInMainPage);
+
+		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
+		List<Article> articles = new ArrayList<>();
+
+		for (Map<String, Object> row : rows) {
+			articles.add(new Article(row));
+		}
+
+		return articles;
+	}
+
 	public int getForPrintListArticlesCount(int cateItemId, String searchKeywordType, String searchKeyword) {
 		SecSql sql = new SecSql();
 
@@ -99,11 +124,17 @@ public class ArticleDao extends Dao {
 
 	public Article getForPrintArticle(int id) {
 		SecSql sql = new SecSql();
-
-		sql.append("SELECT *, 'Youn' AS extra__writer ");
-		sql.append("FROM article ");
+		
+		sql.append("SELECT A.*, M.nickName AS extra__writer");
+		sql.append("FROM article AS A");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON A.memberId = M.id");
+		
+		
+//		sql.append("SELECT *, 'Youn' AS extra__writer ");
+//		sql.append("FROM article ");
 		sql.append("WHERE 1 ");
-		sql.append("AND id = ? ", id);
+		sql.append("AND A.id = ? ", id);
 		sql.append("AND displayStatus = 1 ");
 
 		return new Article(DBUtil.selectRow(dbConn, sql));

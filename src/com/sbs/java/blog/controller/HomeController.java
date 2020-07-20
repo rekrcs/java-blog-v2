@@ -31,9 +31,14 @@ public class HomeController extends Controller {
 	}
 
 	private String doActionMain() {
+		//최신 게시물 순서
 		int showArticlesInMainPage = 5;
 		List<Article> articles = articleService.getForPrintListArticles(showArticlesInMainPage);
 		req.setAttribute("articles", articles);
+		
+		//조회수 높은 순서
+		List<Article> articleHits = articleService.getForPrintListInOrderHit(showArticlesInMainPage);
+		req.setAttribute("articleHits", articleHits);
 		return "home/main.jsp";
 	}
 

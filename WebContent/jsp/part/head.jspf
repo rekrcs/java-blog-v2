@@ -11,7 +11,6 @@
 	////게시물별 카운팅
 	
 	int totalCateItems = (int) request.getAttribute("totalCateItems");
-	List<Integer> eachCateItemIds = (List<Integer>) request.getAttribute("eachCateItemIds");
 //	session.getAttribute("loginedMemberId");
 
 	//로그인 회원정보

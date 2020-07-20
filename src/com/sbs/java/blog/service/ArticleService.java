@@ -99,5 +99,9 @@ public class ArticleService extends Service {
 		return articleDao.getTotalCateItems(id);
 	}
 
+	public List<Article> getForPrintListInOrderHit(int showArticlesInMainPage) {
+		return articleDao.getForPrintListInOrderHit(showArticlesInMainPage);
+	}
+
 
 }
