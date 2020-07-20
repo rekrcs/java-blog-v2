@@ -41,7 +41,6 @@
 
 <script>
 	var writeFormSubmitted = false;
-
 	function submitWriteForm(form) {
 		if (writeFormSubmitted) {
 			alert('처리 중입니다.');
