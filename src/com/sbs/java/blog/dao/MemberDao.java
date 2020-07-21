@@ -104,4 +104,14 @@ public class MemberDao extends Dao {
 		return new Member(DBUtil.selectRow(dbConn, sql));
 	}
 
+	public int getTemporaryPw(int id, String pw) {
+		SecSql secSql = new SecSql();
+
+		secSql.append("UPDATE member");
+		secSql.append("SET loginPw = ?", pw);
+		secSql.append("WHERE id = ?", id);
+
+		return DBUtil.update(dbConn, secSql);
+	}
+
 }

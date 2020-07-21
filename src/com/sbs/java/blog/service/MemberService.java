@@ -41,4 +41,8 @@ public class MemberService extends Service {
 	public Member getMemberById(int id) {
 		return memberDao.getMemberById(id);
 	}
+
+	public int getTemporaryPw(int id, String pw) {
+		return memberDao.getTemporaryPw(id, pw);
+	}
 }
