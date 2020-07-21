@@ -52,6 +52,7 @@
 .body-main-name {
 	margin-top: 30px;
 }
+
 .title {
 	font-size: 3rem;
 }
@@ -247,10 +248,16 @@ th {
 
 	<!-- 수정 삭제버튼-->
 	<div class="option-box">
+		<%
+			if (loginedMemberId == article.getMemberId()) {
+		%>
 		<span class="option-modify"><a
 			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=<%=article.getMemberId()%>">수정</a></span><span></span><span
 			class="option-delete"><a
 			href="doDelete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
+		<%
+			}
+		%>
 	</div>
 
 	<div style="margin-top: 50px">댓글 : ${totalCountForReply}</div>
@@ -288,6 +295,9 @@ th {
 		</div>
 		<div class="reply-option-box flex flex-jc-e"
 			style="margin: 0 10px 20px 0">
+			<%
+				if (loginedMemberId == articleReply.getMemberId()) {
+			%>
 			<div class="reply-modify">
 				<a
 					href="modifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">수정</a>
@@ -296,6 +306,9 @@ th {
 				<a
 					href="doDeleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">삭제</a>
 			</div>
+			<%
+				}
+			%>
 		</div>
 	</div>
 	<%

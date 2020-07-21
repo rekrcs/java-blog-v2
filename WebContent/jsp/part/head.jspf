@@ -7,11 +7,11 @@
 <%
 	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
 	List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
-	
+
 	////게시물별 카운팅
-	
+
 	int totalCateItems = (int) request.getAttribute("totalCateItems");
-//	session.getAttribute("loginedMemberId");
+	//	session.getAttribute("loginedMemberId");
 
 	//로그인 회원정보
 	int loginedMemberId = (int) request.getAttribute("loginedMemberId");
@@ -134,15 +134,19 @@
 					<%
 						if (isLogined == true) {
 					%>
-					<li><a
-						href="${pageContext.request.contextPath}/s/member/doLogout"
-						class="flex height-100p flex-ai-c">Log out</a></li>
+					<li><a href="" class="flex height-100p flex-ai-c"><%=loginedMember.getNickname()%></a>
+						<ul>
+							<li><a href="#" class="block">My page</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/s/member/doLogout"
+								class="block">log out</a></li>
+						</ul></li>
 					<%
 						} else {
 					%>
 					<li><a
 						href="${pageContext.request.contextPath}/s/member/login"
-						class="flex height-100p flex-ai-c">Log in</a></li>
+						class="flex height-100p flex-ai-c">log in</a></li>
 					<li><a href="${pageContext.request.contextPath}/s/member/join"
 						class="flex height-100p flex-ai-c">Sign up</a></li>
 					<%
@@ -198,9 +202,11 @@
 				<%
 					if (isLogined == true) {
 				%>
-				<li><a
-					href="${pageContext.request.contextPath}/s/member/doLogout"
-					class="block"> Log out</a></li>
+				<li><a href="#" class="block"><%=loginedMember.getNickname()%></a>
+					<ul>
+						<li><a href="#" class="block">My page</a></li>
+						<li><a href="${pageContext.request.contextPath}/s/member/doLogout" class="block">Log out</a></li>
+					</ul></li>
 				<%
 					} else {
 				%>

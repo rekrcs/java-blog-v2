@@ -65,7 +65,7 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionModifyReply() {
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int articleId = Util.getInt(req, "articleId");
 
@@ -87,7 +87,7 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionDodeleteReply() {
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int articleId = Util.getInt(req, "articleId");
 
@@ -109,7 +109,7 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionReply() {
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		int articleId = Util.getInt(req, "id");
 		if (session.getAttribute("loginedMemberId") == null) {
 			return "html:<script> alert('로그인 후 댓글 쓰기가 가능 합니다.'); location.replace('detail?id=" + articleId
@@ -123,7 +123,7 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionDoDelete() {
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int loginedMemberId = 0;
 		int memberId = Util.getInt(req, "memberId");
@@ -157,7 +157,7 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionModify() {
-		HttpSession session = req.getSession();
+//		HttpSession session = req.getSession();
 		int loginedMemberId = 0;
 
 		if (session.getAttribute("loginedMemberId") != null) {
