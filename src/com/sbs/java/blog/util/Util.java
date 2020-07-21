@@ -1,7 +1,9 @@
 package com.sbs.java.blog.util;
 
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,5 +73,38 @@ public class Util {
 
 	public static String getString(HttpServletRequest req, String paramName) {
 		return req.getParameter(paramName);
+	}
+
+	public static String getTemporaryPw() {
+		Random rand = new Random();
+		String temporaryPw = "";
+
+		for (int i = 0; i < 6; i++) {
+			String ran = Integer.toString(rand.nextInt(10));
+			temporaryPw += ran;
+		}
+		return temporaryPw;
+	}
+
+	public static String getTemporaryPwSHA256(String temporaryPw) {
+		String temporaryPwSHA256 = "";
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			byte[] hash = digest.digest(temporaryPw.getBytes("UTF-8"));
+			StringBuffer hexString = new StringBuffer();
+
+			for (int i = 0; i < hash.length; i++) {
+				String hex = Integer.toHexString(0xff & hash[i]);
+				if (hex.length() == 1)
+					hexString.append('0');
+				hexString.append(hex);
+			}
+
+			temporaryPwSHA256 = hexString.toString();
+			return temporaryPwSHA256;
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+
 	}
 }

@@ -14,6 +14,7 @@ import com.sbs.java.blog.dto.Member;
 import com.sbs.java.blog.service.ArticleService;
 import com.sbs.java.blog.service.MemberService;
 import com.sbs.java.blog.util.Util;
+import com.sbs.java.mail.service.MailService;
 
 public abstract class Controller {
 	protected Connection dbConn;

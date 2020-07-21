@@ -16,14 +16,17 @@ import com.sbs.java.blog.controller.MemberController;
 import com.sbs.java.blog.controller.TestController;
 import com.sbs.java.blog.exception.SQLErrorException;
 import com.sbs.java.blog.util.Util;
+import com.sbs.java.mail.service.MailService;
 
 public class App {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
+	private MailService mailService;
 
-	public App(HttpServletRequest req, HttpServletResponse resp) {
+	public App(HttpServletRequest req, HttpServletResponse resp, MailService mailService) {
 		this.req = req;
 		this.resp = resp;
+		this.mailService = mailService;
 	}
 
 	private void loadDbDriver() throws IOException {
@@ -60,7 +63,7 @@ public class App {
 			dbConn = DriverManager.getConnection(url, user, password);
 
 			// 올바른 컨트롤러로 라우팅
-			route(dbConn, req, resp);
+			route(dbConn, req, resp, mailService);
 		} catch (SQLException e) {
 			Util.printEx("SQL 예외(커넥션 열기)", resp, e);
 		} catch (SQLErrorException e) {
@@ -79,7 +82,7 @@ public class App {
 
 	}
 
-	private void route(Connection dbConn, HttpServletRequest req, HttpServletResponse resp)
+	private void route(Connection dbConn, HttpServletRequest req, HttpServletResponse resp, MailService mailService)
 			throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
 
@@ -98,7 +101,7 @@ public class App {
 			controller = new ArticleController(dbConn, actionMethodName, req, resp);
 			break;
 		case "member":
-			controller = new MemberController(dbConn, actionMethodName, req, resp);
+			controller = new MemberController(dbConn, actionMethodName, req, resp, mailService);
 			break;
 		case "home":
 			controller = new HomeController(dbConn, actionMethodName, req, resp);

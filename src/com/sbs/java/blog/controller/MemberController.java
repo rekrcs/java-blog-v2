@@ -1,29 +1,23 @@
 package com.sbs.java.blog.controller;
 
-import java.security.MessageDigest;
 import java.sql.Connection;
 import java.util.List;
-import java.util.Properties;
-import java.util.Random;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.java.blog.dto.Member;
+import com.sbs.java.blog.util.Util;
+import com.sbs.java.mail.service.MailService;
 
 public class MemberController extends Controller {
 
+	private MailService mailService;
+
 	public MemberController(Connection dbConn, String actionMethodName, HttpServletRequest req,
-			HttpServletResponse resp) {
+			HttpServletResponse resp, MailService mailService) {
 		super(dbConn, actionMethodName, req, resp);
+		this.mailService = mailService;
 	}
 
 	@Override
@@ -52,25 +46,9 @@ public class MemberController extends Controller {
 		String loginId = req.getParameter("loginId");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
-		String temporaryPw = getTemporaryPw();
-		String temporaryPwSHA256 = "";
+		String temporaryPw = Util.getTemporaryPw();
+		String temporaryPwSHA256 = Util.getTemporaryPwSHA256(temporaryPw);
 
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] hash = digest.digest(temporaryPw.getBytes("UTF-8"));
-			StringBuffer hexString = new StringBuffer();
-
-			for (int i = 0; i < hash.length; i++) {
-				String hex = Integer.toHexString(0xff & hash[i]);
-				if (hex.length() == 1)
-					hexString.append('0');
-				hexString.append(hex);
-			}
-
-			temporaryPwSHA256 = hexString.toString();
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
 
 		List<Member> members = memberService.getForPrintMembers();
 
@@ -81,25 +59,14 @@ public class MemberController extends Controller {
 
 				int num = memberService.getTemporaryPw(memberId, temporaryPwSHA256);
 
-				getGmailForTemporaryPw(name, temporaryPw, email);
-
+//				getGmailForTemporaryPw(name, temporaryPw, email);
+				boolean sendMailDone = mailService.findPassword(email, name + "님 임시 비밀번호 입니다.", "임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요") == 1;
 				return String.format(
 						"html:<script> alert('%s님 임시비번이 이메일로 발송되었습니다.'); location.replace('../home/main'); </script>",
 						name);
 			}
 		}
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
-	}
-
-	private String getTemporaryPw() {
-		Random rand = new Random();
-		String temporaryPw = "";
-
-		for (int i = 0; i < 6; i++) {
-			String ran = Integer.toString(rand.nextInt(10));
-			temporaryPw += ran;
-		}
-		return temporaryPw;
 	}
 
 	private String doActionFindPassword() {
@@ -151,7 +118,7 @@ public class MemberController extends Controller {
 
 	private String doActionDoJoin() {
 //		List<Member> members = memberService.getForPrintMembers();
-		
+
 		String loginId = req.getParameter("loginId");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
@@ -181,95 +148,97 @@ public class MemberController extends Controller {
 		}
 
 		memberService.join(loginId, loginPw, name, nickname, email);
-		gmailSend(name, email);
+//		gmailSend(name, email);
+
+		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", "반갑습니다.!!") == 1;
 		return String.format("html:<script> alert('%s님 환영합니다.'); location.replace('../home/main'); </script>", name);
 	}
 
 	// 끝
-	private void gmailSend(String name, String email) {
-		String user = ""; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
-		String password = ""; // 패스워드
-		// SMTP 서버 정보를 설정한다.
-		Properties prop = new Properties();
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-		prop.put("mail.smtp.port", 465);
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.ssl.enable", "true");
-		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+//	private void gmailSend(String name, String email) {
+//		String user = ""; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
+//		String password = ""; // 패스워드
+//		// SMTP 서버 정보를 설정한다.
+//		Properties prop = new Properties();
+//		prop.put("mail.smtp.host", "smtp.gmail.com");
+//		prop.put("mail.smtp.port", 465);
+//		prop.put("mail.smtp.auth", "true");
+//		prop.put("mail.smtp.ssl.enable", "true");
+//		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+//
+//		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+//			protected PasswordAuthentication getPasswordAuthentication() {
+//				return new PasswordAuthentication(user, password);
+//			}
+//		});
+//
+//		try {
+//			MimeMessage message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress(user));
+//
+//			// 수신자메일주소
+//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+//
+//			// Subject
+//			message.setSubject(name + "님 가입환영합니다."); // 메일 제목을 입력
+//
+//			// Text
+//			message.setText("blog에 가입하셨습니다."); // 메일 내용을 입력
+//
+//			// send the message
+//			Transport.send(message); //// 전송
+//			System.out.println("message sent successfully...");
+//		} catch (AddressException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (MessagingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
-		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
-			}
-		});
-
-		try {
-			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(user));
-
-			// 수신자메일주소
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-
-			// Subject
-			message.setSubject(name + "님 가입환영합니다."); // 메일 제목을 입력
-
-			// Text
-			message.setText("blog에 가입하셨습니다."); // 메일 내용을 입력
-
-			// send the message
-			Transport.send(message); //// 전송
-			System.out.println("message sent successfully...");
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private void getGmailForTemporaryPw(String name, String temporaryPw, String email) {
-		String user = ""; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
-		String password = ""; // 패스워드
-
-		// SMTP 서버 정보를 설정한다.
-		Properties prop = new Properties();
-		prop.put("mail.smtp.host", "smtp.gmail.com");
-		prop.put("mail.smtp.port", 465);
-		prop.put("mail.smtp.auth", "true");
-		prop.put("mail.smtp.ssl.enable", "true");
-		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-
-		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(user, password);
-			}
-		});
-
-		try {
-			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(user));
-
-			// 수신자메일주소
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-
-			// Subject
-			message.setSubject(name + "님 임시비빌번호입니다."); // 메일 제목을 입력
-
-			// Text
-			message.setText("임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요"); // 메일 내용을 입력
-
-			// send the message
-			Transport.send(message); //// 전송
-			System.out.println("message sent successfully...");
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	private void getGmailForTemporaryPw(String name, String temporaryPw, String email) {
+//		String user = ""; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
+//		String password = ""; // 패스워드
+//
+//		// SMTP 서버 정보를 설정한다.
+//		Properties prop = new Properties();
+//		prop.put("mail.smtp.host", "smtp.gmail.com");
+//		prop.put("mail.smtp.port", 465);
+//		prop.put("mail.smtp.auth", "true");
+//		prop.put("mail.smtp.ssl.enable", "true");
+//		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+//
+//		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
+//			protected PasswordAuthentication getPasswordAuthentication() {
+//				return new PasswordAuthentication(user, password);
+//			}
+//		});
+//
+//		try {
+//			MimeMessage message = new MimeMessage(session);
+//			message.setFrom(new InternetAddress(user));
+//
+//			// 수신자메일주소
+//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+//
+//			// Subject
+//			message.setSubject(name + "님 임시비빌번호입니다."); // 메일 제목을 입력
+//
+//			// Text
+//			message.setText("임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요"); // 메일 내용을 입력
+//
+//			// send the message
+//			Transport.send(message); //// 전송
+//			System.out.println("message sent successfully...");
+//		} catch (AddressException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (MessagingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 //
 //	for(
