@@ -22,11 +22,15 @@ public class App {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private MailService mailService;
+	private String dbId;
+	private String dbPw;
 
-	public App(HttpServletRequest req, HttpServletResponse resp, MailService mailService) {
+	public App(HttpServletRequest req, HttpServletResponse resp, MailService mailService, String dbId, String dbPw) {
 		this.req = req;
 		this.resp = resp;
 		this.mailService = mailService;
+		this.dbId = dbId;
+		this.dbPw = dbPw;
 	}
 
 	private void loadDbDriver() throws IOException {
@@ -129,11 +133,11 @@ public class App {
 	}
 
 	private String getDbId() {
-		return "site33";
+		return dbId;
 	}
 
 	private String getDbPassword() {
-		return "sbs123414";
+		return dbPw;
 	}
 
 }

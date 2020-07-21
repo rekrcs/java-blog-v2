@@ -18,9 +18,12 @@ public class DispatcherServlet extends HttpServlet {
 		
 		String gmailId = getServletConfig().getInitParameter("gmailId");
 		String gmailPw = getServletConfig().getInitParameter("gmailPw");
+		String dbId = getServletConfig().getInitParameter("dbId");
+		String dbPw = getServletConfig().getInitParameter("dbPw");
+		
 		MailService mailService = new MailService(gmailId, gmailPw, gmailId, "관리자");
 		
-		new App(req, resp, mailService).start();
+		new App(req, resp, mailService, dbId, dbPw).start();
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
