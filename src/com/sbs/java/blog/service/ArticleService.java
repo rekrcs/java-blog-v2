@@ -103,5 +103,11 @@ public class ArticleService extends Service {
 		return articleDao.getForPrintListInOrderHit(showArticlesInMainPage);
 	}
 
+	public List<Article> getForPrintArticlesByMemberId(int id) {
+		return articleDao.getForPrintArticlesByMemberId(id);
+	}
 
+	public int getForPrintListArticlesCountByMemberId(int id) {
+		return articleDao.getForPrintListArticlesCountByMemberId(id);
+	}
 }

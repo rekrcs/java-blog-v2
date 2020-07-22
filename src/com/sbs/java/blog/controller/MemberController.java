@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sbs.java.blog.dto.Article;
 import com.sbs.java.blog.dto.Member;
 import com.sbs.java.blog.util.Util;
 import com.sbs.java.mail.service.MailService;
@@ -41,9 +42,22 @@ public class MemberController extends Controller {
 			return doActionFindId();
 		case "doFindId":
 			return doActionDoFindId();
+		case "myPage":
+			return doActionMyPage();
 		}
 		return "";
 
+	}
+
+	private String doActionMyPage() {
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		
+		List<Article> articles = articleService.getForPrintArticlesByMemberId(loginedMemberId);
+		req.setAttribute("articles", articles);
+		
+		int totalCount = articleService.getForPrintListArticlesCountByMemberId(loginedMemberId);
+		req.setAttribute("totalCount", totalCount);
+		return "member/myPage.jsp";
 	}
 
 	private String doActionDoFindId() {

@@ -1,9 +1,20 @@
+<%@ page import="java.util.List"%>
+<%@ page import="com.sbs.java.blog.dto.Article"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
-
+<%
+	List<Article> articles = (List<Article>) request.getAttribute("articles");
+%>
 <style>
+.userbox {
+ font-size: 1.2rem;
+ text-align: center;
+}
 
+.userWrite {
+	margin-top: 20px;
+}
 /*홈으로 돌아가기*/
 .backHome {
 	text-align: center;
@@ -24,7 +35,44 @@
 
 <!--body 내용-->
 <section class="body-main">
+	<div class="myPage-box con">
+		<h2 style="text-align: center">My Page</h2>
+		<div class="userbox">
+			<div class="userInf">
+				<div class="userName">
+					이름 :
+					<%=loginedMember.getName()%></div>
+				<div class="userNickname">
+					닉네임 :
+					<%=loginedMember.getNickname()%></div>
+				<div class="email">
+					이메일 :
+					<%=loginedMember.getEmail()%></div>
+			</div>
 
+
+			<div class="userWrite">
+				<div class="userArticle">내가쓴 글 : ${totalCount}</div>
+				<div class="userArticle">내가쓴 글 리스트</div>
+				<table border="1" align ="center">
+					<tr align="center" bgcolor="skybule">
+						<th>카테고리</th>
+						<th>제목</th>
+					</tr>
+					<%
+						for (Article article : articles) {
+					%>
+					<tr>
+						<td><%=article.getExtra().get("cateItemName")%></td>
+						<td><a href="${pageContext.request.contextPath}/s/article/detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
+					</tr>
+					<%
+						}
+					%>
+				</table>
+			</div>
+		</div>
+	</div>
 	<div class="backHome">
 		<a href="../home/main">홈으로 돌아가기</a>
 	</div>

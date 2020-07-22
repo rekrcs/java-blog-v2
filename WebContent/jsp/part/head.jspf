@@ -136,7 +136,7 @@
 					%>
 					<li><a href="" class="flex height-100p flex-ai-c"><%=loginedMember.getNickname()%></a>
 						<ul>
-							<li><a href="#" class="block">My page</a></li>
+							<li><a href="${pageContext.request.contextPath}/s/member/myPage" class="block">My page</a></li>
 							<li><a
 								href="${pageContext.request.contextPath}/s/member/doLogout"
 								class="block">log out</a></li>
@@ -204,7 +204,7 @@
 				%>
 				<li><a href="#" class="block"><%=loginedMember.getNickname()%></a>
 					<ul>
-						<li><a href="#" class="block">My page</a></li>
+						<li><a href="${pageContext.request.contextPath}/s/member/myPage" class="block">My page</a></li>
 						<li><a href="${pageContext.request.contextPath}/s/member/doLogout" class="block">Log out</a></li>
 					</ul></li>
 				<%
