@@ -37,9 +37,35 @@ public class MemberController extends Controller {
 			return doActionFindPassword();
 		case "doFindPassword":
 			return doActionDoFindPassword();
+		case "findId":
+			return doActionFindId();
+		case "doFindId":
+			return doActionDoFindId();
 		}
 		return "";
 
+	}
+
+	private String doActionDoFindId() {
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+
+		List<Member> members = memberService.getForPrintMembers();
+
+		for (Member member : members) {
+			if (name.equals(member.getName()) && email.equals(member.getEmail())) {
+
+				boolean sendMailDone = mailService.findId(email, name + "님의 아이디 입니다.",
+						"아이디 : " + member.getLoginId()) == 1;
+				return String.format(
+						"html:<script> alert('%s님 아이디가 이메일로 발송되었습니다.'); location.replace('login'); </script>", name);
+			}
+		}
+		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
+	}
+
+	private String doActionFindId() {
+		return "member/findId.jsp";
 	}
 
 	private String doActionDoFindPassword() {
@@ -48,7 +74,6 @@ public class MemberController extends Controller {
 		String email = req.getParameter("email");
 		String temporaryPw = Util.getTemporaryPw();
 		String temporaryPwSHA256 = Util.getTemporaryPwSHA256(temporaryPw);
-
 
 		List<Member> members = memberService.getForPrintMembers();
 
@@ -60,10 +85,10 @@ public class MemberController extends Controller {
 				int num = memberService.getTemporaryPw(memberId, temporaryPwSHA256);
 
 //				getGmailForTemporaryPw(name, temporaryPw, email);
-				boolean sendMailDone = mailService.findPassword(email, name + "님 임시 비밀번호 입니다.", "임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요") == 1;
+				boolean sendMailDone = mailService.findPassword(email, name + "님 임시 비밀번호 입니다.",
+						"임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요") == 1;
 				return String.format(
-						"html:<script> alert('%s님 임시비번이 이메일로 발송되었습니다.'); location.replace('../home/main'); </script>",
-						name);
+						"html:<script> alert('%s님 임시비번이 이메일로 발송되었습니다.'); location.replace('login'); </script>", name);
 			}
 		}
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");

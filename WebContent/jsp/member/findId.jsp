@@ -49,22 +49,6 @@
 <!-- 회원가입 중 유효하지 않은 input 방지  -->
 <script>
 	function submitJoinForm(form) {
-		form.loginId.value = form.loginId.value.trim();
-
-		if (form.loginId.value.length == 0) {
-			alert('로그인 아이디를 입력해주세요.');
-			form.loginId.focus();
-			return;
-		}
-
-		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-
-		if (form.loginPwConfirm.value.length == 0) {
-			alert('로그인 비번확인을 입력해주세요.');
-			form.loginPwConfirm.focus();
-			return;
-		}
-
 		form.name.value = form.name.value.trim();
 
 		if (form.name.value.length == 0) {
@@ -109,16 +93,10 @@
 
 <!--body 내용-->
 <section class="body-main">
-	<div class="find-password-form-box con">
-	<h2 style="text-align: center">비번 찾기</h2>
-		<form action="doFindPassword" method="POST" class="find-form form1"
+	<div class="find-id-form-box con">
+	<h2 style="text-align: center">아이디 찾기</h2>
+		<form action="doFindId" method="POST" class="find-form form1"
 			onsubmit="submitJoinForm(this); return false;">
-			<div class="form-row">
-				<div class="label">로그인 아이디</div>
-				<div class="input">
-					<input name="loginId" type="text" placeholder="로그인 아이디를 입력해주세요." />
-				</div>
-			</div>
 			<div class="form-row">
 				<div class="label">이름</div>
 				<div class="input">
@@ -134,7 +112,7 @@
 			<div class="form-row">
 				<div class="label">전송</div>
 				<div class="input">
-					<input type="submit" value="비번찾기" />
+					<input type="submit" value="아이디찾기" />
 				</div>
 			</div>
 		</form>

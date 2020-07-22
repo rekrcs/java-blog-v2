@@ -57,6 +57,14 @@
 .backHome>a:hover {
 	color: #008d62;
 }
+
+.find-inf>a {
+	color:blue;
+}
+
+.find-inf>a:hover {
+	color:red;
+}
 </style>
 
 <!-- 비번 암호화저장 -->
@@ -92,6 +100,7 @@
 <!--body 내용-->
 <section class="body-main">
 	<div class="login-form-box con">
+	<h2 style="text-align: center">로그인</h2>
 		<form action="doLogin" method="post" class="login-form form1"
 			onsubmit="submitLoginForm(this); return false;">
 			<input type="hidden" name="loginPwReal" />
@@ -110,12 +119,16 @@
 			<div class="form-row">
 				<div class="label">전송</div>
 				<div class="input">
-					<input type="submit" value="로그인" /> <a href="../home/main">취소</a>
+					<input type="submit" value="로그인" />
 				</div>
 			</div>
 		</form>
 		
-		<div class="find-password flex flex-jc-e"><a href="findPassword">비번찾기</a></div>
+		<div class="flex flex-jc-e">
+		<div class="find-inf"><a href="findId">[아이디찾기]</a></div>
+		<span style="padding:0 5px"></span>
+		<div class="find-inf"><a href="findPassword">[비번찾기]</a></div>
+		</div>
 	</div>
 	<div class="backHome">
 		<a href="../home/main">홈으로 돌아가기</a>

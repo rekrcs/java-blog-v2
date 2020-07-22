@@ -40,6 +40,23 @@
 		display: block;
 	}
 }
+
+/*홈으로 돌아가기*/
+.backHome {
+	text-align: center;
+	border-top: 1px solid rgba(0, 0, 0, .2);
+	border-bottom: 1px solid rgba(0, 0, 0, .2);
+	padding: 20px 0;
+	margin-top: 50px;
+	width: 70%;
+	margin-right: auto;
+	margin-left: auto;
+	font-weight: bold;
+}
+
+.backHome>a:hover {
+	color: #008d62;
+}
 </style>
 
 <!-- 비번 암호화저장 -->
@@ -114,6 +131,7 @@
 <!--body 내용-->
 <section class="body-main">
 	<div class="join-form-box con">
+	<h2 style="text-align: center">회원가입</h2>
 		<form action="doJoin" method="POST" class="join-form form1"
 			onsubmit="submitJoinForm(this); return false;">
 			<input type="hidden" name="loginPwReal" />
@@ -157,11 +175,13 @@
 			<div class="form-row">
 				<div class="label">전송</div>
 				<div class="input">
-					<input type="submit" value="회원가입" /> <a href="../home/main">취소</a>
+					<input type="submit" value="회원가입" />
 				</div>
 			</div>
 		</form>
 	</div>
-
+	<div class="backHome">
+		<a href="../home/main">홈으로 돌아가기</a>
+	</div>
 </section>
 <%@ include file="/jsp/part/foot.jspf"%>

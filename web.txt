@@ -18,6 +18,16 @@
 			<param-name>gmail</param-name>
 			<param-value></param-value>
 		</init-param>
+		
+		<init-param>
+			<param-name>db</param-name>
+			<param-value></param-value>
+		</init-param>
+		
+		<init-param>
+			<param-name>db</param-name>
+			<param-value></param-value>
+		</init-param>
 	</servlet>
 
 	<servlet-mapping>

@@ -22,4 +22,8 @@ public class MailService {
 	public int findPassword(String to, String title, String body) {
 		return Util.sendMail(gmailId, gmailPw, from, fromName, to, title, body);
 	}
+
+	public int findId(String to, String title, String body) {
+		return Util.sendMail(gmailId, gmailPw, from, fromName, to, title, body);
+	}
 }
