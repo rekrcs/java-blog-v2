@@ -239,7 +239,6 @@ for (CateItem cateItem : cateItems) {
 		<form action="doReply?id=<%=article.getId()%>" method="post"
 			class="write-form form1"
 			onsubmit="submitReplyForm(this); return false;">
-			>
 			<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->
 			<div class="form-row">
 				<div class="input">
