@@ -44,17 +44,55 @@ public class MemberController extends Controller {
 			return doActionDoFindId();
 		case "myPage":
 			return doActionMyPage();
+		case "userModify":
+			return doActionUserModify();
+		case "doUserModify":
+			return doActionDoUserModify();
 		}
 		return "";
 
 	}
 
+	private String doActionDoUserModify() {
+		String loginId = req.getParameter("loginId");
+		String email = req.getParameter("email");
+		String name = req.getParameter("name");
+		String nickname = req.getParameter("nickname");
+		String loginPw = req.getParameter("loginPwReal");
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		boolean isJoinableLoginId = memberService.isJoinableLoginId(loginId);
+
+		if (isJoinableLoginId == false) {
+			return String.format("html:<script> alert('%s(은)는 이미 사용중인 아이디 입니다.'); history.back(); </script>", loginId);
+		}
+
+		boolean isJoinableNickname = memberService.isJoinableNickname(nickname);
+
+		if (isJoinableNickname == false) {
+			return String.format("html:<script> alert('%s(은)는 이미 사용중인 닉네임 입니다.'); history.back(); </script>", nickname);
+		}
+
+		boolean isJoinableEmail = memberService.isJoinableEmail(email);
+
+		if (isJoinableEmail == false) {
+			return String.format("html:<script> alert('%s(은)는 이미 사용중인 이메일 입니다.'); history.back(); </script>", email);
+		}
+		memberService.userModify(loginId, loginPw, name, nickname, email, loginedMemberId);
+		
+		return String.format("html:<script> alert('%s님 정보가 수정 되었습니다.'); location.replace('../home/main'); </script>",
+				name);
+	}
+
+	private String doActionUserModify() {
+		return "member/userModify.jsp";
+	}
+
 	private String doActionMyPage() {
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
-		
+
 		List<Article> articles = articleService.getForPrintArticlesByMemberId(loginedMemberId);
 		req.setAttribute("articles", articles);
-		
+
 		int totalCount = articleService.getForPrintListArticlesCountByMemberId(loginedMemberId);
 		req.setAttribute("totalCount", totalCount);
 		return "member/myPage.jsp";

@@ -8,12 +8,23 @@
 %>
 <style>
 .userbox {
- font-size: 1.2rem;
- text-align: center;
+	font-size: 1.2rem;
+	text-align: center;
 }
 
 .userWrite {
 	margin-top: 20px;
+}
+
+.userModify {
+	margin-top: 50px;
+}
+
+.userModify >a {
+	color: blue;
+}
+.userModify >a:hover {
+	color: red;
 }
 /*홈으로 돌아가기*/
 .backHome {
@@ -54,7 +65,7 @@
 			<div class="userWrite">
 				<div class="userArticle">내가쓴 글 : ${totalCount}</div>
 				<div class="userArticle">내가쓴 글 리스트</div>
-				<table border="1" align ="center">
+				<table border="1" align="center">
 					<tr align="center" bgcolor="skybule">
 						<th>카테고리</th>
 						<th>제목</th>
@@ -64,14 +75,19 @@
 					%>
 					<tr>
 						<td><%=article.getExtra().get("cateItemName")%></td>
-						<td><a href="${pageContext.request.contextPath}/s/article/detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
+						<td><a
+							href="${pageContext.request.contextPath}/s/article/detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
 					</tr>
 					<%
 						}
 					%>
 				</table>
+				<div class="userModify">
+					<a href="userModify">[개인정보 수정]</a>
+				</div>
 			</div>
 		</div>
+
 	</div>
 	<div class="backHome">
 		<a href="../home/main">홈으로 돌아가기</a>
