@@ -201,8 +201,10 @@ public class MemberController extends Controller {
 		}
 
 		session.setAttribute("loginedMemberId", loginedMemberId);
+		
+		String redirectUrl = Util.getString(req, "redirectUrl", "../home/main");
 
-		return String.format("html:<script> alert('로그인 되었습니다.'); location.replace('../home/main'); </script>");
+		return String.format("html:<script> alert('로그인 되었습니다.'); location.replace('" + redirectUrl + "'); </script>");
 		// 끝
 //		if (session.getAttribute("loginedMemberId") != null) {
 //			return "html:<script> alert('로그아웃후에 이용해 주세요'); location.replace('../home/main'); </script>";

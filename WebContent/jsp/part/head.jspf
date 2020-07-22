@@ -145,7 +145,7 @@
 						} else {
 					%>
 					<li><a
-						href="${pageContext.request.contextPath}/s/member/login"
+						href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUrl=${urlEncodedAfterLoginRedirectUrl}"
 						class="flex height-100p flex-ai-c">log in</a></li>
 					<li><a href="${pageContext.request.contextPath}/s/member/join"
 						class="flex height-100p flex-ai-c">Sign up</a></li>
@@ -210,7 +210,7 @@
 				<%
 					} else {
 				%>
-				<li><a href="${pageContext.request.contextPath}/s/member/login"
+				<li><a href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUrl=${urlEncodedAfterLoginRedirectUrl}"
 					class="block"> Log in</a></li>
 
 				<li><a href="${pageContext.request.contextPath}/s/member/join"
