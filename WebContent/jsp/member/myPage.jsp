@@ -20,10 +20,22 @@
 	margin-top: 50px;
 }
 
-.userModify >a {
+.userModify>a {
 	color: blue;
 }
-.userModify >a:hover {
+
+.userModify>a:hover {
+	color: red;
+}
+
+.userDelete {
+	margin: 30px 0;
+}
+
+.userDelete>a {
+	color: blue;
+}
+.userDelete>a:hover {
 	color: red;
 }
 /*홈으로 돌아가기*/
@@ -84,6 +96,10 @@
 				</table>
 				<div class="userModify">
 					<a href="userModify">[개인정보 수정]</a>
+				</div>
+
+				<div class="userDelete">
+					<a href="userDelete">[회원탈퇴]</a>
 				</div>
 			</div>
 		</div>

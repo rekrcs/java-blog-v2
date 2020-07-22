@@ -128,4 +128,13 @@ public class MemberDao extends Dao {
 		return DBUtil.update(dbConn, secSql);
 	}
 
+	public int memberDelete(int id) {
+		SecSql secSql = new SecSql();
+
+		secSql.append("DELETE FROM member");
+		secSql.append("WHERE id = ?", id);
+
+		return DBUtil.delete(dbConn, secSql);
+	}
+
 }

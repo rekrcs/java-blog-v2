@@ -50,4 +50,8 @@ public class MemberService extends Service {
 		return memberDao.userModify(loginId, loginPw, name, nickname, email, id);
 		
 	}
+
+	public int memberDelete(int id) {
+		return memberDao.memberDelete(id);
+	}
 }
