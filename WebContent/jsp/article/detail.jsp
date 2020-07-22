@@ -7,9 +7,9 @@
 <%@ include file="/jsp/part/head.jspf"%>
 <%
 	Article article = (Article) request.getAttribute("article");
-	List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
-	int totalPage = (int) request.getAttribute("totalPage");
-	int paramPage = (int) request.getAttribute("page");
+List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
+int totalPage = (int) request.getAttribute("totalPage");
+int paramPage = (int) request.getAttribute("page");
 %>
 <!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <script
@@ -47,6 +47,21 @@
 <link rel="stylesheet"
 	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 
+
+
+<script>
+	function submitReplyForm(form) {
+		form.body.value = form.body.value.trim();
+
+		if (form.body.value.length == 0) {
+			alert('내용을 입력해주세요.');
+			form.body.focus();
+			return;
+		}
+
+		form.submit();
+	}
+</script>
 
 <style>
 .body-main-name {
@@ -188,12 +203,12 @@ th {
 <!--카테고리 이름 받기-->
 <%
 	String cateName = null;
-	for (CateItem cateItem : cateItems) {
-		if (cateItem.getId() == article.getCateItemId()) {
-			cateName = cateItem.getName();
-			break;
-		}
+for (CateItem cateItem : cateItems) {
+	if (cateItem.getId() == article.getCateItemId()) {
+		cateName = cateItem.getName();
+		break;
 	}
+}
 %>
 
 <!--body 내용-->
@@ -254,6 +269,7 @@ th {
 		<span class="option-modify"><a
 			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=<%=article.getMemberId()%>">수정</a></span><span></span><span
 			class="option-delete"><a
+			onclick="if ( confirm('게시물을 삭제하시겠습니까?') == false ) return false;"
 			href="doDelete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
 		<%
 			}
@@ -265,7 +281,7 @@ th {
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
 		<form action="doReply?id=<%=article.getId()%>" method="post"
-			class="write-form form1">
+			class="write-form form1" onsubmit="submitReplyForm(this); return false;">>
 			<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->
 			<div class="form-row">
 				<div class="input">
@@ -303,7 +319,7 @@ th {
 					href="modifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">수정</a>
 			</div>
 			<div class="reply-delete" style="margin-left: 10px">
-				<a
+				<a onclick="if ( confirm('댓글을 삭제하시겠습니까?') == false ) return false;"
 					href="doDeleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">삭제</a>
 			</div>
 			<%

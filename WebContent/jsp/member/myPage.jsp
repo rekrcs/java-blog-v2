@@ -99,7 +99,7 @@
 				</div>
 
 				<div class="userDelete">
-					<a href="userDelete">[회원탈퇴]</a>
+					<a onclick="if ( confirm('탈퇴하시겠습니까?') == false ) return false;" href="userDelete">[회원탈퇴]</a>
 				</div>
 			</div>
 		</div>

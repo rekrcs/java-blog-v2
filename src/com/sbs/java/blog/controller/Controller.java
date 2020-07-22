@@ -159,8 +159,11 @@ public abstract class Controller {
 			break;
 		}
 
+		String urlEncodedAfterLoginRedirectUrl = (String) req.getAttribute("urlEncodedAfterLoginRedirectUrl");
+
 		if (needToLogin && isLogined == false) {
-			return "html:<script> alert('로그인 후 이용해주세요.'); location.href = '../member/login'; </script>";
+			return "html:<script> alert('로그인 후 이용해주세요.'); location.href = '../member/login?afterLoginRedirectUrl="
+					+ urlEncodedAfterLoginRedirectUrl + "'; </script>";
 		}
 		// 로그인에 관련된 가드 끝
 
