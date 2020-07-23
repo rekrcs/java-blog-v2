@@ -77,15 +77,15 @@ public class Util {
 		return req.getParameter(paramName);
 	}
 
-	public static String getTemporaryPw() {
+	public static String getAuthCode() {
 		Random rand = new Random();
-		String temporaryPw = "";
+		String getAuthCode = "";
 
 		for (int i = 0; i < 6; i++) {
 			String ran = Integer.toString(rand.nextInt(10));
-			temporaryPw += ran;
+			getAuthCode += ran;
 		}
-		return temporaryPw;
+		return getAuthCode;
 	}
 
 	public static String getTemporaryPwSHA256(String temporaryPw) {

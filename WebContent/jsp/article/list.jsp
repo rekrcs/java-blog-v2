@@ -9,7 +9,6 @@
 	int paramPage = (int) request.getAttribute("page");
 	String cateItemName = (String) request.getAttribute("cateItemName");
 %>
-
 <style>
 .page-box {
 	margin-bottom: 15px;

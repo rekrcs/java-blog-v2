@@ -54,4 +54,8 @@ public class MemberService extends Service {
 	public int memberDelete(int id) {
 		return memberDao.memberDelete(id);
 	}
+
+	public int successAuth(int authStatus) {
+		return memberDao.successAuth(authStatus);
+	}
 }

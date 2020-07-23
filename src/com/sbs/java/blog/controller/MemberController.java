@@ -56,17 +56,32 @@ public class MemberController extends Controller {
 			return doActionDoubleCheckPassword();
 		case "doDoubleCheckPassword":
 			return doActionDoDoubleCheckPassword();
+		case "doAuthMail":
+			return doActionDoAuthMail();
 		}
 		return "";
 
 	}
 
+	private String doActionDoAuthMail() {
+		String code = req.getParameter("code");
+		String authCode = (String) session.getAttribute("code");
+
+		if (authCode.equals(code)) {
+			int num = memberService.successAuth(1);
+			return String.format(
+					"html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
+		}
+		return String.format(
+				"html:<script> alert('일치하는 정보가 없습니다.'); window.close(); </script>");
+	}
+
 	private String doActionDoDoubleCheckPassword() {
-		String loginPw = req.getParameter("loginPwReal");	
+		String loginPw = req.getParameter("loginPwReal");
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
-		
+
 		Member member = memberService.getMemberById(loginedMemberId);
-		if(member.getLoginPw().equals(loginPw)) {
+		if (member.getLoginPw().equals(loginPw)) {
 			return "member/userModify.jsp";
 		}
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
@@ -158,7 +173,7 @@ public class MemberController extends Controller {
 		String loginId = req.getParameter("loginId");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
-		String temporaryPw = Util.getTemporaryPw();
+		String temporaryPw = Util.getAuthCode();
 		String temporaryPwSHA256 = Util.getTemporaryPwSHA256(temporaryPw);
 
 		List<Member> members = memberService.getForPrintMembers();
@@ -203,7 +218,12 @@ public class MemberController extends Controller {
 		if (loginedMemberId == -1) {
 			return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
 		}
-
+		
+		Member member = memberService.getMemberById(loginedMemberId);
+		
+		if(member.getMailAuthStatus() == 0) {
+			return String.format("html:<script> alert('이메일 인증후에 로그인 가능합니다.'); history.back(); </script>");
+		}
 		session.setAttribute("loginedMemberId", loginedMemberId);
 
 		String redirectUrl = Util.getString(req, "redirectUrl", "../home/main");
@@ -263,8 +283,16 @@ public class MemberController extends Controller {
 		memberService.join(loginId, loginPw, name, nickname, email);
 //		gmailSend(name, email);
 
-		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", "반갑습니다.!!") == 1;
-		return String.format("html:<script> alert('%s님 환영합니다.'); location.replace('../home/main'); </script>", name);
+		String code = Util.getAuthCode();
+
+		session.setAttribute("code", code);
+
+		String body = "";
+		body += "로그인을 위해서는 인증이 필요합니다. 아래의 링크를 클릭해 주세요";
+//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s", code);
+		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s", code);
+		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
+		return String.format("html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>", name);
 	}
 
 	// 끝
