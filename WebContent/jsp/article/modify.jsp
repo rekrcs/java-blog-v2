@@ -1,71 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
+<%@ include file="/jsp/part/toastUiEditor.jspf"%>
+<%
+	Article article = (Article) request.getAttribute("article");
+%>
 
-<!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
-
-<!-- 하이라이트 라이브러리, 언어 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/css.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/javascript.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/xml.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/php.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/php-template.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/sql.min.js"></script>
-
-<!-- 코드 미러 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
-
-<!-- 토스트 UI 에디터, 자바스크립트 코어 -->
-<script
-	src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-
-<!-- 토스트 UI 에디터, 신택스 하이라이트 플러그인 추가 -->
-<script
-	src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
-
-<!-- 토스트 UI 에디터, CSS 코어 -->
-<link rel="stylesheet"
-	href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-	
-	
 <script>
-	var writeFormSubmitted = false;
+	var submitModifyFormDone = false;
 
-	function submitWriteForm(form) {
-		if (writeFormSubmitted) {
-			alert('처리 중입니다.');
+	function submitModifyForm(form) {
+		if (submitModifyFormDone) {
+			alert('처리중입니다.');
 			return;
 		}
 
 		form.title.value = form.title.value.trim();
+
 		if (form.title.value.length == 0) {
 			alert('제목을 입력해주세요.');
 			form.title.focus();
 
-			return;
+			return false;
 		}
 
-		var source = editor1.getMarkdown().trim();
-		if (source.length == 0) {
+		var editor = $(form).find('.toast-editor').data('data-toast-editor');
+
+		var body = editor.getMarkdown();
+		body = body.trim();
+
+		if (body.length == 0) {
 			alert('내용을 입력해주세요.');
-			editor1.focus();
-			return;
+			editor.focus();
+
+			return false;
 		}
 
-		form.body.value = source;
-		form.submit();
+		form.body.value = body;
 
+		form.submit();
+		submitModifyFormDone = true;
 	}
 </script>
 
@@ -137,10 +111,24 @@
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
-	<div class="write-form-box con">
-		<form action="doModify?id=${param.id}" method="post"
-			onsubmit="submitWriteForm(this); return false;"
-			class="write-form form1">
+	<div class="modify-form-box con">
+		<form action="doModify?id=${param.id}" method="POST"
+			class="modify-form form1"
+			onsubmit="submitModifyForm(this); return false;">
+			<input type="hidden" name="id" value="<%=article.getId()%>">
+			<input type="hidden" name="body">
+			<div class="form-row">
+				<div class="label">번호</div>
+				<div class="input">
+					<%=article.getId()%>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="label">날짜</div>
+				<div class="input">
+					<%=article.getRegDate()%>
+				</div>
+			</div>
 			<div class="form-row">
 				<div class="label">카테고리 선택</div>
 				<div class="input">
@@ -148,7 +136,9 @@
 						<%
 							for (CateItem cateItem : cateItems) {
 						%>
-						<option value="<%=cateItem.getId()%>"><%=cateItem.getName()%></option>
+						<option
+							<%=cateItem.getId() == article.getCateItemId() ? "selected" : ""%>
+							value="<%=cateItem.getId()%>"><%=cateItem.getName()%></option>
 						<%
 							}
 						%>
@@ -159,33 +149,21 @@
 			<div class="form-row">
 				<div class="label">제목</div>
 				<div class="input">
-					<input name="title" type="text" placeholder="제목을 입력해주세요." />
+					<input value="<%=article.getTitle()%>" name="title" type="text"
+						placeholder="제목을 입력해주세요." />
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="label">내용</div>
 				<div class="input">
-					<!-- 					<textarea name="body" placeholder="내용을 입력해주세요."></textarea> -->
-					<input type="hidden" name="body">
-					<div id="editor1"></div>
-					<script>
-						var editor1 = new toastui.Editor({
-							el : document.querySelector("#editor1"),
-							height : "600px",
-							initialEditType : "markdown",
-							previewStyle : "vertical",
-							initialValue : "# 안녕",
-							plugins : [
-									toastui.Editor.plugin.codeSyntaxHighlight,
-									youtubePlugin, replPlugin, codepenPlugin ]
-						});
-					</script>
+					<script type="text/x-template"><%=article.getBodyForXTemplate()%></script>
+					<div class="toast-editor"></div>
 				</div>
 			</div>
 			<div class="form-row">
-				<div class="label">전송</div>
+				<div class="label">수정</div>
 				<div class="input">
-					<input type="submit" value="전송" /> <a href="list">취소</a>
+					<input type="submit" value="수정" /> <a href="list">취소</a>
 				</div>
 			</div>
 		</form>

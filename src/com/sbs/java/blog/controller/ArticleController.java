@@ -176,6 +176,11 @@ public class ArticleController extends Controller {
 					+ "'); </script>";
 		}
 
+
+		Article article = articleService.getForPrintArticle(id);
+
+		req.setAttribute("article", article);
+
 		return "article/modify.jsp";
 	}
 
@@ -222,8 +227,8 @@ public class ArticleController extends Controller {
 		if (!Util.empty(req, "page") && Util.isNum(req, "page")) {
 			page = Util.getInt(req, "page");
 		}
-		
-		//댓글 리스팅 페이징
+
+		// 댓글 리스팅 페이징
 		int itemsInAPage = 3;
 		int totalCount = articleService.getForPrintListReplyCount(id);
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
