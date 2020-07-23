@@ -182,27 +182,27 @@ for (CateItem cateItem : cateItems) {
 	<table border="1" width="100%">
 		<tr>
 			<th>번호</th>
-			<td><%=article.getId()%></td>
+			<td>${article.id}</td>
 		</tr>
 		<tr>
 			<th>글쓴이</th>
-			<td><%=article.getExtra().get("writer")%></td>
+			<td>${article.extra.writer}</td>
 		</tr>
 		<tr>
 			<th>조회수</th>
-			<td><%=article.getHit()%></td>
+			<td>${article.hit}</td>
 		</tr>
 		<tr>
 			<th>작성일</th>
-			<td><%=article.getRegDate()%></td>
+			<td>${article.regDate}</td>
 		</tr>
 		<tr>
 			<th>수정일</th>
-			<td><%=article.getUpdateDate()%></td>
+			<td>${article.updateDate}</td>
 		</tr>
 		<tr>
 			<th>카테고리</th>
-			<td><%=cateName%></td>
+			<td>${cateItem.name}</td>
 		</tr>
 		<tr>
 			<th>댓글수</th>
@@ -210,10 +210,10 @@ for (CateItem cateItem : cateItems) {
 		</tr>
 	</table>
 	<div class="body-main-name">
-		<div class="title"><%=article.getTitle()%></div>
+		<div class="title">${article.title}</div>
 	</div>
 	<div>
-		<script type="text/x-template"><%=article.getBodyForXTemplate()%></script>
+		<script type="text/x-template">${article.bodyForXTemplate}</script>
 		<div class="toast-editor toast-editor-viewer"></div>
 	</div>
 
@@ -223,10 +223,10 @@ for (CateItem cateItem : cateItems) {
 			if (loginedMemberId == article.getMemberId()) {
 		%>
 		<span class="option-modify"><a
-			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=<%=article.getMemberId()%>">수정</a></span><span></span><span
+			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=${article.memberId}">수정</a></span><span></span><span
 			class="option-delete"><a
 			onclick="if ( confirm('게시물을 삭제하시겠습니까?') == false ) return false;"
-			href="doDelete?id=${param.id}&memberId=<%=article.getMemberId()%>">삭제</a></span>
+			href="doDelete?id=${param.id}&memberId=${article.memberId}">삭제</a></span>
 		<%
 			}
 		%>
@@ -236,7 +236,7 @@ for (CateItem cateItem : cateItems) {
 
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
-		<form action="doReply?id=<%=article.getId()%>" method="post"
+		<form action="doReply?id=${article.id}" method="post"
 			class="write-form form1"
 			onsubmit="submitReplyForm(this); return false;">
 			<!-- 				<form name="kk" onsubmit="kkSubmit(); reurn false;" class="write-form form1">		 -->

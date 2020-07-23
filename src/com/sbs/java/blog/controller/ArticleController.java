@@ -283,7 +283,7 @@ public class ArticleController extends Controller {
 
 		req.setAttribute("totalCount", totalCount);
 		req.setAttribute("totalPage", totalPage);
-		req.setAttribute("page", page);
+		req.setAttribute("cPage", page);
 
 		List<Article> articles = articleService.getForPrintListArticles(page, itemsInAPage, cateItemId,
 				searchKeywordType, searchKeyword);

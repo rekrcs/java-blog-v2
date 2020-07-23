@@ -2,9 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
-<%
-	ArticleReply articleReply = (ArticleReply) request.getAttribute("articleReply");
-%>
 
 <style>
 
@@ -103,16 +100,16 @@
 	<div class="reply-container">
 		<div class="reply-box">
 			<div class="reply-header" style="margin-bottom: 10px;">
-				<span style="margin-right: 20px">홍길동</span><span><%=articleReply.getRegDate().substring(0, 10)%></span>
+				<span style="margin-right: 20px">홍길동</span><span>${articleReply.regDate.substring(0, 10)}</span>
 			</div>
-			<div class="reply-body" style="font-size: 1.2rem"><%=articleReply.getBody()%></div>
+			<div class="reply-body" style="font-size: 1.2rem">${articleReply.body}</div>
 		</div>
 	</div>
 	
 	
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
-		<form action="doModifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>" method="post" class="write-form form1">
+		<form action="doModifyReply?id=${articleReply.id}&articleId=${articleReply.articleId}" method="post" class="write-form form1">
 
 			<div class="form-row">
 				<div class="input">
@@ -132,7 +129,7 @@
 </div>
 
 <div class="backHome">
-	<a href="detail?id=<%=articleReply.getArticleId()%>">게시물로 돌아가기</a>
+	<a href="detail?id=${articleReply.articleId}">게시물로 돌아가기</a>
 </div>
 <!--footer 파트-->
 <footer class="article-footer">
