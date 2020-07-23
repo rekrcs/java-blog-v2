@@ -52,9 +52,28 @@ public class MemberController extends Controller {
 			return doActionUserDelete();
 		case "doUserDelete":
 			return doActionDoUserDelete();
+		case "doubleCheckPassword":
+			return doActionDoubleCheckPassword();
+		case "doDoubleCheckPassword":
+			return doActionDoDoubleCheckPassword();
 		}
 		return "";
 
+	}
+
+	private String doActionDoDoubleCheckPassword() {
+		String loginPw = req.getParameter("loginPwReal");	
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		
+		Member member = memberService.getMemberById(loginedMemberId);
+		if(member.getLoginPw().equals(loginPw)) {
+			return "member/userModify.jsp";
+		}
+		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
+	}
+
+	private String doActionDoubleCheckPassword() {
+		return "member/doubleCheckPassword.jsp";
 	}
 
 	private String doActionDoUserDelete() {
@@ -69,7 +88,7 @@ public class MemberController extends Controller {
 
 		if (member.getLoginId().equals(loginId) && member.getEmail().equals(email) && member.getName().equals(name)
 				&& member.getNickname().equals(nickname) && member.getLoginPw().equals(loginPw)) {
-			
+
 			int deleteId = memberService.memberDelete(loginedMemberId);
 			session.removeAttribute("loginedMemberId");
 			return String.format("html:<script> alert('%s님 탈퇴됬습니다.'); location.replace('../home/main'); </script>",
@@ -92,21 +111,6 @@ public class MemberController extends Controller {
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		boolean isJoinableLoginId = memberService.isJoinableLoginId(loginId);
 
-		if (isJoinableLoginId == false) {
-			return String.format("html:<script> alert('%s(은)는 이미 사용중인 아이디 입니다.'); history.back(); </script>", loginId);
-		}
-
-		boolean isJoinableNickname = memberService.isJoinableNickname(nickname);
-
-		if (isJoinableNickname == false) {
-			return String.format("html:<script> alert('%s(은)는 이미 사용중인 닉네임 입니다.'); history.back(); </script>", nickname);
-		}
-
-		boolean isJoinableEmail = memberService.isJoinableEmail(email);
-
-		if (isJoinableEmail == false) {
-			return String.format("html:<script> alert('%s(은)는 이미 사용중인 이메일 입니다.'); history.back(); </script>", email);
-		}
 		memberService.userModify(loginId, loginPw, name, nickname, email, loginedMemberId);
 
 		return String.format("html:<script> alert('%s님 정보가 수정 되었습니다.'); location.replace('../home/main'); </script>",
@@ -201,7 +205,7 @@ public class MemberController extends Controller {
 		}
 
 		session.setAttribute("loginedMemberId", loginedMemberId);
-		
+
 		String redirectUrl = Util.getString(req, "redirectUrl", "../home/main");
 
 		return String.format("html:<script> alert('로그인 되었습니다.'); location.replace('" + redirectUrl + "'); </script>");

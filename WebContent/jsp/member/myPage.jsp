@@ -95,7 +95,7 @@
 					%>
 				</table>
 				<div class="userModify">
-					<a href="userModify">[개인정보 수정]</a>
+					<a href="doubleCheckPassword">[개인정보 수정]</a>
 				</div>
 
 				<div class="userDelete">

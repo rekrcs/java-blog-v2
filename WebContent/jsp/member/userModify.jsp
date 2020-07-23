@@ -65,7 +65,7 @@
 
 <!-- 회원가입 중 유효하지 않은 input 방지  -->
 <script>
-	function submitJoinForm(form) {
+	function submitModifyForm(form) {
 		form.loginId.value = form.loginId.value.trim();
 
 		if (form.loginId.value.length == 0) {
@@ -133,7 +133,7 @@
 	<div class="user-modify-form-box con">
 		<h2 style="text-align: center">개인정보 수정</h2>
 		<form action="doUserModify" method="POST" class="user-modify-form form1"
-			onsubmit="submitJoinForm(this); return false;">
+			onsubmit="submitModifyForm(this); return false;">
 			<input type="hidden" name="loginPwReal" />
 			<div class="form-row">
 				<div class="label">로그인 아이디</div>
