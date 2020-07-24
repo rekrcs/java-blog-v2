@@ -218,6 +218,10 @@ public class ArticleController extends Controller {
 		Article article = articleService.getForPrintArticle(id);
 
 		req.setAttribute("article", article);
+		
+		CateItem cateItem = articleService.getForPrintCateItemNameByArticleId(id);
+		req.setAttribute("cateItem", cateItem);
+		
 
 		int totalCountForReply = articleService.getForPrintListReplyCount(id);
 		req.setAttribute("totalCountForReply", totalCountForReply);

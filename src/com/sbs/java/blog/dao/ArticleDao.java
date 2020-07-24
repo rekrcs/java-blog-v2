@@ -387,6 +387,20 @@ public class ArticleDao extends Dao {
 		int count = DBUtil.selectRowIntValue(dbConn, sql);
 		return count;
 	}
+
+	public CateItem getForPrintCateItemNameByArticleId(int id) {
+		SecSql sql = new SecSql();
+
+		sql.append("SELECT A.*, C.name AS extra__cateItemName");
+		sql.append("FROM article AS A");
+		sql.append("INNER JOIN `cateItem` AS C");
+		sql.append("ON A.cateItemId = C.id");
+		sql.append("WHERE 1 ");
+		sql.append("AND A.id = ? ", id);
+		sql.append("AND displayStatus = 1 ");
+
+		return new CateItem(DBUtil.selectRow(dbConn, sql));
+	}
 }
 
 //	public List<ArticleReply> getArticleReply(int id) {

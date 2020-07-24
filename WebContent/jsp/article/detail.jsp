@@ -8,9 +8,9 @@
 <%@ include file="/jsp/part/toastUiEditor.jspf"%>
 <%
 	Article article = (Article) request.getAttribute("article");
-List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
-int totalPage = (int) request.getAttribute("totalPage");
-int paramPage = (int) request.getAttribute("page");
+	List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
+	int totalPage = (int) request.getAttribute("totalPage");
+	int paramPage = (int) request.getAttribute("page");
 %>
 
 
@@ -166,16 +166,6 @@ th {
 }
 </style>
 
-<!--카테고리 이름 받기-->
-<%
-	String cateName = null;
-for (CateItem cateItem : cateItems) {
-	if (cateItem.getId() == article.getCateItemId()) {
-		cateName = cateItem.getName();
-		break;
-	}
-}
-%>
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
@@ -202,7 +192,7 @@ for (CateItem cateItem : cateItems) {
 		</tr>
 		<tr>
 			<th>카테고리</th>
-			<td>${cateItem.name}</td>
+			<td>${cateItem.extra.cateItemName}</td>
 		</tr>
 		<tr>
 			<th>댓글수</th>
@@ -219,17 +209,14 @@ for (CateItem cateItem : cateItems) {
 
 	<!-- 수정 삭제버튼-->
 	<div class="option-box">
-		<%
-			if (loginedMemberId == article.getMemberId()) {
-		%>
-		<span class="option-modify"><a
-			href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=${article.memberId}">수정</a></span><span></span><span
-			class="option-delete"><a
-			onclick="if ( confirm('게시물을 삭제하시겠습니까?') == false ) return false;"
-			href="doDelete?id=${param.id}&memberId=${article.memberId}">삭제</a></span>
-		<%
-			}
-		%>
+		<c:if test="${loginedMemberId == article.memberId}">
+			<span class="option-modify"><a
+				href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=${article.memberId}">수정</a></span>
+			<span></span>
+			<span class="option-delete"><a
+				onclick="if ( confirm('게시물을 삭제하시겠습니까?') == false ) return false;"
+				href="doDelete?id=${param.id}&memberId=${article.memberId}">삭제</a></span>
+		</c:if>
 	</div>
 
 	<div style="margin-top: 50px">댓글 : ${totalCountForReply}</div>
@@ -256,49 +243,39 @@ for (CateItem cateItem : cateItems) {
 	</div>
 
 	<!-- 댓글 출력 -->
-	<%
-		for (ArticleReply articleReply : articleReplies) {
-	%>
-	<div class="reply-container">
-		<div class="reply-box">
-			<div class="reply-header" style="margin-bottom: 10px;">
-				<span style="margin-right: 20px"><%=articleReply.getExtra().get("writer")%></span><span><%=articleReply.getRegDate()%></span>
+	<c:forEach items="${articleReplies}" var="articleReply">
+		<div class="reply-container">
+			<div class="reply-box">
+				<div class="reply-header" style="margin-bottom: 10px;">
+					<span style="margin-right: 20px">${articleReply.extra.writer}</span><span>${articleReply.regDate}</span>
+				</div>
+				<div class="reply-body" style="font-size: 1.2rem">${articleReply.body}</div>
 			</div>
-			<div class="reply-body" style="font-size: 1.2rem"><%=articleReply.getBody()%></div>
+			<div class="reply-option-box flex flex-jc-e"
+				style="margin: 0 10px 20px 0">
+
+				<c:if test="${loginedMemberId == articleReply.memberId}">
+					<div class="reply-modify">
+						<a
+							href="modifyReply?id=${articleReply.id}&articleId=${articleReply.articleId}&memberId=${articleReply.memberId}">수정</a>
+					</div>
+					<div class="reply-delete" style="margin-left: 10px">
+						<a
+							onclick="if ( confirm('댓글을 삭제하시겠습니까?') == false ) return false;"
+							href="doDeleteReply?id=${articleReply.id}&articleId=${articleReply.articleId}&memberId=${articleReply.memberId}">삭제</a>
+					</div>
+				</c:if>
+			</div>
 		</div>
-		<div class="reply-option-box flex flex-jc-e"
-			style="margin: 0 10px 20px 0">
-			<%
-				if (loginedMemberId == articleReply.getMemberId()) {
-			%>
-			<div class="reply-modify">
-				<a
-					href="modifyReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">수정</a>
-			</div>
-			<div class="reply-delete" style="margin-left: 10px">
-				<a onclick="if ( confirm('댓글을 삭제하시겠습니까?') == false ) return false;"
-					href="doDeleteReply?id=<%=articleReply.getId()%>&articleId=<%=articleReply.getArticleId()%>&memberId=<%=articleReply.getMemberId()%>">삭제</a>
-			</div>
-			<%
-				}
-			%>
-		</div>
-	</div>
-	<%
-		}
-	%>
+	</c:forEach>
 
 	<!-- 	댓글 페이징 -->
 	<div class="con page-box">
 		<ul class="flex flex-jc-c">
-			<%
-				for (int i = 1; i <= totalPage; i++) {
-			%>
-			<li class="<%=i == paramPage ? "current" : ""%>"><a
-				href="?id=<%=article.getId()%>&page=<%=i%>" class="block"><%=i%></a></li>
-			<%
-				}
-			%>
+			<c:forEach var="i" begin="1" end="${totalPage}" step="1">
+			<li class="${i == page ? 'current' : ''}"><a
+				href="?id=${article.id}&page=${i}" class="block">${i}</a></li>
+			</c:forEach>
 		</ul>
 	</div>
 </section>

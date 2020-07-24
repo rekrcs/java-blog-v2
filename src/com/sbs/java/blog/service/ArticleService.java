@@ -110,4 +110,8 @@ public class ArticleService extends Service {
 	public int getForPrintListArticlesCountByMemberId(int id) {
 		return articleDao.getForPrintListArticlesCountByMemberId(id);
 	}
+
+	public CateItem getForPrintCateItemNameByArticleId(int id) {
+		return articleDao.getForPrintCateItemNameByArticleId(id);
+	}
 }
