@@ -281,10 +281,12 @@ public class ArticleDao extends Dao {
 	public ArticleReply getArticleReplyForPrint(int id) {
 		SecSql sql = new SecSql();
 
-		sql.append("SELECT * ");
-		sql.append("FROM articleReply ");
+		sql.append("SELECT A.*, M.nickname AS extra__memberName");
+		sql.append("FROM articleReply AS A");
+		sql.append("INNER JOIN `member` AS M");
+		sql.append("ON A.memberId = M.id");
 		sql.append("WHERE 1 ");
-		sql.append("AND id = ?", id);
+		sql.append("AND A.id = ? ", id);
 
 		Map<String, Object> row = DBUtil.selectRow(dbConn, sql);
 

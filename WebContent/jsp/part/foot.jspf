@@ -3,9 +3,7 @@
 <%@ page import="com.sbs.java.blog.dto.Article"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	List<Integer> eachCateItemIds = (List<Integer>) request.getAttribute("eachCateItemIds");
-%>
+
 <!--내용 파트와 aside 파트 구분-->
 <div class="between-section-and-aside visible-on-md-up"></div>
 <!--aside 파트-->
@@ -15,18 +13,13 @@
 			<h3>카테고리</h3>
 		</div>
 		<ul>
-			<%
-				int i = 0;
-				for (CateItem cateItem : cateItems) {
-			%>
-			<li><a
-				href="${pageContext.request.contextPath}/s/article/list?cateItemId=<%=cateItem.getId()%>"><%=cateItem.getName()%>
-					(<%=eachCateItemIds.get(i)%>)</a></li>
-			<%
-				i++;
-				}
-			%>
-
+			<c:set var="count" value="0" />
+			<c:forEach items="${cateItems}" var="cateItem">
+				<li><a
+					href="${pageContext.request.contextPath}/s/article/list?cateItemId=${cateItem.id}">${cateItem.name}
+						(${eachCateItemIds.get(count)}) </a></li>
+				<c:set var="count" value="${count + 1}" />
+			</c:forEach>
 		</ul>
 	</div>
 	<div class="aside-section">
@@ -34,14 +27,10 @@
 			<h3>최근 게시물</h3>
 		</div>
 		<ul>
-			<%
-				for (Article articleForFooter : articlesForFooter) {
-			%>
-			<li><a
-				href="${pageContext.request.contextPath}/s/article/detail?id=<%=articleForFooter.getId()%>"><%=articleForFooter.getTitle()%></a></li>
-			<%
-				}
-			%>
+			<c:forEach items="${articlesForFooters}" var="articleForFooter">
+				<li><a
+					href="${pageContext.request.contextPath}/s/article/detail?id=${articleForFooter.id}">${articleForFooter.title}</a></li>
+			</c:forEach>
 		</ul>
 	</div>
 	<div class="aside-section">

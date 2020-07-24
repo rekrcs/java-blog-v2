@@ -2,9 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
 <%@ include file="/jsp/part/toastUiEditor.jspf"%>
-<%
-	Article article = (Article) request.getAttribute("article");
-%>
 
 <script>
 	var submitModifyFormDone = false;

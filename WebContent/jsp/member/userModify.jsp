@@ -139,27 +139,27 @@
 				<div class="label">로그인 아이디</div>
 				<div class="input">
 					<input name="loginId" type="text"
-						value=<%=loginedMember.getLoginId()%> />
+						value=${loginedMember.loginId} />
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="label">이름</div>
 				<div class="input">
-					<input name="name" type="text" value=<%=loginedMember.getName()%> />
+					<input name="name" type="text" value=${loginedMember.name} />
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="label">닉네임</div>
 				<div class="input">
 					<input name="nickname" type="text"
-						value=<%=loginedMember.getNickname()%> />
+						value=${loginedMember.nickname} />
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="label">이메일</div>
 				<div class="input">
 					<input name="email" type="email"
-						value=<%=loginedMember.getEmail()%> />
+						value=${loginedMember.email} />
 				</div>
 			</div>
 			<div class="form-row">

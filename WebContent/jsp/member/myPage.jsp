@@ -3,9 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
-<%
-	List<Article> articles = (List<Article>) request.getAttribute("articles");
-%>
+
 <style>
 .userbox {
 	font-size: 1.2rem;
@@ -64,13 +62,13 @@
 			<div class="userInf">
 				<div class="userName">
 					이름 :
-					<%=loginedMember.getName()%></div>
+					${loginedMember.name}</div>
 				<div class="userNickname">
 					닉네임 :
-					<%=loginedMember.getNickname()%></div>
+					${loginedMember.nickname}</div>
 				<div class="email">
 					이메일 :
-					<%=loginedMember.getEmail()%></div>
+					${loginedMember.email}</div>
 			</div>
 
 
@@ -82,17 +80,14 @@
 						<th>카테고리</th>
 						<th>제목</th>
 					</tr>
-					<%
-						for (Article article : articles) {
-					%>
+				
+					<c:forEach items="${articles}" var="article">
 					<tr>
-						<td><%=article.getExtra().get("cateItemName")%></td>
+						<td>${article.extra.cateItemName}</td>
 						<td><a
-							href="${pageContext.request.contextPath}/s/article/detail?id=<%=article.getId()%>"><%=article.getTitle()%></a></td>
+							href="${pageContext.request.contextPath}/s/article/detail?id=${article.id}">${article.title}</a></td>
 					</tr>
-					<%
-						}
-					%>
+				</c:forEach>
 				</table>
 				<div class="userModify">
 					<a href="doubleCheckPassword">[개인정보 수정]</a>

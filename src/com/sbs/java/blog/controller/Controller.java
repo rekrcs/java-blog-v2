@@ -41,7 +41,7 @@ public abstract class Controller {
 		// 액션 전 실행
 		// 이 메서드는 모든 컨트롤러의 모든 액션이 실행되기 전에 실행된다.
 		List<CateItem> cateItems = articleService.getForPrintCateItems();
-		List<Article> articlesForFooter = articleService.getForPrintListArticles(5);
+		List<Article> articlesForFooters = articleService.getForPrintListArticles(5);
 
 		// 사이드바 카테고리 아이템별 갯수
 		int cateItemId = 0;
@@ -51,7 +51,7 @@ public abstract class Controller {
 		}
 
 		req.setAttribute("cateItems", cateItems);
-		req.setAttribute("articlesForFooter", articlesForFooter);
+		req.setAttribute("articlesForFooters", articlesForFooters);
 
 		// 사용자 관련 정보를 리퀘스트 객체에 정리해서 넣기
 		int loginedMemberId = -1;

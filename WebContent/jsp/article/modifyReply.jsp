@@ -73,8 +73,7 @@
 
 /*댓글 출력*/
 .reply-container>.reply-box {
-	margin: 10px 10px 0 10px;
-	border: 1px solid rgba(0, 0, 0, .2);
+/* 	margin: 10px 10px 0 10px; */
 	word-break: break-all;
 }
 
@@ -100,9 +99,8 @@
 	<div class="reply-container">
 		<div class="reply-box">
 			<div class="reply-header" style="margin-bottom: 10px;">
-				<span style="margin-right: 20px">홍길동</span><span>${articleReply.regDate.substring(0, 10)}</span>
+				<span style="margin-right: 20px">${articleReply.extra.memberName}</span><span>${articleReply.regDate.substring(0, 10)}</span>
 			</div>
-			<div class="reply-body" style="font-size: 1.2rem">${articleReply.body}</div>
 		</div>
 	</div>
 	
@@ -113,7 +111,7 @@
 
 			<div class="form-row">
 				<div class="input">
-					<textarea name="body" placeholder="수정할 내용을 입력해주세요."></textarea>
+					<textarea name="body" value="text">${articleReply.body}</textarea>
 				</div>
 			</div>
 			<div class="form-row">

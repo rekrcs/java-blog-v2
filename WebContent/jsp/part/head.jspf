@@ -5,19 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-	List<CateItem> cateItems = (List<CateItem>) request.getAttribute("cateItems");
-List<Article> articlesForFooter = (List<Article>) request.getAttribute("articlesForFooter");
-
-////게시물별 카운팅
-
-int totalCateItems = (int) request.getAttribute("totalCateItems");
-//	session.getAttribute("loginedMemberId");
-
-//로그인 회원정보
-int loginedMemberId = (int) request.getAttribute("loginedMemberId");
-Member loginedMember = (Member) request.getAttribute("loginedMember");
-%>
 
 <!DOCTYPE html>
 <html lang="ko">

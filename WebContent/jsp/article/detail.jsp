@@ -6,14 +6,6 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
 <%@ include file="/jsp/part/toastUiEditor.jspf"%>
-<%
-	Article article = (Article) request.getAttribute("article");
-	List<ArticleReply> articleReplies = (List<ArticleReply>) request.getAttribute("articleReplies");
-	int totalPage = (int) request.getAttribute("totalPage");
-	int paramPage = (int) request.getAttribute("page");
-%>
-
-
 
 <script>
 	function submitReplyForm(form) {
