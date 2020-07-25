@@ -4,6 +4,25 @@
 <%@ include file="/jsp/part/toastUiEditor.jspf"%>
 
 <script>
+	/* 여기서 부터 */
+	var onBeforeUnloadSetted = false;
+	var onBeforeUnload = function(e) {
+		return '떠나시겠습니까?'; // 요새 브라우저는 이 메시지가 아닌 자체의 메세지가 나옵니다.
+	};
+
+	function applyOnBeforeUnload() {
+		if (onBeforeUnloadSetted)
+			return;
+		$(window).bind('beforeunload', onBeforeUnload); // 떠날 때 실행되는 함수를 등록
+		onBeforeUnloadSetted = true;
+	}
+
+	function removeOnBeforeUnload() {
+		$(window).unbind('beforeunload', onBeforeUnload); // 떠날 때 실행되는 함수를 해제
+		onBeforeUnloadSetted = false;
+	}
+	/* 여기까지는 라이브러리 */
+
 	var submitWriteFormDone = false;
 
 	function submitWriteForm(form) {
@@ -35,9 +54,19 @@
 
 		form.body.value = body;
 
+		removeOnBeforeUnload();
 		form.submit();
 		submitWriteFormDone = true;
 	}
+
+	function WriteForm__init() {
+		// 폼의 특정 요소를 건드리(?)면, 그 이후 부터 외부로 이동하는 것에 참견하는 녀석을 작동시킨다.
+		$('form.write-form input, form.write-form textarea').keyup(function() {
+			applyOnBeforeUnload();
+		});
+	}
+
+	WriteForm__init();
 </script>
 
 <style>

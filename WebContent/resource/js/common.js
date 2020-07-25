@@ -52,3 +52,22 @@ function MobileSideBar__init() {
 $(function() {
 	MobileSideBar__init();
 });
+
+/* 글작성중 페이지 빠져가나가 경고 라이브러리 */
+/*	var onBeforeUnloadSetted = false;
+	var onBeforeUnload = function(e) {
+		return '떠나시겠습니까?'; // 요새 브라우저는 이 메시지가 아닌 자체의 메세지가 나옵니다.
+	};
+
+	function applyOnBeforeUnload() {
+		if (onBeforeUnloadSetted)
+			return;
+		$(window).bind('beforeunload', onBeforeUnload); // 떠날 때 실행되는 함수를 등록
+		onBeforeUnloadSetted = true;
+	}
+
+	function removeOnBeforeUnload() {
+		$(window).unbind('beforeunload', onBeforeUnload); // 떠날 때 실행되는 함수를 해제
+		onBeforeUnloadSetted = false;
+	} */
+	/*글작성중 페이지 빠져가나가 경고 라이브러리 끝 */
