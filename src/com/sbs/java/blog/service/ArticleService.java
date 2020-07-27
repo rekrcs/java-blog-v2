@@ -80,8 +80,8 @@ public class ArticleService extends Service {
 		articleDao.increaseHit(id);
 	}
 
-	public int modify(int id, int cateItemId, String title, String body) {
-		return articleDao.modify(id, cateItemId, title, body);
+	public int modifyArticle(int id, int cateItemId, String title, String body) {
+		return articleDao.modifyArticle(id, cateItemId, title, body);
 	}
 
 	public void deleteArticle(int id) {
@@ -144,6 +144,10 @@ public class ArticleService extends Service {
 
 	public CateItem getForPrintCateItemNameByArticleId(int id) {
 		return articleDao.getForPrintCateItemNameByArticleId(id);
+	}
+
+	public Map<String, Object> getCheckRsModifyAvailable(int id, int actorId) {
+		return getCheckRsDeleteAvailable(id, actorId);
 	}
 
 	public Map<String, Object> getCheckRsDeleteAvailable(int id, int actorId) {

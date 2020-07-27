@@ -201,7 +201,9 @@ th {
 		<c:if test="${article.extra.deleteAvailable}">
 			<span class="option-modify"><a
 				href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=${article.memberId}">수정</a></span>
-			<span></span>
+		</c:if>
+		<span></span>
+		<c:if test="${article.extra.modifyAvailable}">
 			<span class="option-delete"><a
 				onclick="if ( confirm('게시물을 삭제하시겠습니까?') == false ) return false;"
 				href="doDelete?id=${param.id}&memberId=${article.memberId}">삭제</a></span>
@@ -262,8 +264,8 @@ th {
 	<div class="con page-box">
 		<ul class="flex flex-jc-c">
 			<c:forEach var="i" begin="1" end="${totalPage}" step="1">
-			<li class="${i == page ? 'current' : ''}"><a
-				href="?id=${article.id}&page=${i}" class="block">${i}</a></li>
+				<li class="${i == page ? 'current' : ''}"><a
+					href="?id=${article.id}&page=${i}" class="block">${i}</a></li>
 			</c:forEach>
 		</ul>
 	</div>
