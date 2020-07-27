@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.sbs.java.blog.dto.Article;
 import com.sbs.java.blog.dto.ArticleReply;
 import com.sbs.java.blog.dto.CateItem;
+import com.sbs.java.blog.dto.Member;
 import com.sbs.java.blog.util.Util;
 
 public class ArticleController extends Controller {
@@ -293,6 +294,13 @@ public class ArticleController extends Controller {
 				searchKeywordType, searchKeyword);
 
 		req.setAttribute("articles", articles);
+		
+		List<Article> wholeArticles = articleService.getForPrintListArticles(page, itemsInAPage, cateItemId);
+		req.setAttribute("wholeArticles", wholeArticles);
+		
+		List<Member> wholeMembers = memberService.getForPrintMembers();
+		req.setAttribute("wholeMembers", wholeMembers);
+		
 		return "article/list.jsp";
 	}
 

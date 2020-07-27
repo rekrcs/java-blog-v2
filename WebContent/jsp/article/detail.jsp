@@ -1,7 +1,4 @@
-<%@ page import="java.util.List"%>
-<%@ page import="com.sbs.java.blog.dto.Article"%>
-<%@ page import="com.sbs.java.blog.dto.CateItem"%>
-<%@ page import="com.sbs.java.blog.dto.ArticleReply"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>

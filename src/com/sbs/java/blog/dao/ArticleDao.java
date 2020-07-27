@@ -19,21 +19,39 @@ public class ArticleDao extends Dao {
 		this.dbConn = dbConn;
 	}
 
+	public List<Article> getForPrintListArticles(int page, int itemsInAPage, int cateItemId) {
+		SecSql sql = new SecSql();
+		int limitFrom = (page - 1) * itemsInAPage;
+
+		sql.append("SELECT *");
+		sql.append("FROM article");
+		sql.append("WHERE displayStatus = 1");
+		if (cateItemId != 0) {
+			sql.append("AND cateItemId = ?", cateItemId);
+		}
+		sql.append("ORDER BY id DESC ");
+		sql.append("LIMIT ?, ? ", limitFrom, itemsInAPage);
+
+		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
+		List<Article> articles = new ArrayList<>();
+
+		for (Map<String, Object> row : rows) {
+			articles.add(new Article(row));
+		}
+
+		return articles;
+	}
+
 	public List<Article> getForPrintListArticles(int page, int itemsInAPage, int cateItemId, String searchKeywordType,
 			String searchKeyword) {
 		SecSql sql = new SecSql();
 		int limitFrom = (page - 1) * itemsInAPage;
 
-		// 시작
 		sql.append("SELECT A.*, M.nickname AS extra__writer");
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
 		sql.append("WHERE displayStatus = 1");
-		// 끝
-//		sql.append("SELECT *");
-//		sql.append("FROM article");
-//		sql.append("WHERE displayStatus = 1");
 		if (cateItemId != 0) {
 			sql.append("AND cateItemId = ?", cateItemId);
 		}
@@ -404,23 +422,3 @@ public class ArticleDao extends Dao {
 		return new CateItem(DBUtil.selectRow(dbConn, sql));
 	}
 }
-
-//	public List<ArticleReply> getArticleReply(int id) {
-//		SecSql sql = new SecSql();
-//
-//		sql.append("SELECT * ");
-//		sql.append("FROM articleReply ");
-//		sql.append("WHERE 1 ");
-//		sql.append("AND articleId = ?", id);
-//		sql.append("ORDER BY id DESC ");
-//
-//		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, sql);
-//		List<ArticleReply> articleReplies = new ArrayList<>();
-//
-//		for (Map<String, Object> row : rows) {
-//			articleReplies.add(new ArticleReply(row));
-//		}
-//
-//		return articleReplies;
-//
-//	}

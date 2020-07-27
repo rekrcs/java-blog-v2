@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
@@ -22,7 +23,8 @@
 		onBeforeUnloadSetted = false;
 	}
 	/* 여기까지는 라이브러리 */
-
+	
+	applyOnBeforeUnload();
 	var submitWriteFormDone = false;
 
 	function submitWriteForm(form) {
@@ -59,14 +61,14 @@
 		submitWriteFormDone = true;
 	}
 
-	function WriteForm__init() {
-		// 폼의 특정 요소를 건드리(?)면, 그 이후 부터 외부로 이동하는 것에 참견하는 녀석을 작동시킨다.
-		$('form.write-form input, form.write-form textarea').keyup(function() {
-			applyOnBeforeUnload();
-		});
-	}
+// 	function WriteForm__init() {
+// 		// 폼의 특정 요소를 건드리(?)면, 그 이후 부터 외부로 이동하는 것에 참견하는 녀석을 작동시킨다.
+// 		$('form.write-form input, form.write-form textarea').keyup(function() {
+// 			applyOnBeforeUnload();
+// 		});
+// 	}
 
-	WriteForm__init();
+// 	WriteForm__init();
 </script>
 
 <style>

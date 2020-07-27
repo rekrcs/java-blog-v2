@@ -48,12 +48,6 @@ public class MemberDao extends Dao {
 		secSql.append("FROM `member`");
 
 		List<Map<String, Object>> rows = DBUtil.selectRows(dbConn, secSql);
-
-//		String sql = "";
-//		sql += String.format("SELECT * ");
-//		sql += String.format("FROM `member` ");
-
-//		List<Map<String, Object>> rows = DBUtil.selectRows(dbConnection, sql);
 		List<Member> members = new ArrayList<>();
 
 		for (Map<String, Object> row : rows) {

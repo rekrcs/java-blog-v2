@@ -1,4 +1,4 @@
-<%@ page import="com.sbs.java.blog.dto.ArticleReply"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/jsp/part/head.jspf"%>
@@ -73,7 +73,7 @@
 
 /*댓글 출력*/
 .reply-container>.reply-box {
-/* 	margin: 10px 10px 0 10px; */
+	/* 	margin: 10px 10px 0 10px; */
 	word-break: break-all;
 }
 
@@ -103,12 +103,13 @@
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<!-- 댓글 입력폼 -->
 	<div class="write-form-box con">
-		<form action="doModifyReply?id=${articleReply.id}&articleId=${articleReply.articleId}" method="post" class="write-form form1">
-
+		<form action="doModifyReply" method="post" class="write-form form1">
+			<input type="hidden" name="id" value="${articleReply.id}"> <input
+				type="hidden" name="articleId" value="${articleReply.articleId}">
 			<div class="form-row">
 				<div class="input">
 					<textarea name="body" value="text">${articleReply.body}</textarea>

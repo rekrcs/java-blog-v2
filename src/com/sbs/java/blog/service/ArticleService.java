@@ -20,6 +20,10 @@ public class ArticleService extends Service {
 		return articleDao.getForPrintListArticles(showArticlesInMainPage);
 	}
 
+	public List<Article> getForPrintListArticles(int page, int itemsInAPage, int cateItemId) {
+		return articleDao.getForPrintListArticles(page, itemsInAPage, cateItemId);
+	}
+
 	public List<Article> getForPrintListArticles(int page, int itemsInAPage, int cateItemId, String searchKeywordType,
 			String searchKeyword) {
 		return articleDao.getForPrintListArticles(page, itemsInAPage, cateItemId, searchKeywordType, searchKeyword);
@@ -56,7 +60,7 @@ public class ArticleService extends Service {
 	public int delete(int id) {
 		return articleDao.delete(id);
 	}
-	
+
 	public int deleteReply(int id) {
 		return articleDao.deleteReply(id);
 	}
@@ -67,11 +71,11 @@ public class ArticleService extends Service {
 
 	public List<ArticleReply> getArticleReplyPage(int id, int page, int itemsInAPage) {
 		return articleDao.getArticleReplyPage(id, page, itemsInAPage);
-		
+
 	}
 
 	public ArticleReply getArticleReplyForPrint(int id) {
-		
+
 		return articleDao.getArticleReplyForPrint(id);
 	}
 
