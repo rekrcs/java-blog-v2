@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,5 +129,9 @@ public class Util {
 		}
 
 		return getString(req, paramName);
+	}
+
+	public static boolean isSuccess(Map<String, Object> rs) {
+		return ((String) rs.get("resultCode")).startsWith("S-");
 	}
 }

@@ -235,7 +235,7 @@ public class ArticleDao extends Dao {
 		return DBUtil.update(dbConn, secSql);
 	}
 
-	public int delete(int id) {
+	public int deleteArticle(int id) {
 		SecSql secSql = new SecSql();
 
 		secSql.append("DELETE FROM article");

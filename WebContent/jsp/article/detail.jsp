@@ -198,7 +198,7 @@ th {
 
 	<!-- 수정 삭제버튼-->
 	<div class="option-box">
-		<c:if test="${loginedMemberId == article.memberId}">
+		<c:if test="${article.extra.deleteAvailable}">
 			<span class="option-modify"><a
 				href="${pageContext.request.contextPath}/s/article/modify?id=${param.id}&memberId=${article.memberId}">수정</a></span>
 			<span></span>

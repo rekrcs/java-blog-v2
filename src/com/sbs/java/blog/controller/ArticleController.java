@@ -2,6 +2,7 @@ package com.sbs.java.blog.controller;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -124,26 +125,47 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionDoDelete() {
-//		HttpSession session = req.getSession();
+		// 시작
+		if (Util.empty(req, "id")) {
+			return "html:id를 입력해주세요.";
+		}
+
+		if (Util.isNum(req, "id") == false) {
+			return "html:id를 정수로 입력해주세요.";
+		}
+
 		int id = Util.getInt(req, "id");
-		int loginedMemberId = 0;
-		int memberId = Util.getInt(req, "memberId");
 
-		if (session.getAttribute("loginedMemberId") != null) {
-			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		Map<String, Object> getCheckRsDeleteAvailableRs = articleService.getCheckRsDeleteAvailable(id, loginedMemberId);
+
+		if (Util.isSuccess(getCheckRsDeleteAvailableRs) == false) {
+			return "html:<script> alert('" + getCheckRsDeleteAvailableRs.get("msg") + "'); history.back(); </script>";
 		}
 
-		if (session.getAttribute("loginedMemberId") == null) {
-			return "html:<script> alert('본인만 삭제 가능 합니다. 로그인 후 이용하세요'); location.replace('detail?id=" + id
-					+ "'); </script>";
-		}
+		articleService.deleteArticle(id);
+		// 끝
 
-		if (loginedMemberId != memberId) {
-			return "html:<script> alert('작성자만 삭제 가능 합니다.'); location.replace('../article/detail?id=" + id
-					+ "'); </script>";
-		}
-
-		int deleteId = articleService.delete(id);
+//		int id = Util.getInt(req, "id");
+//		int loginedMemberId = 0;
+//		int memberId = Util.getInt(req, "memberId");
+//
+//		if (session.getAttribute("loginedMemberId") != null) {
+//			loginedMemberId = (int) session.getAttribute("loginedMemberId");
+//		}
+//
+//		if (session.getAttribute("loginedMemberId") == null) {
+//			return "html:<script> alert('본인만 삭제 가능 합니다. 로그인 후 이용하세요'); location.replace('detail?id=" + id
+//					+ "'); </script>";
+//		}
+//
+//		if (loginedMemberId != memberId) {
+//			return "html:<script> alert('작성자만 삭제 가능 합니다.'); location.replace('../article/detail?id=" + id
+//					+ "'); </script>";
+//		}
+//
+		// int deleteId = articleService.delete(id);
 		return "html:<script> alert('" + id + "번 게시물이 삭제되었습니다.'); location.replace('list'); </script>";
 	}
 
@@ -177,8 +199,7 @@ public class ArticleController extends Controller {
 					+ "'); </script>";
 		}
 
-
-		Article article = articleService.getForPrintArticle(id);
+		Article article = articleService.getForPrintArticle(id, loginedMemberId);
 
 		req.setAttribute("article", article);
 
@@ -216,17 +237,18 @@ public class ArticleController extends Controller {
 		int id = Util.getInt(req, "id");
 
 		articleService.increaseHit(id);
-		Article article = articleService.getForPrintArticle(id);
+
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+		Article article = articleService.getForPrintArticle(id, loginedMemberId);
 
 		req.setAttribute("article", article);
-		
+
 		CateItem cateItem = articleService.getForPrintCateItemNameByArticleId(id);
 		req.setAttribute("cateItem", cateItem);
-		
 
 		int totalCountForReply = articleService.getForPrintListReplyCount(id);
 		req.setAttribute("totalCountForReply", totalCountForReply);
-//		시작
+
 		int page = 1;
 
 		if (!Util.empty(req, "page") && Util.isNum(req, "page")) {
@@ -242,7 +264,6 @@ public class ArticleController extends Controller {
 		req.setAttribute("totalPage", totalPage);
 		req.setAttribute("page", page);
 
-//		끝
 		List<ArticleReply> articleReplies = articleService.getArticleReplyPage(id, page, itemsInAPage);
 		req.setAttribute("articleReplies", articleReplies);
 		return "article/detail.jsp";
@@ -290,17 +311,13 @@ public class ArticleController extends Controller {
 		req.setAttribute("totalPage", totalPage);
 		req.setAttribute("cPage", page);
 
-		List<Article> articles = articleService.getForPrintListArticles(page, itemsInAPage, cateItemId,
+		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+
+		List<Article> articles = articleService.getForPrintListArticles(loginedMemberId, page, itemsInAPage, cateItemId,
 				searchKeywordType, searchKeyword);
 
 		req.setAttribute("articles", articles);
-		
-		List<Article> wholeArticles = articleService.getForPrintListArticles(page, itemsInAPage, cateItemId);
-		req.setAttribute("wholeArticles", wholeArticles);
-		
-		List<Member> wholeMembers = memberService.getForPrintMembers();
-		req.setAttribute("wholeMembers", wholeMembers);
-		
+
 		return "article/list.jsp";
 	}
 

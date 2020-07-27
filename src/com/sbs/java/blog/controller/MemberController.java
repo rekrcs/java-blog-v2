@@ -69,11 +69,9 @@ public class MemberController extends Controller {
 
 		if (authCode.equals(code)) {
 			int num = memberService.successAuth(1);
-			return String.format(
-					"html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
+			return String.format("html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
 		}
-		return String.format(
-				"html:<script> alert('일치하는 정보가 없습니다.'); window.close(); </script>");
+		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); window.close(); </script>");
 	}
 
 	private String doActionDoDoubleCheckPassword() {
@@ -185,7 +183,6 @@ public class MemberController extends Controller {
 
 				int num = memberService.getTemporaryPw(memberId, temporaryPwSHA256);
 
-//				getGmailForTemporaryPw(name, temporaryPw, email);
 				boolean sendMailDone = mailService.findPassword(email, name + "님 임시 비밀번호 입니다.",
 						"임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요") == 1;
 				return String.format(
@@ -200,28 +197,23 @@ public class MemberController extends Controller {
 	}
 
 	private String doActionDoLogout() {
-//		HttpSession session = req.getSession();
-
 		session.removeAttribute("loginedMemberId");
 		return "html:<script> alert('로그아웃 되었습니다.'); location.replace('../home/main'); </script>";
 	}
 
 	private String doActionDoLogin() {
-//		List<Member> members = memberService.getForPrintMembers();
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPwReal");
-//		HttpSession session = req.getSession();
 
-		// 시작
 		int loginedMemberId = memberService.getMemberIdByLoginIdAndLoginPw(loginId, loginPw);
 
 		if (loginedMemberId == -1) {
 			return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
 		}
-		
+
 		Member member = memberService.getMemberById(loginedMemberId);
-		
-		if(member.getMailAuthStatus() == 0) {
+
+		if (member.getMailAuthStatus() == 0) {
 			return String.format("html:<script> alert('이메일 인증후에 로그인 가능합니다.'); history.back(); </script>");
 		}
 		session.setAttribute("loginedMemberId", loginedMemberId);
@@ -229,20 +221,6 @@ public class MemberController extends Controller {
 		String redirectUrl = Util.getString(req, "redirectUrl", "../home/main");
 
 		return String.format("html:<script> alert('로그인 되었습니다.'); location.replace('" + redirectUrl + "'); </script>");
-		// 끝
-//		if (session.getAttribute("loginedMemberId") != null) {
-//			return "html:<script> alert('로그아웃후에 이용해 주세요'); location.replace('../home/main'); </script>";
-//		} else {
-//			for (Member member : members) {
-//				if (member.getLoginId().equals(loginId) && member.getLoginPw().equals(loginPwReal)) {
-//					session.setAttribute("loginedMemberId", member.getId());
-//
-//					return "html:<script> alert('" + member.getLoginId()
-//							+ "님이 로그인 됐습니다.'); location.replace('../home/main'); </script>";
-//				}
-//			}
-//		}
-//		return "html:<script> alert('아이디와 비번을 확인해 주세요'); location.replace('login'); </script>";
 	}
 
 	private String doActionLogin() {
@@ -250,18 +228,12 @@ public class MemberController extends Controller {
 	}
 
 	private String doActionDoJoin() {
-//		List<Member> members = memberService.getForPrintMembers();
-
 		String loginId = req.getParameter("loginId");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
 		String nickname = req.getParameter("nickname");
 		String loginPw = req.getParameter("loginPwReal");
-//		String loginPwReal = req.getParameter("loginPwReal");
-//		String loginPw = req.getParameter("loginPw");
-//		String loginPwConfirm = req.getParameter("loginPwConfirm");
 
-		// 시작
 		boolean isJoinableLoginId = memberService.isJoinableLoginId(loginId);
 
 		if (isJoinableLoginId == false) {
@@ -281,7 +253,6 @@ public class MemberController extends Controller {
 		}
 
 		memberService.join(loginId, loginPw, name, nickname, email);
-//		gmailSend(name, email);
 
 		String code = Util.getAuthCode();
 
@@ -292,121 +263,10 @@ public class MemberController extends Controller {
 //		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s", code);
 		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s", code);
 		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
-		return String.format("html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>", name);
+		return String.format(
+				"html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>",
+				name);
 	}
-
-	// 끝
-//	private void gmailSend(String name, String email) {
-//		String user = ""; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
-//		String password = ""; // 패스워드
-//		// SMTP 서버 정보를 설정한다.
-//		Properties prop = new Properties();
-//		prop.put("mail.smtp.host", "smtp.gmail.com");
-//		prop.put("mail.smtp.port", 465);
-//		prop.put("mail.smtp.auth", "true");
-//		prop.put("mail.smtp.ssl.enable", "true");
-//		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-//
-//		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
-//			protected PasswordAuthentication getPasswordAuthentication() {
-//				return new PasswordAuthentication(user, password);
-//			}
-//		});
-//
-//		try {
-//			MimeMessage message = new MimeMessage(session);
-//			message.setFrom(new InternetAddress(user));
-//
-//			// 수신자메일주소
-//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-//
-//			// Subject
-//			message.setSubject(name + "님 가입환영합니다."); // 메일 제목을 입력
-//
-//			// Text
-//			message.setText("blog에 가입하셨습니다."); // 메일 내용을 입력
-//
-//			// send the message
-//			Transport.send(message); //// 전송
-//			System.out.println("message sent successfully...");
-//		} catch (AddressException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (MessagingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
-//	private void getGmailForTemporaryPw(String name, String temporaryPw, String email) {
-//		String user = ""; // 네이버일 경우 네이버 계정, gmail경우 gmail 계정
-//		String password = ""; // 패스워드
-//
-//		// SMTP 서버 정보를 설정한다.
-//		Properties prop = new Properties();
-//		prop.put("mail.smtp.host", "smtp.gmail.com");
-//		prop.put("mail.smtp.port", 465);
-//		prop.put("mail.smtp.auth", "true");
-//		prop.put("mail.smtp.ssl.enable", "true");
-//		prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-//
-//		Session session = Session.getDefaultInstance(prop, new javax.mail.Authenticator() {
-//			protected PasswordAuthentication getPasswordAuthentication() {
-//				return new PasswordAuthentication(user, password);
-//			}
-//		});
-//
-//		try {
-//			MimeMessage message = new MimeMessage(session);
-//			message.setFrom(new InternetAddress(user));
-//
-//			// 수신자메일주소
-//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-//
-//			// Subject
-//			message.setSubject(name + "님 임시비빌번호입니다."); // 메일 제목을 입력
-//
-//			// Text
-//			message.setText("임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요"); // 메일 내용을 입력
-//
-//			// send the message
-//			Transport.send(message); //// 전송
-//			System.out.println("message sent successfully...");
-//		} catch (AddressException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (MessagingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
-//
-//	for(
-//
-//	Member member:members)
-//	{
-//		if (member.getLoginId().equals(loginId)) {
-//			return "html:<script> alert('이미 존재하는 아이디 입니다.'); location.replace('join'); </script>";
-//		}
-//
-//		if (member.getNickname().equals(nickname)) {
-//			return "html:<script> alert('이미 존재하는 닉네임 입니다.'); location.replace('join'); </script>";
-//		}
-//
-//		if (member.getEmail().equals(email)) {
-//			return "html:<script> alert('이미 존재하는 이메일 입니다.'); location.replace('join'); </script>";
-//		}
-//	}
-//
-//		if (!loginPw.equals(loginPwConfirm)) {
-//			return "html:<script> alert('비번과 비번 확인이 일치 하지 않습니다.'); location.replace('join'); </script>";
-//
-//		} else {
-//	int id = memberService.join(loginId, name, nickname, loginPwReal,
-//			email);return"html:<script> alert('"+id+"번 회원님이 가입 했습니다.'); location.replace('..home/main'); </script>";
-//		}
-//	}
 
 	private String doActionJoin() {
 		return "member/join.jsp";
