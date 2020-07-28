@@ -55,7 +55,7 @@ public class MemberService extends Service {
 		return memberDao.memberDelete(id);
 	}
 
-	public int successAuth(int authStatus) {
-		return memberDao.successAuth(authStatus);
+	public int successAuth(int authStatus, String loginId) {
+		return memberDao.successAuth(authStatus, loginId);
 	}
 }

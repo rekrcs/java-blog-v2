@@ -131,11 +131,12 @@ public class MemberDao extends Dao {
 		return DBUtil.delete(dbConn, secSql);
 	}
 
-	public int successAuth(int authStatus) {
+	public int successAuth(int authStatus, String loginId) {
 		SecSql secSql = new SecSql();
 
 		secSql.append("UPDATE member");
 		secSql.append("SET mailAuthStatus = ?", authStatus);
+		secSql.append("WHERE loginId = ?", loginId);
 
 		return DBUtil.update(dbConn, secSql);
 	}

@@ -66,9 +66,11 @@ public class MemberController extends Controller {
 	private String doActionDoAuthMail() {
 		String code = req.getParameter("code");
 		String authCode = (String) session.getAttribute("code");
+		String loginId = req.getParameter("loginId");
+		
 
 		if (authCode.equals(code)) {
-			int num = memberService.successAuth(1);
+			int num = memberService.successAuth(1, loginId);
 			return String.format("html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
 		}
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); window.close(); </script>");
@@ -260,8 +262,8 @@ public class MemberController extends Controller {
 
 		String body = "";
 		body += "로그인을 위해서는 인증이 필요합니다. 아래의 링크를 클릭해 주세요";
-//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s", code);
-		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s", code);
+		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
+//		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
 		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
 		return String.format(
 				"html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>",
