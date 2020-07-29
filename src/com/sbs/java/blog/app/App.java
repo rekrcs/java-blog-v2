@@ -47,7 +47,7 @@ public class App {
 		// DB 커넥터 로딩 성공
 	}
 
-	private String getDbUrl() {
+	private String getDbUri() {
 		return "jdbc:mysql://site33.iu.gy:3306/site33?serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull";
 	}
 
@@ -56,7 +56,7 @@ public class App {
 		loadDbDriver();
 
 		// DB 접속정보 세팅
-		String url = getDbUrl();
+		String url = getDbUri();
 		String user = getDbId();
 		String password = getDbPassword();
 

@@ -104,7 +104,7 @@
 	<h2 style="text-align: center">로그인</h2>
 		<form action="doLogin" method="post" class="login-form form1"
 			onsubmit="submitLoginForm(this); return false;">
-			<input type="hidden" name="redirectUrl" value="${param.afterLoginRedirectUrl}" />
+			<input type="hidden" name="redirectUri" value="${param.afterLoginRedirectUri}" />
 			<input type="hidden" name="loginPwReal" />
 			<div class="form-row">
 				<div class="label">로그인 아이디</div>

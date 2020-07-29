@@ -55,7 +55,7 @@
 	function renderYoutube(wrapperId, youtubeId) {
 		const el = document.querySelector('#' + wrapperId);
 
-		var urlParams = getUrlParams(youtubeId);
+		var urlParams = getUriParams(youtubeId);
 
 		var width = '100%';
 		var height = '100%';
@@ -103,35 +103,35 @@
 
 	// repl 플러그인 시작
 	function replPlugin() {
-		toastui.Editor.codeBlockManager.setReplacer("repl", function(replUrl) {
+		toastui.Editor.codeBlockManager.setReplacer("repl", function(replUri) {
 			var postSharp = "";
-			if (replUrl.indexOf('#') !== -1) {
-				var pos = replUrl.indexOf('#');
-				postSharp = replUrl.substr(pos);
-				replUrl = replUrl.substr(0, pos);
+			if (replUri.indexOf('#') !== -1) {
+				var pos = replUri.indexOf('#');
+				postSharp = replUri.substr(pos);
+				replUri = replUri.substr(0, pos);
 			}
 
-			if (replUrl.indexOf('?') === -1) {
-				replUrl += "?dummy=1";
+			if (replUri.indexOf('?') === -1) {
+				replUri += "?dummy=1";
 			}
 
-			replUrl += "&lite=true";
-			replUrl += postSharp;
+			replUri += "&lite=true";
+			replUri += postSharp;
 
 			// Indentify multiple code blocks
 			const wrapperId = "yt" + Math.random().toString(36).substr(2, 10);
 
 			// Avoid sanitizing iframe tag
-			setTimeout(renderRepl.bind(null, wrapperId, replUrl), 0);
+			setTimeout(renderRepl.bind(null, wrapperId, replUri), 0);
 
 			return "<div id=\"" + wrapperId + "\"></div>";
 		});
 	}
 
-	function renderRepl(wrapperId, replUrl) {
+	function renderRepl(wrapperId, replUri) {
 		const el = document.querySelector('#' + wrapperId);
 
-		var urlParams = getUrlParams(replUrl);
+		var urlParams = getUriParams(replUri);
 
 		var height = 400;
 
@@ -142,7 +142,7 @@
 		el.innerHTML = '<iframe height="'
 				+ height
 				+ 'px" width="100%" src="'
-				+ replUrl
+				+ replUri
 				+ '" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>';
 	}
 	// repl 플러그인 끝
@@ -150,21 +150,21 @@
 	// codepen 플러그인 시작
 	function codepenPlugin() {
 		toastui.Editor.codeBlockManager.setReplacer("codepen", function(
-				codepenUrl) {
+				codepenUri) {
 			// Indentify multiple code blocks
 			const wrapperId = "yt" + Math.random().toString(36).substr(2, 10);
 
 			// Avoid sanitizing iframe tag
-			setTimeout(renderCodepen.bind(null, wrapperId, codepenUrl), 0);
+			setTimeout(renderCodepen.bind(null, wrapperId, codepenUri), 0);
 
 			return '<div id="' + wrapperId + '"></div>';
 		});
 	}
 
-	function renderCodepen(wrapperId, codepenUrl) {
+	function renderCodepen(wrapperId, codepenUri) {
 		const el = document.querySelector('#' + wrapperId);
 
-		var urlParams = getUrlParams(codepenUrl);
+		var urlParams = getUriParams(codepenUri);
 
 		var height = 400;
 
@@ -182,12 +182,12 @@
 			width += 'px';
 		}
 
-		if (codepenUrl.indexOf('#') !== -1) {
-			var pos = codepenUrl.indexOf('#');
-			codepenUrl = codepenUrl.substr(0, pos);
+		if (codepenUri.indexOf('#') !== -1) {
+			var pos = codepenUri.indexOf('#');
+			codepenUri = codepenUri.substr(0, pos);
 		}
 
-		el.innerHTML = '<iframe height="' + height + '" style="width: ' + width + ';" scrolling="no" title="" src="' + codepenUrl + '" frameborder="no" allowtransparency="true" allowfullscreen="true"></iframe>';
+		el.innerHTML = '<iframe height="' + height + '" style="width: ' + width + ';" scrolling="no" title="" src="' + codepenUri + '" frameborder="no" allowtransparency="true" allowfullscreen="true"></iframe>';
 	}
 	// repl 플러그인 끝
 
@@ -196,7 +196,7 @@
 // 		return this.split(org).join(dest);
 // 	}
 
-// 	function getUrlParams(url) {
+// 	function getUriParams(url) {
 // 		url = url.trim();
 // 		url = url.replaceAll('&amp;', '&');
 // 		if (url.indexOf('#') !== -1) {

@@ -82,29 +82,29 @@ public abstract class Controller {
 
 		// 현재 URL
 
-		String currentUrl = req.getRequestURI();
+		String currentUri = req.getRequestURI();
 
 		if (req.getQueryString() != null) {
-			currentUrl += "?" + req.getQueryString();
+			currentUri += "?" + req.getQueryString();
 		}
 
-		String urlEncodedCurrentUrl = Util.getUrlEncoded(currentUrl);
+		String urlEncodedCurrentUri = Util.getUriEncoded(currentUri);
 
 		// 현재 접속된 페이지와 관련된 유용한 정보 담기
-		req.setAttribute("currentUrl", currentUrl);
-		req.setAttribute("urlEncodedCurrentUrl", urlEncodedCurrentUrl);
-		req.setAttribute("urlEncodedAfterLoginRedirectUrl", urlEncodedCurrentUrl);
+		req.setAttribute("currentUri", currentUri);
+		req.setAttribute("urlEncodedCurrentUri", urlEncodedCurrentUri);
+		req.setAttribute("urlEncodedAfterLoginRedirectUri", urlEncodedCurrentUri);
 
 		// 로그인 페이지에서 로그인 페이지로 이동하는 버튼을 또 누른 경우
-		// 기존 afterLoginRedirectUrl 정보를 유지시키기 위한 로직
-		if (currentUrl.contains("/s/member/login") || currentUrl.contains("/s/member/join")) {
-			String urlEncodedOldAfterLoginRedirectUrl = Util.getString(req, "afterLoginRedirectUrl", "");
-			urlEncodedOldAfterLoginRedirectUrl = Util.getUrlEncoded(urlEncodedOldAfterLoginRedirectUrl);
-			req.setAttribute("urlEncodedAfterLoginRedirectUrl", urlEncodedOldAfterLoginRedirectUrl);
+		// 기존 afterLoginRedirectUri 정보를 유지시키기 위한 로직
+		if (currentUri.contains("/s/member/login") || currentUri.contains("/s/member/join")) {
+			String urlEncodedOldAfterLoginRedirectUri = Util.getString(req, "afterLoginRedirectUri", "");
+			urlEncodedOldAfterLoginRedirectUri = Util.getUriEncoded(urlEncodedOldAfterLoginRedirectUri);
+			req.setAttribute("urlEncodedAfterLoginRedirectUri", urlEncodedOldAfterLoginRedirectUri);
 		}
 
 		// 로그아웃 후 가야하는 곳, 기본적으로 현재 URL
-		req.setAttribute("urlEncodedAfterLogoutRedirectUrl", urlEncodedCurrentUrl);
+		req.setAttribute("urlEncodedAfterLogoutRedirectUri", urlEncodedCurrentUri);
 
 	}
 
@@ -162,11 +162,11 @@ public abstract class Controller {
 			break;
 		}
 
-		String urlEncodedAfterLoginRedirectUrl = (String) req.getAttribute("urlEncodedAfterLoginRedirectUrl");
+		String urlEncodedAfterLoginRedirectUri = (String) req.getAttribute("urlEncodedAfterLoginRedirectUri");
 
 		if (needToLogin && isLogined == false) {
-			return "html:<script> alert('로그인 후 이용해주세요.'); location.href = '../member/login?afterLoginRedirectUrl="
-					+ urlEncodedAfterLoginRedirectUrl + "'; </script>";
+			return "html:<script> alert('로그인 후 이용해주세요.'); location.href = '../member/login?afterLoginRedirectUri="
+					+ urlEncodedAfterLoginRedirectUri + "'; </script>";
 		}
 		// 로그인에 관련된 가드 끝
 

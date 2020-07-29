@@ -118,13 +118,13 @@
 									href="${pageContext.request.contextPath}/s/member/myPage"
 									class="block">My page</a></li>
 								<li><a
-									href="${pageContext.request.contextPath}/s/member/doLogout?redirectUrl=${urlEncodedAfterLogoutRedirectUrl}"
+									href="${pageContext.request.contextPath}/s/member/doLogout?redirectUri=${urlEncodedAfterLogoutRedirectUri}"
 									class="block">Log out</a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${isLogined == false}">
 						<li><a
-							href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUrl=${urlEncodedAfterLoginRedirectUrl}"
+							href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUri=${urlEncodedAfterLoginRedirectUri}"
 							class="flex height-100p flex-ai-c">Log in</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/s/member/join"
@@ -184,13 +184,13 @@
 								href="${pageContext.request.contextPath}/s/member/myPage"
 								class="block">My page</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/s/member/doLogout?redirectUrl=${urlEncodedAfterLogoutRedirectUrl}"
+								href="${pageContext.request.contextPath}/s/member/doLogout?redirectUri=${urlEncodedAfterLogoutRedirectUri}"
 								class="block">Log out</a></li>
 						</ul></li>
 				</c:if>
 				<c:if test="${isLogined == false}">
 					<li><a
-						href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUrl=${urlEncodedAfterLoginRedirectUrl}"
+						href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUri=${urlEncodedAfterLoginRedirectUri}"
 						class="block"> Log in</a></li>
 
 					<li><a href="${pageContext.request.contextPath}/s/member/join"

@@ -249,11 +249,11 @@ th {
 	<c:if test="${isLogined == false}">
 		<div class="con">
 
-			<c:url value="/s/member/login" var="loginUrl">
-				<c:param name="afterLoginRedirectUrl"
-					value="${currentUrl}&jsAction=WriteReplyForm__focus" />
+			<c:url value="/s/member/login" var="loginUri">
+				<c:param name="afterLoginRedirectUri"
+					value="${currentUri}&jsAction=WriteReplyForm__focus" />
 			</c:url>
-			<a href="${loginUrl}">로그인</a> 후 이용해주세요.
+			<a href="${loginUri}">로그인</a> 후 이용해주세요.
 		</div>
 	</c:if>
 	<c:if test="${isLogined}">
@@ -311,7 +311,7 @@ th {
 				class="write-reply-form form1"
 				onsubmit="WriteReplyForm__submit(this); return false;">
 				<input type="hidden" name="articleId" value="${article.id}">
-				<c:url value="${noBaseCurrentUri}" var="redirectUrl">
+				<c:url value="${noBaseCurrentUri}" var="redirectUri">
 					<c:forEach items="${paramValues}" var="p">
 						<c:choose>
 							<c:when test="${p.key == 'jsAction'}">
@@ -327,7 +327,7 @@ th {
 
 					<c:param name="jsAction" value="WriteReplyList__showTop" />
 				</c:url>
-				<input type="hidden" name="redirectUrl" value="${redirectUrl}">
+				<input type="hidden" name="redirectUri" value="${redirectUri}">
 				<input type="hidden" name="body">
 				<div class="form-row">
 					<div class="input">

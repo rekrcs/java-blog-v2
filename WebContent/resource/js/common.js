@@ -5,7 +5,7 @@ String.prototype.replaceAll = function(org, dest) {
 	return this.split(org).join(dest);
 }
 
-function getUrlParams(url) {
+function getUriParams(url) {
 	url = url.trim();
 	url = url.replaceAll('&amp;', '&');
 	if (url.indexOf('#') !== -1) {

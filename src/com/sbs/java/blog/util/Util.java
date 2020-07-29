@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Random;
 
@@ -111,7 +110,7 @@ public class Util {
 
 	}
 
-	public static String getUrlEncoded(String str) {
+	public static String getUriEncoded(String str) {
 		try {
 			return URLEncoder.encode(str, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -135,17 +134,17 @@ public class Util {
 		return ((String) rs.get("resultCode")).startsWith("S-");
 	}
 
-	public static String adParamFrom(String redirectUrl, String paramName, int paramValue) {
-		return adParamFrom(redirectUrl, paramName, paramValue + "");
+	public static String adParamFrom(String redirectUri, String paramName, int paramValue) {
+		return adParamFrom(redirectUri, paramName, paramValue + "");
 	}
 
-	public static String adParamFrom(String redirectUrl, String paramName, String paramValue) {
-		if (redirectUrl.contains("?") == false) {
-			redirectUrl += "?dummy=dummy";
+	public static String adParamFrom(String redirectUri, String paramName, String paramValue) {
+		if (redirectUri.contains("?") == false) {
+			redirectUri += "?dummy=dummy";
 		}
 
-		redirectUrl += "&" + paramName + "=" + paramValue;
+		redirectUri += "&" + paramName + "=" + paramValue;
 
-		return redirectUrl;
+		return redirectUri;
 	}
 }
