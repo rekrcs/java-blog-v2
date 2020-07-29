@@ -118,14 +118,14 @@
 									href="${pageContext.request.contextPath}/s/member/myPage"
 									class="block">My page</a></li>
 								<li><a
-									href="${pageContext.request.contextPath}/s/member/doLogout"
-									class="block">log out</a></li>
+									href="${pageContext.request.contextPath}/s/member/doLogout?redirectUrl=${urlEncodedAfterLogoutRedirectUrl}"
+									class="block">Log out</a></li>
 							</ul></li>
 					</c:if>
 					<c:if test="${isLogined == false}">
 						<li><a
 							href="${pageContext.request.contextPath}/s/member/login?afterLoginRedirectUrl=${urlEncodedAfterLoginRedirectUrl}"
-							class="flex height-100p flex-ai-c">log in</a></li>
+							class="flex height-100p flex-ai-c">Log in</a></li>
 						<li><a
 							href="${pageContext.request.contextPath}/s/member/join"
 							class="flex height-100p flex-ai-c">Sign up</a></li>
@@ -184,7 +184,7 @@
 								href="${pageContext.request.contextPath}/s/member/myPage"
 								class="block">My page</a></li>
 							<li><a
-								href="${pageContext.request.contextPath}/s/member/doLogout"
+								href="${pageContext.request.contextPath}/s/member/doLogout?redirectUrl=${urlEncodedAfterLogoutRedirectUrl}"
 								class="block">Log out</a></li>
 						</ul></li>
 				</c:if>

@@ -119,7 +119,10 @@ public class ArticleController extends Controller {
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		String body = Util.getString(req, "body");
 		int id = articleService.writeArticleReply(articleId, loginedMemberId, body);
-
+		String redirectUrl = Util.getString(req, "redirectUrl");
+		
+		redirectUrl = Util.adParamFrom(redirectUrl, "generatedArticleReplyId", id);
+		
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 

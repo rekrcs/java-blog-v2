@@ -37,6 +37,19 @@
 		form.submit();
 		WriteReplyForm__submitDone = true;
 	}
+
+	function WriteReplyForm__init() {
+		$('.write-reply-form .cancel').click(
+				function() {
+					var editor = $('.write-reply-form .toast-editor').data(
+							'data-toast-editor');
+					editor.setMarkdown('');
+				});
+	}
+
+	$(function() {
+		WriteReplyForm__init();
+	});
 </script>
 
 <style>
