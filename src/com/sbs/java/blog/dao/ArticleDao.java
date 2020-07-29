@@ -193,7 +193,7 @@ public class ArticleDao extends Dao {
 		sql.append("SET regDate = NOW()");
 		sql.append(", updateDate = NOW()");
 		sql.append(", title = ? ", title);
-		sql.append(", body = ? ", body);
+		sql.append(", body = ?qwe ", body);
 		sql.append(", memberId = ? ", memberId);
 		sql.append(", displayStatus = '1'");
 		sql.append(", cateItemId = ?", cateItemId);
@@ -253,7 +253,7 @@ public class ArticleDao extends Dao {
 		return DBUtil.delete(dbConn, secSql);
 	}
 
-	public int replyWrite(String body, int articleId, int memberId) {
+	public int writeArticleReply(int articleId, int memberId, String body) {
 		SecSql sql = new SecSql();
 
 		sql.append("INSERT INTO articleReply");
@@ -261,7 +261,8 @@ public class ArticleDao extends Dao {
 		sql.append(", updateDate = NOW()");
 		sql.append(", body = ? ", body);
 		sql.append(", articleId = ? ", articleId);
-		sql.append(", memberId = ? ", memberId);
+		sql.append(", displayStatus = '1'");
+		sql.append(", memberId = ?", memberId);
 
 		return DBUtil.insert(dbConn, sql);
 	}

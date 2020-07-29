@@ -48,6 +48,10 @@ public class ArticleReply extends Dto {
 		this.memberId = memberId;
 	}
 
+	public String getBodyForXTemplate() {
+		return body.replaceAll("(?i)script", "<!--REPLACE:script-->");
+	}
+
 	@Override
 	public String toString() {
 		return "ArticleReply [body=" + body + ", articleId=" + articleId + ", updateDate=" + updateDate + ", memberId="

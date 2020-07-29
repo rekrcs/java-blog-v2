@@ -42,7 +42,7 @@ public class ArticleController extends Controller {
 			return doActionDoModify();
 		case "doDelete":
 			return doActionDoDelete();
-		case "doReply":
+		case "doWriteReply":
 			return doActionReply();
 		case "doDeleteReply":
 			return doActionDodeleteReply();
@@ -111,15 +111,14 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionReply() {
-//		HttpSession session = req.getSession();
-		int articleId = Util.getInt(req, "id");
+		int articleId = Util.getInt(req, "articleId");
 		if (session.getAttribute("loginedMemberId") == null) {
 			return "html:<script> alert('로그인 후 댓글 쓰기가 가능 합니다.'); location.replace('detail?id=" + articleId
 					+ "'); </script>";
 		}
-		int memberId = (int) session.getAttribute("loginedMemberId");
-		String body = req.getParameter("body");
-		int id = articleService.replyWrite(body, articleId, memberId);
+		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
+		String body = Util.getString(req, "body");
+		int id = articleService.writeArticleReply(articleId, loginedMemberId, body);
 
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
