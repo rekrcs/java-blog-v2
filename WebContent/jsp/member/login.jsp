@@ -17,48 +17,6 @@
 </style>
 <%="<style>.form1 .form-row:not(:first-child) { margin-top : 10px; }</style>"%>
 <style>
-.form1 .form-row>.label {
-	width: 100px;
-}
-
-.form1 .form-row>.input {
-	flex-grow: 1;
-}
-
-.form1 .form-row>.input>input {
-	display: block;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 10px;
-}
-
-.member-join-box {
-	margin-top: 30px;
-}
-
-@media ( max-width : 700px ) {
-	.form1 .form-row {
-		display: block;
-	}
-}
-
-/*홈으로 돌아가기*/
-.backHome {
-	text-align: center;
-	border-top: 1px solid rgba(0, 0, 0, .2);
-	border-bottom: 1px solid rgba(0, 0, 0, .2);
-	padding: 20px 0;
-	margin-top: 50px;
-	width: 70%;
-	margin-right: auto;
-	margin-left: auto;
-	font-weight: bold;
-}
-
-.backHome>a:hover {
-	color: #008d62;
-}
-
 .find-inf>a {
 	color:blue;
 }

@@ -11,7 +11,6 @@ import com.sbs.java.blog.dto.Member;
 import com.sbs.java.blog.service.MailService;
 import com.sbs.java.blog.util.Util;
 
-
 public class MemberController extends Controller {
 
 	private MailService mailService;
@@ -58,16 +57,29 @@ public class MemberController extends Controller {
 			return actionDoDoubleCheckPassword();
 		case "doAuthMail":
 			return actionDoAuthMail();
+		case "getLoginIdDup":
+			return actionGetLoginIdDup();
 		}
 		return "";
 
+	}
+
+	private String actionGetLoginIdDup() {
+		String loginId = req.getParameter("loginId");
+
+		boolean isJoinableLoginId = memberService.isJoinableLoginId(loginId);
+
+		if (isJoinableLoginId) {
+			return "json:{\"msg\":\"사용할 수 있는 아이디 입니다.\", \"resultCode\": \"S-1\", \"loginId\":\"" + loginId + "\"}";
+		} else {
+			return "json:{\"msg\":\"사용할 수 없는 아이디 입니다.\", \"resultCode\": \"F-1\", \"loginId\":\"" + loginId + "\"}";
+		}
 	}
 
 	private String actionDoAuthMail() {
 		String code = req.getParameter("code");
 		String authCode = (String) session.getAttribute("code");
 		String loginId = req.getParameter("loginId");
-		
 
 		if (authCode.equals(code)) {
 			int num = memberService.successAuth(1, loginId);
@@ -200,9 +212,9 @@ public class MemberController extends Controller {
 
 	private String actionDoLogout() {
 		session.removeAttribute("loginedMemberId");
-		
+
 		String redirectUri = Util.getString(req, "redirectUri", "../home/main");
-		
+
 		return "html:<script> alert('로그아웃 되었습니다.'); location.replace('" + redirectUri + "'); </script>";
 	}
 

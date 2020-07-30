@@ -78,70 +78,9 @@
 	color: red;
 }
 
-/*댓글*/
-/* lib */
-.form1 {
-	display: block;
-	width: 100%;
-}
-
-.form1 .form-row {
-	align-items: center;
-	display: flex;
-}
-
-.form1 .form-row>.input {
-	flex-grow: 1;
-}
-
-.form1 .form-row>.input>input, .form1 .form-row>.input>textarea {
-	display: block;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 10px;
-}
-
-.form1 .form-row>.input>textarea {
-	height: 70px;
-}
-
-@media ( max-width : 700px ) {
-	.form1 .form-row {
-		display: block;
-	}
-}
-
-@media ( max-width : 700px ) {
-	.form1 .form-row>.input>.reply-btn {
-		width: 100%;
-	}
-}
-
-@media ( min-width : 701px ) {
-	.form1 .form-row>.input>.reply-btn {
-		width: 10%;
-	}
-}
 /* cus */
 .write-form-box {
 	margin: 20px 0 30px;
-}
-
-/*홈으로 돌아가기*/
-.backHome {
-	text-align: center;
-	border-top: 1px solid rgba(0, 0, 0, .2);
-	border-bottom: 1px solid rgba(0, 0, 0, .2);
-	padding: 20px 0;
-	margin-top: 50px;
-	width: 50%;
-	margin-right: auto;
-	margin-left: auto;
-	font-weight: bold;
-}
-
-.backHome>a:hover {
-	color: #008d62;
 }
 
 /*테이블 정렬*/

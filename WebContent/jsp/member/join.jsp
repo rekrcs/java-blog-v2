@@ -66,7 +66,8 @@
 
 <!-- 회원가입 중 유효하지 않은 input 방지  -->
 <script>
-	function submitJoinForm(form) {
+	var JoinForm__validLoginId = '';
+	function JoinForm__submit(form) {
 		form.loginId.value = form.loginId.value.trim();
 
 		if (form.loginId.value.length == 0) {
@@ -160,13 +161,14 @@
 	<div class="join-form-box con">
 		<h2 style="text-align: center">회원가입</h2>
 		<form action="doJoin" method="POST" class="join-form form1"
-			onsubmit="submitJoinForm(this); return false;">
+			onsubmit="JoinForm__submit(this); return false;">
 			<input type="hidden" name="loginPwReal" />
 			<div class="form-row">
 				<div class="label">로그인 아이디</div>
 				<div class="input">
 					<input onkeyup="JoinForm__checkLoginIdDup(this);" name="loginId"
 						type="text" placeholder="로그인 아이디를 입력해주세요." />
+					<div class="message-msg"></div>
 				</div>
 			</div>
 			<div class="form-row">

@@ -32,24 +32,9 @@
 .userDelete>a {
 	color: blue;
 }
+
 .userDelete>a:hover {
 	color: red;
-}
-/*홈으로 돌아가기*/
-.backHome {
-	text-align: center;
-	border-top: 1px solid rgba(0, 0, 0, .2);
-	border-bottom: 1px solid rgba(0, 0, 0, .2);
-	padding: 20px 0;
-	margin-top: 50px;
-	width: 70%;
-	margin-right: auto;
-	margin-left: auto;
-	font-weight: bold;
-}
-
-.backHome>a:hover {
-	color: #008d62;
 }
 </style>
 
@@ -59,15 +44,9 @@
 		<h2 style="text-align: center">My Page</h2>
 		<div class="userbox">
 			<div class="userInf">
-				<div class="userName">
-					이름 :
-					${loginedMember.name}</div>
-				<div class="userNickname">
-					닉네임 :
-					${loginedMember.nickname}</div>
-				<div class="email">
-					이메일 :
-					${loginedMember.email}</div>
+				<div class="userName">이름 : ${loginedMember.name}</div>
+				<div class="userNickname">닉네임 : ${loginedMember.nickname}</div>
+				<div class="email">이메일 : ${loginedMember.email}</div>
 			</div>
 
 
@@ -79,22 +58,22 @@
 						<th>카테고리</th>
 						<th>제목</th>
 					</tr>
-				
+
 					<c:forEach items="${articles}" var="article">
-					<tr>
-						<td>${article.extra.cateItemName}</td>
-						<td><a
-							href="${pageContext.request.contextPath}/s/article/detail?id=${article.id}">${article.title}</a></td>
-					</tr>
-				</c:forEach>
+						<tr>
+							<td>${article.extra.cateItemName}</td>
+							<td><a
+								href="${pageContext.request.contextPath}/s/article/detail?id=${article.id}">${article.title}</a></td>
+						</tr>
+					</c:forEach>
 				</table>
 				<div class="userModify">
 					<a href="doubleCheckPassword">[개인정보 수정]</a>
 				</div>
 
-<!-- 				<div class="userDelete"> -->
-<!-- 					<a onclick="if ( confirm('탈퇴하시겠습니까?') == false ) return false;" href="userDelete">[회원탈퇴]</a> -->
-<!-- 				</div> -->
+				<!-- 				<div class="userDelete"> -->
+				<!-- 					<a onclick="if ( confirm('탈퇴하시겠습니까?') == false ) return false;" href="userDelete">[회원탈퇴]</a> -->
+				<!-- 				</div> -->
 			</div>
 		</div>
 
