@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import com.sbs.java.blog.app.App;
 import com.sbs.java.mail.service.MailService;
 
+@WebServlet("/s/*")
 public class DispatcherServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
 		req.setCharacterEncoding("UTF-8");
-		
-		String gmailId = getServletConfig().getInitParameter("gmailId");
-		String gmailPw = getServletConfig().getInitParameter("gmailPw");
-		String dbId = getServletConfig().getInitParameter("dbId");
-		String dbPw = getServletConfig().getInitParameter("dbPw");
+
+		String gmailId = getServletContext().getInitParameter("gmailId");
+		String gmailPw = getServletContext().getInitParameter("gmailPw");
+		String dbId = getServletContext().getInitParameter("dbId");
+		String dbPw = getServletContext().getInitParameter("dbPw");
 		
 		MailService mailService = new MailService(gmailId, gmailPw, gmailId, "관리자");
-		
+
 		new App(req, resp, mailService, dbId, dbPw).start();
 	}
 
