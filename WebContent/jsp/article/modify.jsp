@@ -109,52 +109,43 @@
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
-	<div class="modify-form-box con">
-		<form action="doModify" method="POST" class="modify-form form1"
-			onsubmit="submitModifyForm(this); return false;">
-			<input type="hidden" name="id" value="${article.id}"> <input
-				type="hidden" name="body">
-			<div class="form-row">
-				<div class="label">번호</div>
-				<div class="input">${article.id}</div>
+	div class="modify-reply-form-box con">
+	<form action="doModifyReply" method="POST"
+		class="modify-reply-form form1"
+		onsubmit="submitModifyReplyForm(this); return false;">
+		<input type="hidden" name="redirectUri" value="${param.redirectUri}">
+		<input type="hidden" name="id" value="${articleReply.id}"> <input
+			type="hidden" name="body">
+		<div class="form-row">
+			<div class="label">게시물 번호</div>
+			<div class="input">${article.id}</div>
+		</div>
+		<div class="form-row">
+			<div class="label">게시물 제목</div>
+			<div class="input">${article.title}</div>
+		</div>
+		<div class="form-row">
+			<div class="label">번호</div>
+			<div class="input">${articleReply.id}</div>
+		</div>
+		<div class="form-row">
+			<div class="label">날짜</div>
+			<div class="input">${articleReply.regDate}</div>
+		</div>
+		<div class="form-row">
+			<div class="label">내용</div>
+			<div class="input">
+				<script type="text/x-template">${articleReply.bodyForXTemplate}</script>
+				<div class="toast-editor"></div>
 			</div>
-			<div class="form-row">
-				<div class="label">날짜</div>
-				<div class="input">${article.regDate}</div>
+		</div>
+		<div class="form-row">
+			<div class="label">수정</div>
+			<div class="input">
+				<input type="submit" value="수정" /> <a href="list">취소</a>
 			</div>
-			<div class="form-row">
-				<div class="label">카테고리 선택</div>
-				<div class="input">
-					<select name="cateItemId">
-						<c:forEach items="${cateItems}" var="cateItem">
-							<option ${article.cateItemId == cateItem.id ? 'selected' : ''}
-								value="${cateItem.id}">${cateItem.name}</option>
-						</c:forEach>
-
-					</select>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="label">제목</div>
-				<div class="input">
-					<input value="${article.title}" name="title" type="text"
-						placeholder="제목을 입력해주세요." />
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="label">내용</div>
-				<div class="input">
-					<script type="text/x-template">${article.bodyForXTemplate}</script>
-					<div class="toast-editor"></div>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="label">수정</div>
-				<div class="input">
-					<input type="submit" value="수정" />
-				</div>
-			</div>
-		</form>
+		</div>
+	</form>
 	</div>
 </section>
 </div>

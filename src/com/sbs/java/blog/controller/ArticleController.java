@@ -56,10 +56,18 @@ public class ArticleController extends Controller {
 	}
 
 	private String doActionDoModifyReply() {
-		int id = Integer.parseInt(req.getParameter("id"));
-		int articleId = Integer.parseInt(req.getParameter("articleId"));
-		String body = req.getParameter("body");
+		if (Util.empty(req, "id")) {
+			return "html:id를 입력해주세요.";
+		}
 
+		if (Util.isNum(req, "id") == false) {
+			return "html:id를 정수로 입력해주세요.";
+		}
+
+		int id = Util.getInt(req, "id");
+		String body = Util.getString(req, "body");
+
+		int articleId = Integer.parseInt(req.getParameter("articleId"));
 		int modifyId = articleService.modifyReply(id, body);
 
 		return "html:<script> alert('댓글이 수정 되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
@@ -120,9 +128,9 @@ public class ArticleController extends Controller {
 		String body = Util.getString(req, "body");
 		int id = articleService.writeArticleReply(articleId, loginedMemberId, body);
 		String redirectUri = Util.getString(req, "redirectUri");
-		
+
 		redirectUri = Util.adParamFrom(redirectUri, "generatedArticleReplyId", id);
-		
+
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 
