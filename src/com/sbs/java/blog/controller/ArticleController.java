@@ -29,33 +29,33 @@ public class ArticleController extends Controller {
 	public String doAction() {
 		switch (actionMethodName) {
 		case "list":
-			return doActionList();
+			return actionList();
 		case "detail":
-			return doActionDetail();
+			return actionDetail();
 		case "doWrite":
-			return doActionDoWrite();
+			return actionDoWrite();
 		case "write":
-			return doActionWrite();
+			return actionWrite();
 		case "modify":
-			return doActionModify();
+			return actionModify();
 		case "doModify":
-			return doActionDoModify();
+			return actionDoModify();
 		case "doDelete":
-			return doActionDoDelete();
+			return actionDoDelete();
 		case "doWriteReply":
-			return doActionReply();
+			return actionReply();
 		case "doDeleteReply":
-			return doActionDodeleteReply();
+			return actionDodeleteReply();
 		case "modifyReply":
-			return doActionModifyReply();
+			return actionModifyReply();
 		case "doModifyReply":
-			return doActionDoModifyReply();
+			return actionDoModifyReply();
 		}
 
 		return "";
 	}
 
-	private String doActionDoModifyReply() {
+	private String actionDoModifyReply() {
 		if (Util.empty(req, "id")) {
 			return "html:id를 입력해주세요.";
 		}
@@ -74,7 +74,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	private String doActionModifyReply() {
+	private String actionModifyReply() {
 //		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int articleId = Util.getInt(req, "articleId");
@@ -96,7 +96,7 @@ public class ArticleController extends Controller {
 		return "article/modifyReply.jsp";
 	}
 
-	private String doActionDodeleteReply() {
+	private String actionDodeleteReply() {
 //		HttpSession session = req.getSession();
 		int id = Util.getInt(req, "id");
 		int articleId = Util.getInt(req, "articleId");
@@ -118,7 +118,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('댓글이 삭제되었습니다.'); location.replace('./detail?id=" + articleId + "'); </script>";
 	}
 
-	private String doActionReply() {
+	private String actionReply() {
 		int articleId = Util.getInt(req, "articleId");
 		if (session.getAttribute("loginedMemberId") == null) {
 			return "html:<script> alert('로그인 후 댓글 쓰기가 가능 합니다.'); location.replace('detail?id=" + articleId
@@ -134,7 +134,7 @@ public class ArticleController extends Controller {
 		return "html:<script>location.replace('./detail?id=" + articleId + "');</script>";
 	}
 
-	private String doActionDoDelete() {
+	private String actionDoDelete() {
 		if (Util.empty(req, "id")) {
 			return "html:id를 입력해주세요.";
 		}
@@ -158,7 +158,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('" + id + "번 게시물이 삭제되었습니다.'); location.replace('list'); </script>";
 	}
 
-	private String doActionDoModify() {
+	private String actionDoModify() {
 		if (Util.empty(req, "id")) {
 			return "html:id를 입력해주세요.";
 		}
@@ -186,7 +186,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('" + id + "번 게시물이 수정되었습니다.'); location.replace('detail?id=" + id + "'); </script>";
 	}
 
-	private String doActionModify() {
+	private String actionModify() {
 		if (Util.empty(req, "id")) {
 			return "html:id를 입력해주세요.";
 		}
@@ -205,14 +205,14 @@ public class ArticleController extends Controller {
 		return "article/modify.jsp";
 	}
 
-	private String doActionWrite() {
+	private String actionWrite() {
 		if (session.getAttribute("loginedMemberId") == null) {
 			return "html:<script> alert('로그인 후 글 작성 가능 합니다.'); location.replace('../member/login'); </script>";
 		}
 		return "article/write.jsp";
 	}
 
-	private String doActionDoWrite() {
+	private String actionDoWrite() {
 		String title = req.getParameter("title");
 		String body = req.getParameter("body");
 		int cateItemId = Util.getInt(req, "cateItemId");
@@ -224,7 +224,7 @@ public class ArticleController extends Controller {
 		return "html:<script> alert('" + id + "번 게시물이 생성되었습니다.'); location.replace('list'); </script>";
 	}
 
-	private String doActionDetail() {
+	private String actionDetail() {
 		if (Util.empty(req, "id")) {
 			return "html:id를 입력해주세요.";
 		}
@@ -269,7 +269,7 @@ public class ArticleController extends Controller {
 
 	}
 
-	private String doActionList() {
+	private String actionList() {
 		int page = 1;
 
 		if (!Util.empty(req, "page") && Util.isNum(req, "page")) {

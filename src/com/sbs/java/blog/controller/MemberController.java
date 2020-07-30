@@ -25,45 +25,45 @@ public class MemberController extends Controller {
 	public String doAction() {
 		switch (actionMethodName) {
 		case "join":
-			return doActionJoin();
+			return actionJoin();
 		case "doJoin":
-			return doActionDoJoin();
+			return actionDoJoin();
 		case "login":
-			return doActionLogin();
+			return actionLogin();
 		case "doLogin":
-			return doActionDoLogin();
+			return actionDoLogin();
 		case "doLogout":
-			return doActionDoLogout();
+			return actionDoLogout();
 		case "findPassword":
-			return doActionFindPassword();
+			return actionFindPassword();
 		case "doFindPassword":
-			return doActionDoFindPassword();
+			return actionDoFindPassword();
 		case "findId":
-			return doActionFindId();
+			return actionFindId();
 		case "doFindId":
-			return doActionDoFindId();
+			return actionDoFindId();
 		case "myPage":
-			return doActionMyPage();
+			return actionMyPage();
 		case "userModify":
-			return doActionUserModify();
+			return actionUserModify();
 		case "doUserModify":
-			return doActionDoUserModify();
+			return actionDoUserModify();
 		case "userDelete":
-			return doActionUserDelete();
+			return actionUserDelete();
 		case "doUserDelete":
-			return doActionDoUserDelete();
+			return actionDoUserDelete();
 		case "doubleCheckPassword":
-			return doActionDoubleCheckPassword();
+			return actionDoubleCheckPassword();
 		case "doDoubleCheckPassword":
-			return doActionDoDoubleCheckPassword();
+			return actionDoDoubleCheckPassword();
 		case "doAuthMail":
-			return doActionDoAuthMail();
+			return actionDoAuthMail();
 		}
 		return "";
 
 	}
 
-	private String doActionDoAuthMail() {
+	private String actionDoAuthMail() {
 		String code = req.getParameter("code");
 		String authCode = (String) session.getAttribute("code");
 		String loginId = req.getParameter("loginId");
@@ -76,7 +76,7 @@ public class MemberController extends Controller {
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); window.close(); </script>");
 	}
 
-	private String doActionDoDoubleCheckPassword() {
+	private String actionDoDoubleCheckPassword() {
 		String loginPw = req.getParameter("loginPwReal");
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
@@ -87,11 +87,11 @@ public class MemberController extends Controller {
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
 	}
 
-	private String doActionDoubleCheckPassword() {
+	private String actionDoubleCheckPassword() {
 		return "member/doubleCheckPassword.jsp";
 	}
 
-	private String doActionDoUserDelete() {
+	private String actionDoUserDelete() {
 		String loginId = req.getParameter("loginId");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
@@ -113,11 +113,11 @@ public class MemberController extends Controller {
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
 	}
 
-	private String doActionUserDelete() {
+	private String actionUserDelete() {
 		return "member/userDelete.jsp";
 	}
 
-	private String doActionDoUserModify() {
+	private String actionDoUserModify() {
 		String loginId = req.getParameter("loginId");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
@@ -132,11 +132,11 @@ public class MemberController extends Controller {
 				name);
 	}
 
-	private String doActionUserModify() {
+	private String actionUserModify() {
 		return "member/userModify.jsp";
 	}
 
-	private String doActionMyPage() {
+	private String actionMyPage() {
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
 		List<Article> articles = articleService.getForPrintArticlesByMemberId(loginedMemberId);
@@ -147,7 +147,7 @@ public class MemberController extends Controller {
 		return "member/myPage.jsp";
 	}
 
-	private String doActionDoFindId() {
+	private String actionDoFindId() {
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 
@@ -165,11 +165,11 @@ public class MemberController extends Controller {
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
 	}
 
-	private String doActionFindId() {
+	private String actionFindId() {
 		return "member/findId.jsp";
 	}
 
-	private String doActionDoFindPassword() {
+	private String actionDoFindPassword() {
 		String loginId = req.getParameter("loginId");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
@@ -194,11 +194,11 @@ public class MemberController extends Controller {
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
 	}
 
-	private String doActionFindPassword() {
+	private String actionFindPassword() {
 		return "member/findPassword.jsp";
 	}
 
-	private String doActionDoLogout() {
+	private String actionDoLogout() {
 		session.removeAttribute("loginedMemberId");
 		
 		String redirectUri = Util.getString(req, "redirectUri", "../home/main");
@@ -206,7 +206,7 @@ public class MemberController extends Controller {
 		return "html:<script> alert('로그아웃 되었습니다.'); location.replace('" + redirectUri + "'); </script>";
 	}
 
-	private String doActionDoLogin() {
+	private String actionDoLogin() {
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPwReal");
 
@@ -228,11 +228,11 @@ public class MemberController extends Controller {
 		return String.format("html:<script> alert('로그인 되었습니다.'); location.replace('" + redirectUri + "'); </script>");
 	}
 
-	private String doActionLogin() {
+	private String actionLogin() {
 		return "member/login.jsp";
 	}
 
-	private String doActionDoJoin() {
+	private String actionDoJoin() {
 		String loginId = req.getParameter("loginId");
 		String email = req.getParameter("email");
 		String name = req.getParameter("name");
@@ -273,7 +273,7 @@ public class MemberController extends Controller {
 				name);
 	}
 
-	private String doActionJoin() {
+	private String actionJoin() {
 		return "member/join.jsp";
 	}
 

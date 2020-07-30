@@ -51,7 +51,7 @@ public class ArticleDao extends Dao {
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
-		sql.append("WHERE displayStatus = 1");
+		sql.append("WHERE A.displayStatus = 1");
 		if (cateItemId != 0) {
 			sql.append("AND cateItemId = ?", cateItemId);
 		}

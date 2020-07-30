@@ -18,19 +18,19 @@ public class HomeController extends Controller {
 	public String doAction() {
 		switch (actionMethodName) {
 		case "main":
-			return doActionMain();
+			return actionMain();
 		case "aboutMe":
-			return doActionAboutMe();
+			return actionAboutMe();
 		}
 
 		return "";
 	}
 
-	private String doActionAboutMe() {
+	private String actionAboutMe() {
 		return "home/aboutMe.jsp";
 	}
 
-	private String doActionMain() {
+	private String actionMain() {
 		//최신 게시물 순서
 		int showArticlesInMainPage = 5;
 		List<Article> articles = articleService.getForPrintListArticles(showArticlesInMainPage);

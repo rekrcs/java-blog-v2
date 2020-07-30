@@ -19,15 +19,15 @@ public class TestController extends Controller {
 	public String doAction() {
 		switch (actionMethodName) {
 		case "dbInsert":
-			return doActionDbInsert();
+			return actionDbInsert();
 		case "dbSelect":
-			return doActionDbSelect();
+			return actionDbSelect();
 		}
 
 		return "";
 	}
 
-	private String doActionDbInsert() {
+	private String actionDbInsert() {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		int id = -1;
@@ -67,7 +67,7 @@ public class TestController extends Controller {
 		return "html:" + id;
 	}
 
-	private String doActionDbSelect() {
+	private String actionDbSelect() {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String title = null;
