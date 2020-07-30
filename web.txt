@@ -4,35 +4,24 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
 
-	<servlet>
-		<servlet-name>dispatcher</servlet-name>
+	<context-param>
+		<param-name>gmailId</param-name>
+		<param-value></param-value>
+	</context-param>
 
-		<servlet-class>com.sbs.java.blog.servlet.DispatcherServlet</servlet-class>
+	<context-param>
+		<param-name>gmailPw</param-name>
+		<param-value></param-value>
+	</context-param>
 
-		<init-param>
-			<param-name>gmail</param-name>
-			<param-value></param-value>
-		</init-param>
+	<context-param>
+		<param-name>dbId</param-name>
+		<param-value></param-value>
+	</context-param>
 
-		<init-param>
-			<param-name>gmail</param-name>
-			<param-value></param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>db</param-name>
-			<param-value></param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>db</param-name>
-			<param-value></param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/s/*</url-pattern>
-	</servlet-mapping>
+	<context-param>
+		<param-name>dbPw</param-name>
+		<param-value></param-value>
+	</context-param>
 
 </web-app>

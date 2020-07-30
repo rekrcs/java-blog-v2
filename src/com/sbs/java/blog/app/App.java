@@ -9,28 +9,23 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sbs.java.blog.config.Config;
 import com.sbs.java.blog.controller.ArticleController;
 import com.sbs.java.blog.controller.Controller;
 import com.sbs.java.blog.controller.HomeController;
 import com.sbs.java.blog.controller.MemberController;
 import com.sbs.java.blog.controller.TestController;
 import com.sbs.java.blog.exception.SQLErrorException;
+import com.sbs.java.blog.service.MailService;
 import com.sbs.java.blog.util.Util;
-import com.sbs.java.mail.service.MailService;
 
 public class App {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
-	private MailService mailService;
-	private String dbId;
-	private String dbPw;
 
-	public App(HttpServletRequest req, HttpServletResponse resp, MailService mailService, String dbId, String dbPw) {
+	public App(HttpServletRequest req, HttpServletResponse resp) {
 		this.req = req;
 		this.resp = resp;
-		this.mailService = mailService;
-		this.dbId = dbId;
-		this.dbPw = dbPw;
 	}
 
 	private void loadDbDriver() throws IOException {
@@ -52,6 +47,23 @@ public class App {
 	}
 
 	public void start() throws ServletException, IOException {
+		// Config 구성
+		if (req.getServletContext().getInitParameter("gmailId") != null) {
+			Config.gmailId = (String) req.getServletContext().getInitParameter("gmailId");
+		}
+
+		if (req.getServletContext().getInitParameter("gmailPw") != null) {
+			Config.gmailPw = (String) req.getServletContext().getInitParameter("gmailPw");
+		}
+		
+		if (req.getServletContext().getInitParameter("dbId") != null) {
+			Config.dbId = (String) req.getServletContext().getInitParameter("dbId");
+		}
+
+		if (req.getServletContext().getInitParameter("dbPw") != null) {
+			Config.dbPw = (String) req.getServletContext().getInitParameter("dbPw");
+		}
+
 		// DB 드라이버 로딩
 		loadDbDriver();
 
@@ -67,7 +79,7 @@ public class App {
 			dbConn = DriverManager.getConnection(url, user, password);
 
 			// 올바른 컨트롤러로 라우팅
-			route(dbConn, req, resp, mailService);
+			route(dbConn, req, resp);
 		} catch (SQLException e) {
 			Util.printEx("SQL 예외(커넥션 열기)", resp, e);
 		} catch (SQLErrorException e) {
@@ -86,7 +98,7 @@ public class App {
 
 	}
 
-	private void route(Connection dbConn, HttpServletRequest req, HttpServletResponse resp, MailService mailService)
+	private void route(Connection dbConn, HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		resp.setContentType("text/html; charset=UTF-8");
 
@@ -105,7 +117,7 @@ public class App {
 			controller = new ArticleController(dbConn, actionMethodName, req, resp);
 			break;
 		case "member":
-			controller = new MemberController(dbConn, actionMethodName, req, resp, mailService);
+			controller = new MemberController(dbConn, actionMethodName, req, resp);
 			break;
 		case "home":
 			controller = new HomeController(dbConn, actionMethodName, req, resp);

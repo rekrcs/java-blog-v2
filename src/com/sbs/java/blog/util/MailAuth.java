@@ -1,4 +1,4 @@
-package com.sbs.java.mail.servlet.util;
+package com.sbs.java.blog.util;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;

@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sbs.java.blog.dto.Article;
 import com.sbs.java.blog.dto.Member;
+import com.sbs.java.blog.service.MailService;
 import com.sbs.java.blog.util.Util;
-import com.sbs.java.mail.service.MailService;
+
 
 public class MemberController extends Controller {
 
 	private MailService mailService;
 
 	public MemberController(Connection dbConn, String actionMethodName, HttpServletRequest req,
-			HttpServletResponse resp, MailService mailService) {
+			HttpServletResponse resp) {
 		super(dbConn, actionMethodName, req, resp);
-		this.mailService = mailService;
 	}
 
 	@Override
@@ -265,8 +265,8 @@ public class MemberController extends Controller {
 
 		String body = "";
 		body += "로그인을 위해서는 인증이 필요합니다. 아래의 링크를 클릭해 주세요";
-		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
-//		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
+//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
+		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
 		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
 		return String.format(
 				"html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>",
