@@ -3,7 +3,6 @@ package com.sbs.java.blog.dto;
 import java.util.Map;
 
 public class Member extends Dto {
-	private String updateDate;
 	private String loginId;
 	private String loginPw;
 	private String loginPwConfirm;
@@ -15,7 +14,6 @@ public class Member extends Dto {
 	public Member(Map<String, Object> row) {
 		super(row);
 		this.loginId = (String) row.get("loginId");
-		this.updateDate = (String) row.get("updateDate");
 		this.loginPw = (String) row.get("loginPw");
 		this.loginPwConfirm = (String) row.get("loginPwConfirm");
 		this.name = (String) row.get("name");
@@ -72,14 +70,6 @@ public class Member extends Dto {
 		this.loginPwConfirm = loginPwConfirm;
 	}
 
-	public String getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -90,10 +80,10 @@ public class Member extends Dto {
 
 	@Override
 	public String toString() {
-		return "Member [updateDate=" + updateDate + ", loginId=" + loginId + ", loginPw=" + loginPw
-				+ ", loginPwConfirm=" + loginPwConfirm + ", name=" + name + ", email=" + email + ", nickname="
-				+ nickname + ", mailAuthStatus=" + mailAuthStatus + ", getId()=" + getId() + ", getRegDate()="
-				+ getRegDate() + ", getExtra()=" + getExtra() + "]";
+		return "Member [loginId=" + loginId + ", loginPw=" + loginPw + ", loginPwConfirm=" + loginPwConfirm + ", name="
+				+ name + ", email=" + email + ", nickname=" + nickname + ", mailAuthStatus=" + mailAuthStatus
+				+ ", getId()=" + getId() + ", getRegDate()=" + getRegDate() + ", getUpdateDate()=" + getUpdateDate()
+				+ "]";
 	}
 
 }

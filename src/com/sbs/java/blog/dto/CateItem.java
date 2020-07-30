@@ -11,17 +11,18 @@ public class CateItem extends Dto {
 		this.name = (String) row.get("name");
 	}
 
-	@Override
-	public String toString() {
-		return "Article [name=" + name + ", dto=" + super.toString() + "]";
-	}
-
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		return "CateItem [name=" + name + ", getId()=" + getId() + ", getRegDate()=" + getRegDate()
+				+ ", getUpdateDate()=" + getUpdateDate() + "]";
 	}
 
 }

@@ -5,13 +5,11 @@ import java.util.Map;
 public class ArticleReply extends Dto {
 	private String body;
 	private int articleId;
-	private String updateDate;
 	private int memberId;
 
 	public ArticleReply(Map<String, Object> row) {
 		super(row);
 		this.body = (String) row.get("body");
-		this.updateDate = (String) row.get("updateDate");
 		this.articleId = (int) row.get("articleId");
 		this.memberId = (int) row.get("memberId");
 	}
@@ -32,14 +30,6 @@ public class ArticleReply extends Dto {
 		this.articleId = articleId;
 	}
 
-	public String getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
-	}
-
 	public int getMemberId() {
 		return memberId;
 	}
@@ -54,8 +44,10 @@ public class ArticleReply extends Dto {
 
 	@Override
 	public String toString() {
-		return "ArticleReply [body=" + body + ", articleId=" + articleId + ", updateDate=" + updateDate + ", memberId="
-				+ memberId + ", getId()=" + getId() + ", getRegDate()=" + getRegDate() + "]";
+		return "ArticleReply [body=" + body + ", articleId=" + articleId + ", memberId=" + memberId + ", getId()="
+				+ getId() + ", getRegDate()=" + getRegDate() + ", getUpdateDate()=" + getUpdateDate() + "]";
 	}
+
+
 
 }

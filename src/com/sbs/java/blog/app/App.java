@@ -55,7 +55,7 @@ public class App {
 		if (req.getServletContext().getInitParameter("gmailPw") != null) {
 			Config.gmailPw = (String) req.getServletContext().getInitParameter("gmailPw");
 		}
-		
+
 		if (req.getServletContext().getInitParameter("dbId") != null) {
 			Config.dbId = (String) req.getServletContext().getInitParameter("dbId");
 		}
@@ -145,11 +145,11 @@ public class App {
 	}
 
 	private String getDbId() {
-		return dbId;
+		return Config.dbId;
 	}
 
 	private String getDbPassword() {
-		return dbPw;
+		return Config.dbPw;
 	}
 
 }
