@@ -2,16 +2,18 @@ package com.sbs.java.blog.service;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.UUID;
 
 import com.sbs.java.blog.dao.MemberDao;
 import com.sbs.java.blog.dto.Member;
 
 public class MemberService extends Service {
-
+	private AttrService attrService;
 	private MemberDao memberDao;
 
-	public MemberService(Connection dbConnection) {
+	public MemberService(Connection dbConnection, AttrService attrService) {
 		this.memberDao = new MemberDao(dbConnection);
+		this.attrService = attrService;
 	}
 
 	public int join(String loginId, String loginPw, String name, String nickname, String email) {
@@ -48,7 +50,7 @@ public class MemberService extends Service {
 
 	public int userModify(String loginId, String loginPw, String name, String nickname, String email, int id) {
 		return memberDao.userModify(loginId, loginPw, name, nickname, email, id);
-		
+
 	}
 
 	public int memberDelete(int id) {
@@ -57,5 +59,18 @@ public class MemberService extends Service {
 
 	public int successAuth(int authStatus, String loginId) {
 		return memberDao.successAuth(authStatus, loginId);
+	}
+
+	public boolean isValidModifyPrivateAuthCode(int actorId, String authCode) {
+		String authCodeOnDB = attrService.getValue("member__" + actorId + "__extra__modifyPrivateAuthCode");
+
+		return authCodeOnDB.equals(authCode);
+	}
+
+	public String genModifyPrivateAuthCode(int actorId) {
+		String authCode = UUID.randomUUID().toString();
+		attrService.setValue("member__" + actorId + "__extra__modifyPrivateAuthCode", authCode);
+
+		return authCode;
 	}
 }

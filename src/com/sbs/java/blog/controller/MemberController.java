@@ -92,8 +92,15 @@ public class MemberController extends Controller {
 		String loginPw = req.getParameter("loginPwReal");
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
-		Member member = memberService.getMemberById(loginedMemberId);
-		if (member.getLoginPw().equals(loginPw)) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+
+//		if (loginedMember.getLoginPw().equals(loginPw)) {
+//			String authCode = memberService.genModifyPrivateAuthCode(loginedMemberId);
+//
+//			return "member/userModify.jsp";
+//		}
+
+		if (loginedMember.getLoginPw().equals(loginPw)) {
 			return "member/userModify.jsp";
 		}
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); history.back(); </script>");
@@ -139,12 +146,21 @@ public class MemberController extends Controller {
 		boolean isJoinableLoginId = memberService.isJoinableLoginId(loginId);
 
 		memberService.userModify(loginId, loginPw, name, nickname, email, loginedMemberId);
-
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		loginedMember.setLoginPw(loginPw); // 크게 의미는 없지만, 의미론적인 면에서 해야 하는
+		
 		return String.format("html:<script> alert('%s님 정보가 수정 되었습니다.'); location.replace('../home/main'); </script>",
 				name);
 	}
 
 	private String actionUserModify() {
+//		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
+//
+//		String authCode = req.getParameter("authCode");
+//		if (memberService.isValidModifyPrivateAuthCode(loginedMemberId, authCode) == false) {
+//			return String.format(
+//					"html:<script> alert('비밀번호를 다시 체크해주세요.'); location.replace('../member/passwordForPrivate'); </script>");
+//		}
 		return "member/userModify.jsp";
 	}
 
