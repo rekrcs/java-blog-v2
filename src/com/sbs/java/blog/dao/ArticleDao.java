@@ -193,7 +193,7 @@ public class ArticleDao extends Dao {
 		sql.append("SET regDate = NOW()");
 		sql.append(", updateDate = NOW()");
 		sql.append(", title = ? ", title);
-		sql.append(", body = ?qwe ", body);
+		sql.append(", body = ? ", body);
 		sql.append(", memberId = ? ", memberId);
 		sql.append(", displayStatus = '1'");
 		sql.append(", cateItemId = ?", cateItemId);
