@@ -97,6 +97,10 @@ public class MemberController extends Controller {
 	}
 
 	private String actionDoDoubleCheckPassword() {
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('로그인 이용 가능 합니다.'); location.replace('login'); </script>";
+		}
+
 		String loginPw = req.getParameter("loginPwReal");
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
@@ -222,6 +226,8 @@ public class MemberController extends Controller {
 
 				int num = memberService.getTemporaryPw(memberId, temporaryPwSHA256);
 
+				String authCode = memberService.genUseTempPasswordAuthCode(memberId);
+
 				boolean sendMailDone = mailService.findPassword(email, name + "님 임시 비밀번호 입니다.",
 						"임시비번 : " + temporaryPw + "\n로그인후에 반드시 비번을 변경해 주세요") == 1;
 				return String.format(
@@ -261,9 +267,15 @@ public class MemberController extends Controller {
 		if (member.getMailAuthStatus() == 0) {
 			return String.format("html:<script> alert('이메일 인증후에 로그인 가능합니다.'); history.back(); </script>");
 		}
+
 		session.setAttribute("loginedMemberId", loginedMemberId);
 
 		String redirectUri = Util.getString(req, "redirectUri", "../home/main");
+
+		if (memberService.isTempPaswordStatus(loginedMemberId, "1")) {
+			return String.format(
+					"html:<script> alert('로그인 되었습니다. 임시 비번을 사용중 입니다. 반드시 변경해 주세요'); location.replace('myPage');</script>");
+		}
 
 		return String.format("html:<script> alert('로그인 되었습니다.'); location.replace('" + redirectUri + "'); </script>");
 	}
@@ -312,9 +324,10 @@ public class MemberController extends Controller {
 //		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d", email, authCode, memberId);
 //		body += String.format("\n<a href=\"https://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
 //				authCode, memberId);
-		
-		body += String.format("\n<a href=\"http://localhost:8081/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
-				authCode, memberId);
+
+		body += String.format(
+				"\n<a href=\"http://localhost:8081/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>",
+				email, authCode, memberId);
 		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
 		return String.format(
 				"html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>",

@@ -73,7 +73,7 @@ public class MemberService extends Service {
 
 		return authCode;
 	}
-	
+
 	public boolean isValidEmailAuthCode(int actorId, String authCode) {
 		String authCodeOnDB = attrService.getValue("member__" + actorId + "__extra__emailAuthCode");
 
@@ -89,5 +89,17 @@ public class MemberService extends Service {
 
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
+	}
+
+	public String genUseTempPasswordAuthCode(int actorId) {
+		String temPassWordStatus = "1";
+		attrService.setValue("member__" + actorId + "__extra__useTempPassword", temPassWordStatus);
+		return temPassWordStatus;
+	}
+
+	public boolean isTempPaswordStatus(int actorId, String authCode) {
+		String authCodeOnDB = attrService.getValue("member__" + actorId + "__extra__useTempPassword");
+
+		return authCodeOnDB.equals(authCode);
 	}
 }
