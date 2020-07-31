@@ -97,9 +97,6 @@ public class MemberController extends Controller {
 	}
 
 	private String actionDoDoubleCheckPassword() {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return "html:<script> alert('로그인 이용 가능 합니다.'); location.replace('login'); </script>";
-		}
 
 		String loginPw = req.getParameter("loginPwReal");
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
@@ -119,6 +116,9 @@ public class MemberController extends Controller {
 	}
 
 	private String actionDoubleCheckPassword() {
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('로그인 후 이용 가능 합니다.'); location.replace('../member/login'); </script>";
+		}
 		return "member/doubleCheckPassword.jsp";
 	}
 
@@ -161,13 +161,16 @@ public class MemberController extends Controller {
 		memberService.userModify(loginId, loginPw, name, nickname, email, loginedMemberId);
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		loginedMember.setLoginPw(loginPw); // 크게 의미는 없지만, 의미론적인 면에서 해야 하는
-		
+
 		attrService.remove("member__" + loginedMemberId + "__extra__useTempPassword");
 		return String.format("html:<script> alert('%s님 정보가 수정 되었습니다.'); location.replace('../home/main'); </script>",
 				name);
 	}
 
 	private String actionUserModify() {
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('로그인 후 이용 가능 합니다.'); location.replace('../member/login'); </script>";
+		}
 //		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 //
 //		String authCode = req.getParameter("authCode");
@@ -179,6 +182,9 @@ public class MemberController extends Controller {
 	}
 
 	private String actionMyPage() {
+		if (session.getAttribute("loginedMemberId") == null) {
+			return "html:<script> alert('로그인 후 이용 가능 합니다.'); location.replace('../member/login'); </script>";
+		}
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
 		List<Article> articles = articleService.getForPrintArticlesByMemberId(loginedMemberId);
