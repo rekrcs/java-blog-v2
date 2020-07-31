@@ -132,14 +132,22 @@ public class MemberDao extends Dao {
 		return DBUtil.update(dbConn, secSql);
 	}
 
-	public int successAuth(int authStatus, String loginId) {
+	public int successAuth(int authStatus, int id) {
 		SecSql secSql = new SecSql();
 
 		secSql.append("UPDATE member");
 		secSql.append("SET mailAuthStatus = ?", authStatus);
-		secSql.append("WHERE loginId = ?", loginId);
+		secSql.append("WHERE id = ?", id);
 
 		return DBUtil.update(dbConn, secSql);
+	}
+
+	public Member getMemberByLoginId(String loginId) {
+		SecSql sql = SecSql.from("SELECT *");
+		sql.append("FROM `member`");
+		sql.append("WHERE loginId = ?", loginId);
+
+		return new Member(DBUtil.selectRow(dbConn, sql));
 	}
 
 }

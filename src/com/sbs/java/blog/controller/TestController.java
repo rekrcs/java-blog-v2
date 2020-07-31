@@ -9,7 +9,11 @@ import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sbs.java.blog.service.MailService;
+
 public class TestController extends Controller {
+
+
 	public TestController(Connection dbConn, String actionMethodName, HttpServletRequest req,
 			HttpServletResponse resp) {
 		super(dbConn, actionMethodName, req, resp);
@@ -22,9 +26,19 @@ public class TestController extends Controller {
 			return actionDbInsert();
 		case "dbSelect":
 			return actionDbSelect();
+		case "sendMail":
+			return actionSendMail();
 		}
 
 		return "";
+	}
+
+	private String actionSendMail() {
+		String body = String.format("<a href=\"http://localhost:8081/blog/s/member/authEmail?email=1&authCode=1&memberId=1 \" target=\"_blank\">인증하기</a>");
+		
+		mailService.send("bcvvb@ainbz.com", "안녕하세요.!!!",
+				body);
+		return "html:성공";
 	}
 
 	private String actionDbInsert() {

@@ -57,8 +57,8 @@ public class MemberService extends Service {
 		return memberDao.memberDelete(id);
 	}
 
-	public int successAuth(int authStatus, String loginId) {
-		return memberDao.successAuth(authStatus, loginId);
+	public int successAuth(int authStatus, int id) {
+		return memberDao.successAuth(authStatus, id);
 	}
 
 	public boolean isValidModifyPrivateAuthCode(int actorId, String authCode) {
@@ -72,5 +72,9 @@ public class MemberService extends Service {
 		attrService.setValue("member__" + actorId + "__extra__modifyPrivateAuthCode", authCode);
 
 		return authCode;
+	}
+
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
 	}
 }

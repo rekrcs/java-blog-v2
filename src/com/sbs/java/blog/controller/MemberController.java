@@ -13,8 +13,6 @@ import com.sbs.java.blog.util.Util;
 
 public class MemberController extends Controller {
 
-	private MailService mailService;
-
 	public MemberController(Connection dbConn, String actionMethodName, HttpServletRequest req,
 			HttpServletResponse resp) {
 		super(dbConn, actionMethodName, req, resp);
@@ -55,7 +53,7 @@ public class MemberController extends Controller {
 			return actionDoubleCheckPassword();
 		case "doDoubleCheckPassword":
 			return actionDoDoubleCheckPassword();
-		case "doAuthMail":
+		case "authEmail":
 			return actionDoAuthMail();
 		case "getLoginIdDup":
 			return actionGetLoginIdDup();
@@ -77,14 +75,23 @@ public class MemberController extends Controller {
 	}
 
 	private String actionDoAuthMail() {
-		String code = req.getParameter("code");
-		String authCode = (String) session.getAttribute("code");
-		String loginId = req.getParameter("loginId");
+		String authCode = req.getParameter("authCode");
+		String email = req.getParameter("email");
+		int memberId = Integer.parseInt(req.getParameter("memberId"));
 
-		if (authCode.equals(code)) {
-			int num = memberService.successAuth(1, loginId);
+		if (memberService.isValidModifyPrivateAuthCode(memberId, authCode)) {
+			int num = memberService.successAuth(1, memberId);
 			return String.format("html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
 		}
+
+//		String code = req.getParameter("code");
+//		String authCode = (String) session.getAttribute("code");
+//		String loginId = req.getParameter("loginId");
+
+//		if (authCode.equals(code)) {
+//			int num = memberService.successAuth(1, loginId);
+//			return String.format("html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
+//		}
 		return String.format("html:<script> alert('일치하는 정보가 없습니다.'); window.close(); </script>");
 	}
 
@@ -291,14 +298,22 @@ public class MemberController extends Controller {
 
 		memberService.join(loginId, loginPw, name, nickname, email);
 
-		String code = Util.getAuthCode();
+		Member member = memberService.getMemberByLoginId(loginId);
+		int memberId = member.getId();
+		String authCode = memberService.genModifyPrivateAuthCode(memberId);
 
-		session.setAttribute("code", code);
+//		String code = Util.getAuthCode();
+
+//		session.setAttribute("code", code);
 
 		String body = "";
 		body += "로그인을 위해서는 인증이 필요합니다. 아래의 링크를 클릭해 주세요";
-//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
-		body += String.format("\nhttp://localhost:8081/blog/s/member/doAuthMail?code=%s&loginId=%s", code, loginId);
+//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d", email, authCode, memberId);
+//		body += String.format("\n<a href=\"https://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
+//				authCode, memberId);
+		
+		body += String.format("\n<a href=\"http://localhost:8081/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
+				authCode, memberId);
 		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
 		return String.format(
 				"html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>",

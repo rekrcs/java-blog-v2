@@ -76,11 +76,11 @@
 			return;
 		}
 
-		if (form.loginId.value != JoinForm__validLoginId) {
-			alert('다른 아이디를 입력해주세요.');
-			form.loginId.focus();
-			return;
-		}
+// 		if (form.loginId.value != JoinForm__validLoginId) {
+// 			alert('다른 아이디를 입력해주세요.');
+// 			form.loginId.focus();
+// 			return;
+// 		}
 
 		form.loginPw.value = form.loginPw.value.trim();
 
