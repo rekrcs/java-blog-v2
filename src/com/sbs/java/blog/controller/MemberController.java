@@ -118,12 +118,13 @@ public class MemberController extends Controller {
 		String loginPw = req.getParameter("loginPwReal");
 		int loginedMemberId = (int) session.getAttribute("loginedMemberId");
 
-		Member member = memberService.getMemberById(loginedMemberId);
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
-		if (member.getLoginId().equals(loginId) && member.getEmail().equals(email) && member.getName().equals(name)
-				&& member.getNickname().equals(nickname) && member.getLoginPw().equals(loginPw)) {
+		if (loginedMember.getLoginId().equals(loginId) && loginedMember.getEmail().equals(email)
+				&& loginedMember.getName().equals(name) && loginedMember.getNickname().equals(nickname)
+				&& loginedMember.getLoginPw().equals(loginPw)) {
 
-			int deleteId = memberService.memberDelete(loginedMemberId);
+			memberService.memberDelete(loginedMemberId);
 			session.removeAttribute("loginedMemberId");
 			return String.format("html:<script> alert('%s님 탈퇴됬습니다.'); location.replace('../home/main'); </script>",
 					name);
@@ -148,7 +149,7 @@ public class MemberController extends Controller {
 		memberService.userModify(loginId, loginPw, name, nickname, email, loginedMemberId);
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		loginedMember.setLoginPw(loginPw); // 크게 의미는 없지만, 의미론적인 면에서 해야 하는
-		
+
 		return String.format("html:<script> alert('%s님 정보가 수정 되었습니다.'); location.replace('../home/main'); </script>",
 				name);
 	}
@@ -245,6 +246,9 @@ public class MemberController extends Controller {
 		}
 
 		Member member = memberService.getMemberById(loginedMemberId);
+		if (member.getDelStatus() == 1) {
+			return String.format("html:<script> alert('탈퇴회원 입니다.'); history.back(); </script>");
+		}
 
 		if (member.getMailAuthStatus() == 0) {
 			return String.format("html:<script> alert('이메일 인증후에 로그인 가능합니다.'); history.back(); </script>");

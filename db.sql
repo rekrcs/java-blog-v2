@@ -132,4 +132,7 @@ DROP INDEX `name`;
 ALTER TABLE `attr` ADD UNIQUE INDEX (`relTypeCode`, `relId`, `typeCode`, `type2Code`); 
 
 ## 특정 조건을 만족하는 회원 또는 게시물(기타 데이터)를 빠르게 찾기 위해서
-ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`); 
+ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
+
+# 탈퇴회원 구현위해서 delStatus 필드 추가
+ALTER TABLE `member` ADD COLUMN `delStatus` TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL AFTER `mailAuthStatus`; 

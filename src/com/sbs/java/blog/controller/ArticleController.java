@@ -311,7 +311,8 @@ public class ArticleController extends Controller {
 		req.setAttribute("cPage", page);
 
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-
+		
+		
 		List<Article> articles = articleService.getForPrintListArticles(loginedMemberId, page, itemsInAPage, cateItemId,
 				searchKeywordType, searchKeyword);
 

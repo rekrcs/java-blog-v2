@@ -125,10 +125,11 @@ public class MemberDao extends Dao {
 	public int memberDelete(int id) {
 		SecSql secSql = new SecSql();
 
-		secSql.append("DELETE FROM member");
+		secSql.append("UPDATE member");
+		secSql.append("SET delStatus = 1");
 		secSql.append("WHERE id = ?", id);
 
-		return DBUtil.delete(dbConn, secSql);
+		return DBUtil.update(dbConn, secSql);
 	}
 
 	public int successAuth(int authStatus, String loginId) {

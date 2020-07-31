@@ -10,6 +10,7 @@ public class Member extends Dto {
 	private String email;
 	private String nickname;
 	private int mailAuthStatus;
+	private int delStatus;
 
 	public Member(Map<String, Object> row) {
 		super(row);
@@ -20,6 +21,7 @@ public class Member extends Dto {
 		this.email = (String) row.get("email");
 		this.nickname = (String) row.get("nickname");
 		this.mailAuthStatus = (int) row.get("mailAuthStatus");
+		this.delStatus = (int) row.get("delStatus");
 	}
 
 	public int getMailAuthStatus() {
@@ -78,12 +80,20 @@ public class Member extends Dto {
 		this.email = email;
 	}
 
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [loginId=" + loginId + ", loginPw=" + loginPw + ", loginPwConfirm=" + loginPwConfirm + ", name="
 				+ name + ", email=" + email + ", nickname=" + nickname + ", mailAuthStatus=" + mailAuthStatus
-				+ ", getId()=" + getId() + ", getRegDate()=" + getRegDate() + ", getUpdateDate()=" + getUpdateDate()
-				+ "]";
+				+ ", delStatus=" + delStatus + ", getId()=" + getId() + ", getRegDate()=" + getRegDate()
+				+ ", getExtra()=" + getExtra() + "]";
 	}
 
 }
