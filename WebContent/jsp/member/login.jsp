@@ -4,25 +4,12 @@
 <%@ include file="/jsp/part/head.jspf"%>
 
 <style>
-/* lib */
-.form1 {
-	display: block;
-	width: 100%;
-}
-
-.form1 .form-row {
-	align-items: center;
-	display: flex;
-}
-</style>
-<%="<style>.form1 .form-row:not(:first-child) { margin-top : 10px; }</style>"%>
-<style>
 .find-inf>a {
-	color:blue;
+	color: blue;
 }
 
 .find-inf>a:hover {
-	color:red;
+	color: red;
 }
 </style>
 
@@ -59,11 +46,12 @@
 <!--body 내용-->
 <section class="body-main">
 	<div class="login-form-box con">
-	<h2 style="text-align: center">로그인</h2>
+		<h2 style="text-align: center">로그인</h2>
 		<form action="doLogin" method="post" class="login-form form1"
 			onsubmit="submitLoginForm(this); return false;">
-			<input type="hidden" name="redirectUri" value="${param.afterLoginRedirectUri}" />
-			<input type="hidden" name="loginPwReal" />
+			<input type="hidden" name="redirectUri"
+				value="${param.afterLoginRedirectUri}" /> <input type="hidden"
+				name="loginPwReal" />
 			<div class="form-row">
 				<div class="label">로그인 아이디</div>
 				<div class="input">
@@ -83,11 +71,15 @@
 				</div>
 			</div>
 		</form>
-		
+
 		<div class="flex flex-jc-e">
-		<div class="find-inf"><a href="findId">[아이디찾기]</a></div>
-		<span style="padding:0 5px"></span>
-		<div class="find-inf"><a href="findPassword">[비번찾기]</a></div>
+			<div class="find-inf">
+				<a href="findId">[아이디찾기]</a>
+			</div>
+			<span style="padding: 0 5px"></span>
+			<div class="find-inf">
+				<a href="findPassword">[비번찾기]</a>
+			</div>
 		</div>
 	</div>
 	<div class="backHome">

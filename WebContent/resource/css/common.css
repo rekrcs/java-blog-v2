@@ -387,6 +387,10 @@ label[for] {
 	}
 }
 
+.form1 .form-row {
+	margin-top: 10px;
+}
+
 /*홈으로 돌아가기*/
 .backHome {
 	text-align: center;
