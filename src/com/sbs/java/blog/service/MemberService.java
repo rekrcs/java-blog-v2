@@ -73,6 +73,19 @@ public class MemberService extends Service {
 
 		return authCode;
 	}
+	
+	public boolean isValidEmailAuthCode(int actorId, String authCode) {
+		String authCodeOnDB = attrService.getValue("member__" + actorId + "__extra__emailAuthCode");
+
+		return authCodeOnDB.equals(authCode);
+	}
+
+	public String genEmailAuthCode(int actorId) {
+		String authCode = UUID.randomUUID().toString();
+		attrService.setValue("member__" + actorId + "__extra__emailAuthCode", authCode);
+
+		return authCode;
+	}
 
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);

@@ -79,8 +79,9 @@ public class MemberController extends Controller {
 		String email = req.getParameter("email");
 		int memberId = Integer.parseInt(req.getParameter("memberId"));
 
-		if (memberService.isValidModifyPrivateAuthCode(memberId, authCode)) {
+		if (memberService.isValidEmailAuthCode(memberId, authCode)) {
 			int num = memberService.successAuth(1, memberId);
+			attrService.remove("member__" + memberId + "__extra__emailAuthCode");
 			return String.format("html:<script> alert('인증이 완료 되었습니다.'); window.close(); </script>");
 		}
 
@@ -300,7 +301,7 @@ public class MemberController extends Controller {
 
 		Member member = memberService.getMemberByLoginId(loginId);
 		int memberId = member.getId();
-		String authCode = memberService.genModifyPrivateAuthCode(memberId);
+		String authCode = memberService.genEmailAuthCode(memberId);
 
 //		String code = Util.getAuthCode();
 
