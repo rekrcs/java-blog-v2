@@ -161,7 +161,8 @@ public class MemberController extends Controller {
 		memberService.userModify(loginId, loginPw, name, nickname, email, loginedMemberId);
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		loginedMember.setLoginPw(loginPw); // 크게 의미는 없지만, 의미론적인 면에서 해야 하는
-
+		
+		attrService.remove("member__" + loginedMemberId + "__extra__useTempPassword");
 		return String.format("html:<script> alert('%s님 정보가 수정 되었습니다.'); location.replace('../home/main'); </script>",
 				name);
 	}
