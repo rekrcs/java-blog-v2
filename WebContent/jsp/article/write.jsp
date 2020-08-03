@@ -23,7 +23,7 @@
 		onBeforeUnloadSetted = false;
 	}
 	/* 여기까지는 라이브러리 */
-	
+
 	applyOnBeforeUnload();
 	var submitWriteFormDone = false;
 
@@ -61,14 +61,14 @@
 		submitWriteFormDone = true;
 	}
 
-// 	function WriteForm__init() {
-// 		// 폼의 특정 요소를 건드리(?)면, 그 이후 부터 외부로 이동하는 것에 참견하는 녀석을 작동시킨다.
-// 		$('form.write-form input, form.write-form textarea').keyup(function() {
-// 			applyOnBeforeUnload();
-// 		});
-// 	}
+	// 	function WriteForm__init() {
+	// 		// 폼의 특정 요소를 건드리(?)면, 그 이후 부터 외부로 이동하는 것에 참견하는 녀석을 작동시킨다.
+	// 		$('form.write-form input, form.write-form textarea').keyup(function() {
+	// 			applyOnBeforeUnload();
+	// 		});
+	// 	}
 
-// 	WriteForm__init();
+	// 	WriteForm__init();
 </script>
 
 <style>
@@ -81,6 +81,7 @@
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
+	<div class="body-main-name">게시물 작성</div>
 	<div class="write-form-box con">
 		<form action="doWrite" method="post"
 			onsubmit="submitWriteForm(this); return false;"

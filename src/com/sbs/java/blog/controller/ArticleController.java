@@ -255,7 +255,7 @@ public class ArticleController extends Controller {
 		}
 
 		// 댓글 리스팅 페이징
-		int itemsInAPage = 3;
+		int itemsInAPage = 10;
 		int totalCount = articleService.getForPrintListReplyCount(id);
 		int totalPage = (int) Math.ceil(totalCount / (double) itemsInAPage);
 
@@ -317,7 +317,11 @@ public class ArticleController extends Controller {
 				searchKeywordType, searchKeyword);
 
 		req.setAttribute("articles", articles);
-
+		
+		List<Member> members = memberService.getForPrintMembers();
+		
+		req.setAttribute("members", members);
+		
 		return "article/list.jsp";
 	}
 

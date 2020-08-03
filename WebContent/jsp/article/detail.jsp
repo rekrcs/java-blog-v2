@@ -126,11 +126,21 @@ th {
 .page-box>ul>li.current>a {
 	color: red;
 }
+
+/* 로그인버튼 */
+.loginBtn {
+	color: blue;
+}
+
+.loginBtn:hover {
+	color: red;
+}
 </style>
 
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
+	<div class="body-main-name">상세 정보</div>
 	<table border="1" width="100%">
 		<tr>
 			<th>번호</th>
@@ -192,7 +202,7 @@ th {
 				<c:param name="afterLoginRedirectUri"
 					value="${currentUri}&jsAction=WriteReplyForm__focus" />
 			</c:url>
-			<a href="${loginUri}">로그인</a> 후 이용해주세요.
+			<a class="loginBtn" href="${loginUri}">로그인</a> 후 이용해주세요.
 		</div>
 	</c:if>
 	<c:if test="${isLogined}">

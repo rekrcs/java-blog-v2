@@ -40,8 +40,8 @@
 
 <!--body 내용-->
 <section class="body-main">
+	<div class="body-main-name">내 정보</div>
 	<div class="myPage-box con">
-		<h2 style="text-align: center">My Page</h2>
 		<div class="userbox">
 			<div class="userInf">
 				<div class="userName">이름 : ${loginedMember.name}</div>

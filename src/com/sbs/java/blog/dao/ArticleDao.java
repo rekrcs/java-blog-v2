@@ -73,15 +73,11 @@ public class ArticleDao extends Dao {
 
 	public List<Article> getForPrintListArticles(int showArticlesInMainPage) {
 		SecSql sql = new SecSql();
-		// 시작
+		
 		sql.append("SELECT A.*, M.nickname AS extra__writer");
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
-		// 끝
-
-//		sql.append("SELECT *");
-//		sql.append("FROM article");
 		sql.append("WHERE displayStatus = 1");
 		sql.append("ORDER BY id DESC ");
 		sql.append("LIMIT ?", showArticlesInMainPage);
@@ -98,15 +94,11 @@ public class ArticleDao extends Dao {
 
 	public List<Article> getForPrintListInOrderHit(int showArticlesInMainPage) {
 		SecSql sql = new SecSql();
-		// 시작
+
 		sql.append("SELECT A.*, M.nickname AS extra__writer");
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
-		// 끝
-
-//		sql.append("SELECT *");
-//		sql.append("FROM article");
 		sql.append("WHERE displayStatus = 1");
 		sql.append("ORDER BY hit DESC ");
 		sql.append("LIMIT ?", showArticlesInMainPage);
@@ -147,9 +139,6 @@ public class ArticleDao extends Dao {
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
-
-//		sql.append("SELECT *, 'Youn' AS extra__writer ");
-//		sql.append("FROM article ");
 		sql.append("WHERE 1 ");
 		sql.append("AND A.id = ? ", id);
 		sql.append("AND displayStatus = 1 ");
@@ -197,18 +186,6 @@ public class ArticleDao extends Dao {
 		sql.append(", memberId = ? ", memberId);
 		sql.append(", displayStatus = '1'");
 		sql.append(", cateItemId = ?", cateItemId);
-
-		/*
-		 * String sql = "";
-		 * 
-		 * sql += String.format("INSERT INTO article "); sql +=
-		 * String.format("SET regDate = NOW() "); sql +=
-		 * String.format(", updateDate = NOW1() "); sql +=
-		 * String.format(", title = '%s' ", title); sql +=
-		 * String.format(", body = '%s' ", body); sql +=
-		 * String.format(", displayStatus = '1' "); sql +=
-		 * String.format(", cateItemId = '%d' ", cateItemId);
-		 */
 
 		return DBUtil.insert(dbConn, sql);
 	}
@@ -272,15 +249,10 @@ public class ArticleDao extends Dao {
 
 		int limitFrom = (page - 1) * itemsInAPage;
 
-		// 시작
 		sql.append("SELECT A.*, M.nickname AS extra__writer");
 		sql.append("FROM articleReply AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("ON A.memberId = M.id");
-		// 끝
-
-//		sql.append("SELECT * ");
-//		sql.append("FROM articleReply ");
 		sql.append("WHERE 1 ");
 		sql.append("AND articleId = ?", id);
 		sql.append("ORDER BY id DESC ");

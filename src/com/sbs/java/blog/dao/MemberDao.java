@@ -29,15 +29,6 @@ public class MemberDao extends Dao {
 		secSql.append(", email = ? ", email);
 		secSql.append(", nickname = ? ", nickname);
 
-//		String sql = "";
-//
-//		sql += String.format("INSERT INTO `member` ");
-//		sql += String.format("SET regDate = NOW() ");
-//		sql += String.format(", loginId = '%s' ", loginId);
-//		sql += String.format(", name = '%s' ", name);
-//		sql += String.format(", nickname = '%s' ", nickname);
-//		sql += String.format(", loginPw = '%s' ", loginPw);
-
 		return DBUtil.insert(dbConn, secSql);
 	}
 
@@ -127,6 +118,7 @@ public class MemberDao extends Dao {
 
 		secSql.append("UPDATE member");
 		secSql.append("SET delStatus = 1");
+		secSql.append(", nickname = '탈퇴회원'");
 		secSql.append("WHERE id = ?", id);
 
 		return DBUtil.update(dbConn, secSql);

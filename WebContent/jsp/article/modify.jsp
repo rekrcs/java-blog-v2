@@ -50,6 +50,7 @@
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
+	<div class="body-main-name">게시물 수정</div>
 	<div class="modify-form-box con">
 		<form action="doModify" method="POST" class="modify-form form1"
 			onsubmit="submitModifyForm(this); return false;">

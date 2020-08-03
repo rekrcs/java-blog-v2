@@ -5,9 +5,7 @@
 
 <!--body 내용-->
 	<section class="body-main">
-		<div class="body-main-name">
-			<h3>어바웃비</h3>
-		</div>
+		<div class="body-main-name">어바웃미</div>
 	
 	</section>
 	<%@ include file="/jsp/part/foot.jspf"%>

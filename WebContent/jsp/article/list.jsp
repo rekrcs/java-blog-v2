@@ -25,9 +25,7 @@
 
 <!--body 내용-->
 <section class="body-main">
-	<div class="body-main-name">
-		<h3>${cateItemName}(${totalCount})</h3>
-	</div>
+	<div class="body-main-name">${cateItemName}(${totalCount})</div>
 
 	<c:forEach items="${articles}" var="article">
 		<div class="article">

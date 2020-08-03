@@ -343,6 +343,12 @@ label[for] {
 }
 
 /* 커스텀 라이브러리 */
+/* 페이지제목 */
+.body-main-name {
+	text-align: center;
+	font-size: 3.5rem;
+}
+
 /* lib */
 .form1 {
 	display: block;
@@ -602,11 +608,11 @@ label[for] {
 	font-weight: bold;
 }
 
-.mobile-side-bar>.menu-box-1 ul>li>a:not(:only-child )::after {
+.mobile-side-bar>.menu-box-1 ul>li>a:not (:only-child )::after {
 	content: "[+]";
 }
 
-.mobile-side-bar>.menu-box-1 ul>li:hover>a:not(:only-child )::after {
+.mobile-side-bar>.menu-box-1 ul>li:hover>a:not (:only-child )::after {
 	content: "[-]";
 }
 

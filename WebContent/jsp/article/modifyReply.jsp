@@ -56,9 +56,7 @@
 
 <!--body 내용-->
 <section class="body-main flex-grow-1">
-	<div class="body-main-name">
-		<h2 class="con">댓글 수정</h2>
-	</div>
+	<div class="body-main-name">댓글 수정</div>
 
 
 	<!-- 댓글 출력 -->
