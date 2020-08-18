@@ -53,6 +53,10 @@
 </script>
 
 <style>
+.tui-editor-contents {
+	font-size: 1.2rem;
+}
+
 .body-main-name {
 	margin-top: 30px;
 }
@@ -174,7 +178,7 @@ th {
 	<div class="body-main-name">
 		<div class="title">${article.title}</div>
 	</div>
-	<div>
+	<div class="article-body">
 		<script type="text/x-template">${article.bodyForXTemplate}</script>
 		<div class="toast-editor toast-editor-viewer"></div>
 	</div>

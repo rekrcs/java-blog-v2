@@ -328,13 +328,14 @@ public class MemberController extends Controller {
 
 		String body = "";
 		body += "로그인을 위해서는 인증이 필요합니다. 아래의 링크를 클릭해 주세요";
-//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d", email, authCode, memberId);
-//		body += String.format("\n<a href=\"https://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
+//		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d", email,
 //				authCode, memberId);
+		body += String.format("\n<a href=\"https://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
+				authCode, memberId);
 
-		body += String.format(
-				"\n<a href=\"http://localhost:8081/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>",
-				email, authCode, memberId);
+//		body += String.format(
+//				"\n<a href=\"http://localhost:8081/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>",
+//				email, authCode, memberId);
 		boolean sendMailDone = mailService.send(email, name + "님 가입을 환영합니다.", body) == 1;
 		return String.format(
 				"html:<script> alert('%s님 환영합니다. 이메일 인증후에 로그인 가능 합니다.'); location.replace('../home/main'); </script>",
