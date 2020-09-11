@@ -608,11 +608,11 @@ label[for] {
 	font-weight: bold;
 }
 
-.mobile-side-bar>.menu-box-1 ul>li>a:not (:only-child )::after {
+.mobile-side-bar>.menu-box-1 ul>li>a:not(:only-child )::after {
 	content: "[+]";
 }
 
-.mobile-side-bar>.menu-box-1 ul>li:hover>a:not (:only-child )::after {
+.mobile-side-bar>.menu-box-1 ul>li:hover>a:not(:only-child )::after {
 	content: "[-]";
 }
 
