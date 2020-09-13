@@ -53,7 +53,7 @@ public class App {
 		if (isDevelServer) {
 			return "jdbc:mysql://localhost:3306/st_n33_blog?serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull";
 		}
-		return "jdbc:mysql://blog.enkr.net:3306/st_n33_blog?serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull";
+		return "jdbc:mysql://localhost:3306/st_n33_blog?serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull";
 	}
 
 	public void start() throws ServletException, IOException {
@@ -159,14 +159,14 @@ public class App {
 
 	private String getDbId() {
 		if (isDevelServer) {
-			return "sbsst";
+			return "root";
 		}
 		return Config.dbId;
 	}
 
 	private String getDbPassword() {
 		if (isDevelServer) {
-			return "sbs123414";
+			return "";
 		}
 		return Config.dbPw;
 	}
