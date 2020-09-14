@@ -159,14 +159,14 @@ public class App {
 
 	private String getDbId() {
 		if (isDevelServer) {
-			return "root";
+			return "sbsst";
 		}
 		return Config.dbId;
 	}
 
 	private String getDbPassword() {
 		if (isDevelServer) {
-			return "";
+			return "sbs123414";
 		}
 		return Config.dbPw;
 	}
