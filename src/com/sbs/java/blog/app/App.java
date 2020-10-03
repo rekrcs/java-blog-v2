@@ -16,7 +16,6 @@ import com.sbs.java.blog.controller.HomeController;
 import com.sbs.java.blog.controller.MemberController;
 import com.sbs.java.blog.controller.TestController;
 import com.sbs.java.blog.exception.SQLErrorException;
-import com.sbs.java.blog.service.MailService;
 import com.sbs.java.blog.util.Util;
 
 public class App {
@@ -159,14 +158,14 @@ public class App {
 
 	private String getDbId() {
 		if (isDevelServer) {
-			return "sbsst";
+			return "root";
 		}
 		return Config.dbId;
 	}
 
 	private String getDbPassword() {
 		if (isDevelServer) {
-			return "sbs123414";
+			return "";
 		}
 		return Config.dbPw;
 	}

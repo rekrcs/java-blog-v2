@@ -76,16 +76,33 @@
 			return;
 		}
 
-// 		if (form.loginId.value != JoinForm__validLoginId) {
-// 			alert('다른 아이디를 입력해주세요.');
-// 			form.loginId.focus();
-// 			return;
-// 		}
+		var idReg = /^[A-za-z0-9]/g;
+		form.loginId.value = form.loginId.value.trim();
+
+		var idval = idReg.test(form.loginId.value)
+		if (!idval) {
+			alert('로그인 아이디는 영문, 숫자만 가능합니다.');
+			form.loginId.focus();
+			return;
+		}
+
+		if (form.loginId.value.length < 4) {
+			alert('로그인 아이디는 4글자 이상 가능 합니다.');
+			form.loginId.focus();
+			return;
+		}
+
 
 		form.loginPw.value = form.loginPw.value.trim();
 
 		if (form.loginPw.value.length == 0) {
 			alert('로그인 비번을 입력해주세요.');
+			form.loginPw.focus();
+			return;
+		}
+
+		if (form.loginPw.value.length < 5) {
+			alert('로그인 비번는 5글자 이상 가능 합니다.');
 			form.loginPw.focus();
 			return;
 		}

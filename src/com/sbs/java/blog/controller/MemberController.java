@@ -330,7 +330,7 @@ public class MemberController extends Controller {
 		body += "로그인을 위해서는 인증이 필요합니다. 아래의 링크를 클릭해 주세요";
 //		body += String.format("\nhttps://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d", email,
 //				authCode, memberId);
-		body += String.format("\n<a href=\"https://brg.my.iu.gy/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
+		body += String.format("\n<a href=\"https://blog.enkr.net/blog/s/member/authEmail?email=%s&authCode=%s&memberId=%d \" target=\"_blank\">인증하기</a>", email,
 				authCode, memberId);
 
 //		body += String.format(
